@@ -1,0 +1,15 @@
+﻿body {
+    background-image: url("../Images/sistemajobs.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.jumbotron {
+    margin-top: 5%;
+    border-radius: 0 !important;
+    background: #fff;
+}
+
+.jumbotron img {
+    margin-bottom: 10px !important;
+}
