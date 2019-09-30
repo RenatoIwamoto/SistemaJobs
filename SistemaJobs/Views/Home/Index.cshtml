@@ -5,7 +5,11 @@
 <div class="jumbotron">
     <img src="/Images/logo-hiredit.png" />
     <p class="lead">Contrate ou seja contratado. Participe de projetos como freelancer. Compartilhe seu portfólio. Tudo isso com o hired IT.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+    <hr />
+    <ul class="nav navbar-nav" style="font-size:0.8em;">
+        <li>@Html.ActionLink("Cadastro Funcionário", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Cadastro Empresa", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+    </ul>
 </div>
 
 @*<div class="row">
