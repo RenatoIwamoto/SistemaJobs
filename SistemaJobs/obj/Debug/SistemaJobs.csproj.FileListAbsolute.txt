@@ -82,6 +82,8 @@ C:\GIT\SistemaJobs\SistemaJobs\bin\System.Web.WebPages.Deployment.dll
 C:\GIT\SistemaJobs\SistemaJobs\bin\System.Web.WebPages.dll
 C:\GIT\SistemaJobs\SistemaJobs\bin\System.Web.WebPages.Razor.dll
 C:\GIT\SistemaJobs\SistemaJobs\bin\WebGrease.dll
+C:\GIT\SistemaJobs\SistemaJobs\bin\EntityFramework.xml
+C:\GIT\SistemaJobs\SistemaJobs\bin\EntityFramework.SqlServer.xml
 C:\GIT\SistemaJobs\SistemaJobs\bin\System.Web.Helpers.xml
 C:\GIT\SistemaJobs\SistemaJobs\bin\System.Web.Mvc.xml
 C:\GIT\SistemaJobs\SistemaJobs\bin\System.Web.Optimization.xml
@@ -91,8 +93,6 @@ C:\GIT\SistemaJobs\SistemaJobs\bin\System.Web.WebPages.Deployment.xml
 C:\GIT\SistemaJobs\SistemaJobs\bin\System.Web.WebPages.Razor.xml
 C:\GIT\SistemaJobs\SistemaJobs\bin\Newtonsoft.Json.xml
 C:\GIT\SistemaJobs\SistemaJobs\bin\Antlr3.Runtime.pdb
-C:\GIT\SistemaJobs\SistemaJobs\bin\EntityFramework.xml
-C:\GIT\SistemaJobs\SistemaJobs\bin\EntityFramework.SqlServer.xml
 C:\GIT\SistemaJobs\SistemaJobs\bin\Microsoft.AspNet.Identity.Core.xml
 C:\GIT\SistemaJobs\SistemaJobs\bin\Microsoft.AspNet.Identity.Owin.xml
 C:\GIT\SistemaJobs\SistemaJobs\bin\Microsoft.AspNet.Identity.EntityFramework.xml
@@ -105,7 +105,6 @@ C:\GIT\SistemaJobs\SistemaJobs\bin\Microsoft.Owin.Security.OAuth.xml
 C:\GIT\SistemaJobs\SistemaJobs\bin\Microsoft.Owin.Security.Google.xml
 C:\GIT\SistemaJobs\SistemaJobs\bin\Microsoft.Owin.Security.Twitter.xml
 C:\GIT\SistemaJobs\SistemaJobs\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\GIT\SistemaJobs\SistemaJobs\obj\Debug\SistemaJobs.csprojAssemblyReference.cache
 C:\GIT\SistemaJobs\SistemaJobs\obj\Debug\SistemaJobs.csproj.CoreCompileInputs.cache
 C:\GIT\SistemaJobs\SistemaJobs\obj\Debug\SistemaJobs.csproj.CopyComplete
 C:\GIT\SistemaJobs\SistemaJobs\obj\Debug\SistemaJobs.dll
