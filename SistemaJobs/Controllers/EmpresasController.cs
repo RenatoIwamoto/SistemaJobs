@@ -10,108 +10,108 @@ using SistemaJobs;
 
 namespace SistemaJobs.Controllers
 {
-    public class FuncionariosController : Controller
+    public class EmpresasController : Controller
     {
         private HiredItEntities db = new HiredItEntities();
 
-        // GET: Funcionarios
+        // GET: Empresas
         public ActionResult Index()
         {
             return this.RedirectToAction("Index", "Home");
-            //return View(db.Funcionario.ToList());
+            //return View(db.Empresa.ToList());
         }
 
-        // GET: Funcionarios/Details/5
+        // GET: Empresas/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Funcionario funcionario = db.Funcionario.Find(id);
-            if (funcionario == null)
+            Empresa empresa = db.Empresa.Find(id);
+            if (empresa == null)
             {
                 return HttpNotFound();
             }
-            return View(funcionario);
+            return View(empresa);
         }
 
-        // GET: Funcionarios/Create
+        // GET: Empresas/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Funcionarios/Create
+        // POST: Empresas/Create
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdFuncionario,Nome,Sobrenome,CPF,Telefone,Email,Estado,Cidade,Usuario,Senha")] Funcionario funcionario)
+        public ActionResult Create([Bind(Include = "IdEmpresa,Nome,CNPJ,Telefone,Email,Estado,Cidade,Usuario,Senha")] Empresa empresa)
         {
             if (ModelState.IsValid)
             {
-                db.Funcionario.Add(funcionario);
+                db.Empresa.Add(empresa);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(funcionario);
+            return View(empresa);
         }
 
-        // GET: Funcionarios/Edit/5
+        // GET: Empresas/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Funcionario funcionario = db.Funcionario.Find(id);
-            if (funcionario == null)
+            Empresa empresa = db.Empresa.Find(id);
+            if (empresa == null)
             {
                 return HttpNotFound();
             }
-            return View(funcionario);
+            return View(empresa);
         }
 
-        // POST: Funcionarios/Edit/5
+        // POST: Empresas/Edit/5
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdFuncionario,Nome,Sobrenome,CPF,Telefone,Email,Estado,Cidade,Usuario,Senha")] Funcionario funcionario)
+        public ActionResult Edit([Bind(Include = "IdEmpresa,Nome,CNPJ,Telefone,Email,Estado,Cidade,Usuario,Senha")] Empresa empresa)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(funcionario).State = EntityState.Modified;
+                db.Entry(empresa).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(funcionario);
+            return View(empresa);
         }
 
-        // GET: Funcionarios/Delete/5
+        // GET: Empresas/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Funcionario funcionario = db.Funcionario.Find(id);
-            if (funcionario == null)
+            Empresa empresa = db.Empresa.Find(id);
+            if (empresa == null)
             {
                 return HttpNotFound();
             }
-            return View(funcionario);
+            return View(empresa);
         }
 
-        // POST: Funcionarios/Delete/5
+        // POST: Empresas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Funcionario funcionario = db.Funcionario.Find(id);
-            db.Funcionario.Remove(funcionario);
+            Empresa empresa = db.Empresa.Find(id);
+            db.Empresa.Remove(empresa);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
