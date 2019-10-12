@@ -11,17 +11,41 @@ namespace SistemaJobs
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Empresa
     {
         public int IdEmpresa { get; set; }
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string Nome { get; set; }
+
+        [Required]
+        [StringLength(14, MinimumLength = 14)]
         public string CNPJ { get; set; }
+
+        [Required]
+        [StringLength(11, MinimumLength = 11)]
         public string Telefone { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(2, MinimumLength = 2)]
         public string Estado { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string Cidade { get; set; }
+
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string Usuario { get; set; }
+
+        [Required]
+        [StringLength(12, MinimumLength = 4)]
         public string Senha { get; set; }
     }
 }

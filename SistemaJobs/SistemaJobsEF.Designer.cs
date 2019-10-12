@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\GIT\SistemaJobs\SistemaJobs\SistemaJobsEF.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\TCC_SISTEMA\SistemaJobs\SistemaJobs\SistemaJobsEF.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
