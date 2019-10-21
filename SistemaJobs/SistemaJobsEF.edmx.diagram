@@ -7,6 +7,8 @@
       <Diagram DiagramId="6e06b098225244ff800f2492b866ce79" Name="Diagram1">
         <EntityTypeShape EntityType="HiredItModel.Empresa" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HiredItModel.Funcionario" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HiredItModel.Portfolio" Width="1.5" PointX="5" PointY="1.125" />
+        <AssociationConnector Association="HiredItModel.FK_Port_Func" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

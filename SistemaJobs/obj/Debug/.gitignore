@@ -1,0 +1,11 @@
+.vs/
+SistemaJobs.csproj.CoreCompileInputs.cache
+SistemaJobs.csproj.FileListAbsolute.txt
+SistemaJobs.csprojAssemblyReference.cache
+SistemaJobs.dll
+SistemaJobs.pdb
+TempPE/SistemaJobsEF.Designer.cs.dll
+TempPE/SistemaJobsEF.cs.dll
+edmxResourcesToEmbed/SistemaJobsEF.csdl
+edmxResourcesToEmbed/SistemaJobsEF.msl
+edmxResourcesToEmbed/SistemaJobsEF.ssd

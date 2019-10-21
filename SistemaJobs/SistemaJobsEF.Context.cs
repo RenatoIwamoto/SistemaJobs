@@ -27,5 +27,6 @@ namespace SistemaJobs
     
         public virtual DbSet<Empresa> Empresa { get; set; }
         public virtual DbSet<Funcionario> Funcionario { get; set; }
+        public virtual DbSet<Portfolio> Portfolio { get; set; }
     }
 }

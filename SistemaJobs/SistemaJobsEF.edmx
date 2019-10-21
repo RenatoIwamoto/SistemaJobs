@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HiredItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HiredItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Empresa">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -34,12 +34,39 @@
           <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Senha" Type="varchar" MaxLength="12" Nullable="false" />
         </EntityType>
+        <EntityType Name="Portfolio">
+          <Key>
+            <PropertyRef Name="IdPorfolio" />
+          </Key>
+          <Property Name="IdPorfolio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Imagem" Type="varchar" MaxLength="350" />
+          <Property Name="TempoTrabalho" Type="int" />
+          <Property Name="IdFuncionario" Type="int" />
+        </EntityType>
+        <Association Name="FK_Port_Func">
+          <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="0..1" />
+          <End Role="Portfolio" Type="Self.Portfolio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionario">
+              <PropertyRef Name="IdFuncionario" />
+            </Principal>
+            <Dependent Role="Portfolio">
+              <PropertyRef Name="IdFuncionario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="HiredItModelStoreContainer">
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Funcionario" EntityType="Self.Funcionario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Portfolio" EntityType="Self.Portfolio" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Port_Func" Association="Self.FK_Port_Func">
+            <End Role="Funcionario" EntitySet="Funcionario" />
+            <End Role="Portfolio" EntitySet="Portfolio" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HiredItModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -71,11 +98,41 @@
           <Property Name="Cidade" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Senha" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Portfolio" Relationship="HiredItModel.FK_Port_Func" FromRole="Funcionario" ToRole="Portfolio" />
         </EntityType>
         <EntityContainer Name="HiredItEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Empresa" EntityType="Self.Empresa" />
           <EntitySet Name="Funcionario" EntityType="Self.Funcionario" />
+          <EntitySet Name="Portfolio" EntityType="HiredItModel.Portfolio" />
+          <AssociationSet Name="FK_Port_Func" Association="HiredItModel.FK_Port_Func">
+            <End Role="Funcionario" EntitySet="Funcionario" />
+            <End Role="Portfolio" EntitySet="Portfolio" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Portfolio">
+          <Key>
+            <PropertyRef Name="IdPorfolio" />
+          </Key>
+          <Property Name="IdPorfolio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Imagem" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="TempoTrabalho" Type="Int32" />
+          <Property Name="IdFuncionario" Type="Int32" />
+          <NavigationProperty Name="Funcionario" Relationship="HiredItModel.FK_Port_Func" FromRole="Portfolio" ToRole="Funcionario" />
+        </EntityType>
+        <Association Name="FK_Port_Func">
+          <End Type="HiredItModel.Funcionario" Role="Funcionario" Multiplicity="0..1" />
+          <End Type="HiredItModel.Portfolio" Role="Portfolio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionario">
+              <PropertyRef Name="IdFuncionario" />
+            </Principal>
+            <Dependent Role="Portfolio">
+              <PropertyRef Name="IdFuncionario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -110,6 +167,18 @@
                 <ScalarProperty Name="Cidade" ColumnName="Cidade" />
                 <ScalarProperty Name="Usuario" ColumnName="Usuario" />
                 <ScalarProperty Name="Senha" ColumnName="Senha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Portfolio">
+            <EntityTypeMapping TypeName="HiredItModel.Portfolio">
+              <MappingFragment StoreEntitySet="Portfolio">
+                <ScalarProperty Name="IdFuncionario" ColumnName="IdFuncionario" />
+                <ScalarProperty Name="TempoTrabalho" ColumnName="TempoTrabalho" />
+                <ScalarProperty Name="Imagem" ColumnName="Imagem" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="IdPorfolio" ColumnName="IdPorfolio" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

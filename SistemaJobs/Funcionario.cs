@@ -11,45 +11,27 @@ namespace SistemaJobs
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Funcionario
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Funcionario()
+        {
+            this.Portfolio = new HashSet<Portfolio>();
+        }
+    
         public int IdFuncionario { get; set; }
-        [Required]
-        [StringLength(50, MinimumLength = 3)]
         public string Nome { get; set; }
-
-        [Required]
-        [StringLength(100)]
         public string Sobrenome { get; set; }
-
-        [Required]
-        [StringLength(14, MinimumLength = 14)]
         public string CPF { get; set; }
-
-        [Required]
-        [StringLength(11, MinimumLength = 11)]
         public string Telefone { get; set; }
-
-        [Required]
-        [StringLength(100)]
         public string Email { get; set; }
-
-        [Required]
-        [StringLength(2, MinimumLength = 2)]
         public string Estado { get; set; }
-
-        [Required]
-        [StringLength(100)]
         public string Cidade { get; set; }
-
-        [Required]
-        [StringLength(50, MinimumLength = 3)]
         public string Usuario { get; set; }
-
-        [Required]
-        [StringLength(12, MinimumLength = 4)]
         public string Senha { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Portfolio> Portfolio { get; set; }
     }
 }

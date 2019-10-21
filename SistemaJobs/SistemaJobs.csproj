@@ -166,6 +166,7 @@
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\FuncionariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PortfoliosController.cs" />
     <Compile Include="Empresa.cs">
       <DependentUpon>SistemaJobsEF.tt</DependentUpon>
     </Compile>
@@ -178,6 +179,9 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EmpresaModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Portfolio.cs">
+      <DependentUpon>SistemaJobsEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SistemaJobsEF.Context.cs">
       <AutoGen>True</AutoGen>
@@ -277,6 +281,11 @@
     <Content Include="Views\Empresas\Details.cshtml" />
     <Content Include="Views\Empresas\Edit.cshtml" />
     <Content Include="Views\Empresas\Index.cshtml" />
+    <Content Include="Views\Portfolios\Create.cshtml" />
+    <Content Include="Views\Portfolios\Delete.cshtml" />
+    <Content Include="Views\Portfolios\Details.cshtml" />
+    <Content Include="Views\Portfolios\Edit.cshtml" />
+    <Content Include="Views\Portfolios\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

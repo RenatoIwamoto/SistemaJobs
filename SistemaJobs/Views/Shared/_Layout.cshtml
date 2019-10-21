@@ -21,20 +21,22 @@
                 @Html.ActionLink("hired IT", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                @*<ul class="nav navbar-nav">
+                <ul class="nav navbar-nav pull-right">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>*@
-                @Html.Partial("_LoginPartial")
+                </ul>
+                @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        @*<footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>*@
+    <div class="container" style="background-color: #ffffff; width:100vw; height:100vh;">
+        <div class="container body-content">
+            @RenderBody()
+            @*<footer>
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                </footer>*@
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
