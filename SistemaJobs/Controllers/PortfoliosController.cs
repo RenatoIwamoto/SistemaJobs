@@ -17,8 +17,8 @@ namespace SistemaJobs.Controllers
         // GET: Portfolios
         public ActionResult Index()
         {
-            var portfolio = db.Portfolio.Include(p => p.Funcionario);
-            return View(portfolio.ToList());
+            //var portfolio = db.Portfolio.Include(p => p.Funcionario);
+            return View(db.Portfolio.ToList());
         }
 
         // GET: Portfolios/Details/5
