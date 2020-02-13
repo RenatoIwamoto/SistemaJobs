@@ -33,6 +33,10 @@
           <Property Name="Cidade" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Senha" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="Imagem" Type="varchar" MaxLength="200" />
+          <Property Name="Experiencia" Type="varchar" MaxLength="500" />
+          <Property Name="Qualificacoes" Type="varchar" MaxLength="500" />
+          <Property Name="Sobre" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Portfolio">
           <Key>
@@ -99,6 +103,10 @@
           <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Senha" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Portfolio" Relationship="HiredItModel.FK_Port_Func" FromRole="Funcionario" ToRole="Portfolio" />
+          <Property Name="Imagem" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Experiencia" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Qualificacoes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Sobre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="HiredItEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Empresa" EntityType="Self.Empresa" />
@@ -157,6 +165,10 @@
           <EntitySetMapping Name="Funcionario">
             <EntityTypeMapping TypeName="HiredItModel.Funcionario">
               <MappingFragment StoreEntitySet="Funcionario">
+                <ScalarProperty Name="Sobre" ColumnName="Sobre" />
+                <ScalarProperty Name="Qualificacoes" ColumnName="Qualificacoes" />
+                <ScalarProperty Name="Experiencia" ColumnName="Experiencia" />
+                <ScalarProperty Name="Imagem" ColumnName="Imagem" />
                 <ScalarProperty Name="IdFuncionario" ColumnName="IdFuncionario" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="Sobrenome" ColumnName="Sobrenome" />
