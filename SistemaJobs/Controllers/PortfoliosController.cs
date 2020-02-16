@@ -39,7 +39,8 @@ namespace SistemaJobs.Controllers
         // GET: Portfolios/Create
         public ActionResult Create()
         {
-            ViewBag.IdFuncionario = new SelectList(db.Funcionario, "IdFuncionario", "Nome");
+            ViewBag.IdFuncionario = 1;
+            //ViewBag.IdFuncionario = new SelectList(db.Funcionario, "IdFuncionario", "Nome");
             return View();
         }
 

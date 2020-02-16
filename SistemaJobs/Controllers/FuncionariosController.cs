@@ -68,8 +68,24 @@ namespace SistemaJobs.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Funcionario funcionario = db.Funcionario.Find(id);
 
+            if (funcionario == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.Usuario = funcionario.Usuario;
+            ViewBag.Senha = funcionario.Senha;
+            PopularDdlEstado();
+
+            return View(funcionario);
+        }
+
+        //Popula a lista de Estados brasileiros
+        protected void PopularDdlEstado()
+        {
             List<SelectListItem> ddlEstadoItems = new List<SelectListItem>();
             ddlEstadoItems.Add(new SelectListItem { Value = "AC", Text = "AC" });
             ddlEstadoItems.Add(new SelectListItem { Value = "AL", Text = "AL" });
@@ -99,16 +115,7 @@ namespace SistemaJobs.Controllers
             ddlEstadoItems.Add(new SelectListItem { Value = "SE", Text = "SE" });
             ddlEstadoItems.Add(new SelectListItem { Value = "TO", Text = "TO" });
 
-            if (funcionario == null)
-            {
-                return HttpNotFound();
-            }
-
-            ViewBag.Usuario = funcionario.Usuario;
-            ViewBag.Senha = funcionario.Senha;
             ViewBag.Estado = ddlEstadoItems;
-
-            return View(funcionario);
         }
 
         // POST: Funcionarios/Edit/5
@@ -124,8 +131,11 @@ namespace SistemaJobs.Controllers
             {
                 db.Entry(funcionario).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Edit");
+                return RedirectToAction("Details");
             }
+
+            PopularDdlEstado();
+
             return View(funcionario);
         }
 

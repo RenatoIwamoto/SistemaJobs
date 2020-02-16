@@ -18,6 +18,8 @@
           <Property Name="Cidade" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Senha" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="Sobre" Type="varchar" MaxLength="500" />
+          <Property Name="Imagem" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Funcionario">
           <Key>
@@ -87,6 +89,8 @@
           <Property Name="Cidade" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Senha" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Sobre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Imagem" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Funcionario">
           <Key>
@@ -150,6 +154,8 @@
           <EntitySetMapping Name="Empresa">
             <EntityTypeMapping TypeName="HiredItModel.Empresa">
               <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="Imagem" ColumnName="Imagem" />
+                <ScalarProperty Name="Sobre" ColumnName="Sobre" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="CNPJ" ColumnName="CNPJ" />
