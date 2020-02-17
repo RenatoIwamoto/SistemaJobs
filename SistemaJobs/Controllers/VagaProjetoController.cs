@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using SistemaJobs;
 using PagedList;
-
+using SistemaJobs;
+ 
 namespace SistemaJobs.Controllers
 {
-    public class VagasEmpregoController : Controller
+    public class VagaProjetoController : Controller
     {
         private HiredItEntities db = new HiredItEntities();
 
-        // GET: VagasEmprego
+        // GET: VagaProjeto
         public ViewResult Index(string currentFilter, string searchString, int? page)
         {
             if (searchString != null)
@@ -28,111 +29,118 @@ namespace SistemaJobs.Controllers
             }
 
             ViewBag.CurrentFilter = searchString;
-            var vagas = from s in db.Empresa select s;
+            var vagas = from s in db.VagaProjeto select s;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                vagas = vagas.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper()));
+                vagas = vagas.Where(s => s.Titulo.ToUpper().Contains(searchString.ToUpper()));
             }
 
-            vagas = vagas.OrderByDescending(s => s.Nome);
+            vagas = vagas.OrderByDescending(s => s.Titulo);
+            var pagamento = vagas.Where(s => s.Cargos.Equals(null)); 
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);
+
             return View(vagas.ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: VagasEmprego/Details/5
+        // GET: VagaProjeto/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Empresa empresa = db.Empresa.Find(id);
-            if (empresa == null)
+            VagaProjeto vagaProjeto = db.VagaProjeto.Find(id);
+            if (vagaProjeto == null)
             {
                 return HttpNotFound();
             }
-            return View(empresa);
+            return View(vagaProjeto);
         }
 
-        // GET: VagasEmprego/Create
+        // GET: VagaProjeto/Create
         public ActionResult Create()
         {
+            ViewBag.IdCargos = new SelectList(db.Cargos, "IdCargos", "Nome");
             return View();
         }
 
-        // POST: VagasEmprego/Create
+        // POST: VagaProjeto/Create
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdEmpresa,Nome,CNPJ,Telefone,Email,Estado,Cidade,Usuario,Senha")] Empresa empresa)
+        public ActionResult Create([Bind(Include = "IdVagaProjeto,Titulo,Descricao,SalarioOrcamento,Competencias,QtdVagas,Cidade,Estado,RegimeContratacao,DataFinal,Cargos")] VagaProjeto vagaProjeto)
         {
             if (ModelState.IsValid)
             {
-                db.Empresa.Add(empresa);
+                //db.Cargos.Add(vagaProjeto.Cargos);
+                db.VagaProjeto.Add(vagaProjeto);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(empresa);
+            ViewBag.IdCargos = new SelectList(db.Cargos, "IdCargos", "Nome", vagaProjeto.IdCargos);
+            return View(vagaProjeto);
         }
 
-        // GET: VagasEmprego/Edit/5
+        // GET: VagaProjeto/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Empresa empresa = db.Empresa.Find(id);
-            if (empresa == null)
+            VagaProjeto vagaProjeto = db.VagaProjeto.Find(id);
+            if (vagaProjeto == null)
             {
                 return HttpNotFound();
             }
-            return View(empresa);
+            ViewBag.IdCargos = new SelectList(db.Cargos, "IdCargos", "Nome", vagaProjeto.IdCargos);
+            return View(vagaProjeto);
         }
 
-        // POST: VagasEmprego/Edit/5
+        // POST: VagaProjeto/Edit/5
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdEmpresa,Nome,CNPJ,Telefone,Email,Estado,Cidade,Usuario,Senha")] Empresa empresa)
+        public ActionResult Edit([Bind(Include = "IdVagaProjeto,Titulo,Descricao,SalarioOrcamento,Competencias,QtdVagas,Cidade,Estado,RegimeContratacao,DataFinal,IdCargos")] VagaProjeto vagaProjeto)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(empresa).State = EntityState.Modified;
+                db.Entry(vagaProjeto).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(empresa);
+            ViewBag.IdCargos = new SelectList(db.Cargos, "IdCargos", "Nome", vagaProjeto.IdCargos);
+            return View(vagaProjeto);
         }
 
-        // GET: VagasEmprego/Delete/5
+        // GET: VagaProjeto/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Empresa empresa = db.Empresa.Find(id);
-            if (empresa == null)
+            VagaProjeto vagaProjeto = db.VagaProjeto.Find(id);
+            if (vagaProjeto == null)
             {
                 return HttpNotFound();
             }
-            return View(empresa);
+            return View(vagaProjeto);
         }
 
-        // POST: VagasEmprego/Delete/5
+        // POST: VagaProjeto/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Empresa empresa = db.Empresa.Find(id);
-            db.Empresa.Remove(empresa);
+            VagaProjeto vagaProjeto = db.VagaProjeto.Find(id);
+            db.VagaProjeto.Remove(vagaProjeto);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HiredItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cargos">
+          <Key>
+            <PropertyRef Name="IdCargos" />
+          </Key>
+          <Property Name="IdCargos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
         <EntityType Name="Empresa">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -33,6 +40,10 @@
           <Property Name="Cidade" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Senha" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="Imagem" Type="varchar" MaxLength="200" />
+          <Property Name="Experiencia" Type="varchar" MaxLength="500" />
+          <Property Name="Qualificacoes" Type="varchar" MaxLength="500" />
+          <Property Name="Sobre" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Portfolio">
           <Key>
@@ -44,6 +55,22 @@
           <Property Name="Imagem" Type="varchar" MaxLength="350" />
           <Property Name="TempoTrabalho" Type="int" />
           <Property Name="IdFuncionario" Type="int" />
+        </EntityType>
+        <EntityType Name="VagaProjeto">
+          <Key>
+            <PropertyRef Name="IdVagaProjeto" />
+          </Key>
+          <Property Name="IdVagaProjeto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="SalarioOrcamento" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Competencias" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="QtdVagas" Type="int" Nullable="false" />
+          <Property Name="Cidade" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Estado" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="RegimeContratacao" Type="varchar" MaxLength="50" />
+          <Property Name="DataFinal" Type="datetime" Nullable="false" />
+          <Property Name="IdCargos" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Port_Func">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="0..1" />
@@ -57,13 +84,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VagaProjeto_Cargos">
+          <End Role="Cargos" Type="Self.Cargos" Multiplicity="1" />
+          <End Role="VagaProjeto" Type="Self.VagaProjeto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargos">
+              <PropertyRef Name="IdCargos" />
+            </Principal>
+            <Dependent Role="VagaProjeto">
+              <PropertyRef Name="IdCargos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="HiredItModelStoreContainer">
+          <EntitySet Name="Cargos" EntityType="Self.Cargos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Funcionario" EntityType="Self.Funcionario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Portfolio" EntityType="Self.Portfolio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VagaProjeto" EntityType="Self.VagaProjeto" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Port_Func" Association="Self.FK_Port_Func">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Portfolio" EntitySet="Portfolio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VagaProjeto_Cargos" Association="Self.FK_VagaProjeto_Cargos">
+            <End Role="Cargos" EntitySet="Cargos" />
+            <End Role="VagaProjeto" EntitySet="VagaProjeto" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -99,6 +144,10 @@
           <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Senha" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Portfolio" Relationship="HiredItModel.FK_Port_Func" FromRole="Funcionario" ToRole="Portfolio" />
+          <Property Name="Imagem" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Experiencia" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Qualificacoes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Sobre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="HiredItEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Empresa" EntityType="Self.Empresa" />
@@ -107,6 +156,12 @@
           <AssociationSet Name="FK_Port_Func" Association="HiredItModel.FK_Port_Func">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Portfolio" EntitySet="Portfolio" />
+          </AssociationSet>
+          <EntitySet Name="Cargos" EntityType="HiredItModel.Cargos" />
+          <EntitySet Name="VagaProjeto" EntityType="HiredItModel.VagaProjeto" />
+          <AssociationSet Name="FK_VagaProjeto_Cargos" Association="HiredItModel.FK_VagaProjeto_Cargos">
+            <End Role="Cargos" EntitySet="Cargos" />
+            <End Role="VagaProjeto" EntitySet="VagaProjeto" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Portfolio">
@@ -130,6 +185,43 @@
             </Principal>
             <Dependent Role="Portfolio">
               <PropertyRef Name="IdFuncionario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Cargos">
+          <Key>
+            <PropertyRef Name="IdCargos" />
+          </Key>
+          <Property Name="IdCargos" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VagaProjeto" Relationship="HiredItModel.FK_VagaProjeto_Cargos" FromRole="Cargos" ToRole="VagaProjeto" />
+        </EntityType>
+        <EntityType Name="VagaProjeto">
+          <Key>
+            <PropertyRef Name="IdVagaProjeto" />
+          </Key>
+          <Property Name="IdVagaProjeto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SalarioOrcamento" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Competencias" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="QtdVagas" Type="Int32" Nullable="false" />
+          <Property Name="Cidade" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="RegimeContratacao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DataFinal" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdCargos" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cargos" Relationship="HiredItModel.FK_VagaProjeto_Cargos" FromRole="VagaProjeto" ToRole="Cargos" />
+        </EntityType>
+        <Association Name="FK_VagaProjeto_Cargos">
+          <End Type="HiredItModel.Cargos" Role="Cargos" Multiplicity="1" />
+          <End Type="HiredItModel.VagaProjeto" Role="VagaProjeto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargos">
+              <PropertyRef Name="IdCargos" />
+            </Principal>
+            <Dependent Role="VagaProjeto">
+              <PropertyRef Name="IdCargos" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -157,6 +249,10 @@
           <EntitySetMapping Name="Funcionario">
             <EntityTypeMapping TypeName="HiredItModel.Funcionario">
               <MappingFragment StoreEntitySet="Funcionario">
+                <ScalarProperty Name="Sobre" ColumnName="Sobre" />
+                <ScalarProperty Name="Qualificacoes" ColumnName="Qualificacoes" />
+                <ScalarProperty Name="Experiencia" ColumnName="Experiencia" />
+                <ScalarProperty Name="Imagem" ColumnName="Imagem" />
                 <ScalarProperty Name="IdFuncionario" ColumnName="IdFuncionario" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="Sobrenome" ColumnName="Sobrenome" />
@@ -179,6 +275,31 @@
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="IdPorfolio" ColumnName="IdPorfolio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cargos">
+            <EntityTypeMapping TypeName="HiredItModel.Cargos">
+              <MappingFragment StoreEntitySet="Cargos">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="IdCargos" ColumnName="IdCargos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VagaProjeto">
+            <EntityTypeMapping TypeName="HiredItModel.VagaProjeto">
+              <MappingFragment StoreEntitySet="VagaProjeto">
+                <ScalarProperty Name="IdCargos" ColumnName="IdCargos" />
+                <ScalarProperty Name="DataFinal" ColumnName="DataFinal" />
+                <ScalarProperty Name="RegimeContratacao" ColumnName="RegimeContratacao" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Cidade" ColumnName="Cidade" />
+                <ScalarProperty Name="QtdVagas" ColumnName="QtdVagas" />
+                <ScalarProperty Name="Competencias" ColumnName="Competencias" />
+                <ScalarProperty Name="SalarioOrcamento" ColumnName="SalarioOrcamento" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="IdVagaProjeto" ColumnName="IdVagaProjeto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,0 +1,123 @@
+﻿@model SistemaJobs.VagaProjeto
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2 style="text-align:center">Cadastro de Vaga de emprego e projetos</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="row">
+    <hr />
+    @Html.ValidationSummary(true)
+    <div class="form-group col-md-12">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.Titulo)*
+        </div>
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.Titulo, htmlAttributes: new { @style = "min-width: 100%; height: 33px; padding:5px;" })
+                @Html.ValidationMessageFor(model => model.Titulo)
+            </div>
+        </div>
+
+    <div class="form-group col-md-12">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.Descricao)*
+        </div>
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.Descricao, htmlAttributes: new { @style = "min-width: 100%; height: 120px; padding:5px;" })
+                @Html.ValidationMessageFor(model => model.Descricao)
+            </div>
+        </div>
+
+    <div class="form-group col-md-12">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.Competencias)*
+        </div>
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.Competencias, htmlAttributes: new { @style = "min-width: 100%; height: 90px; padding:5px;" })
+                @Html.ValidationMessageFor(model => model.Competencias)
+            </div>
+        </div>
+
+    <div class="form-group col-md-12">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.IdCargos, "Cargos")*
+        </div>
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.Cargos.Nome, htmlAttributes: new { @style = "min-width: 100%; height: 90px; padding:5px;" })
+                @Html.ValidationMessageFor(model => model.Cargos.Nome)
+            </div>
+        </div>
+
+    <div class="form-group col-md-6">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.SalarioOrcamento)*
+        </div>
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.SalarioOrcamento, htmlAttributes: new { @style = "min-width: 100%; height: 33px; padding:5px;" })
+                @Html.ValidationMessageFor(model => model.SalarioOrcamento)
+            </div>
+        </div>
+
+    <div class="form-group col-md-6">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.QtdVagas)*
+            </div>
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.QtdVagas, htmlAttributes: new { @style = "min-width: 100%; height: 33px; padding:5px;" })
+                @Html.ValidationMessageFor(model => model.QtdVagas)
+            </div>
+        </div>
+
+    <div class="form-group col-md-6">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.Cidade)*
+        </div>
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.Cidade, htmlAttributes: new { @style = "min-width: 100%; height: 33px; padding:5px;" })
+                @Html.ValidationMessageFor(model => model.Cidade)
+            </div>
+        </div>
+
+    <div class="form-group col-md-6">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.Estado)*
+        </div>
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.Estado, htmlAttributes: new { @style = "min-width: 100%; height: 33px; padding:5px;" })
+                @Html.ValidationMessageFor(model => model.Estado)
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.RegimeContratacao, htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.RegimeContratacao, htmlAttributes: new { @style = "min-width: 100%; height: 33px; padding:5px;" })
+                @Html.ValidationMessageFor(model => model.RegimeContratacao)
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.DataFinal)*
+            </div>
+                <div class="col-md-12">
+                    @Html.TextBoxFor(model => model.DataFinal, htmlAttributes: new { @style = "min-width: 100%; height: 33px; padding:5px;" })
+                    @Html.ValidationMessageFor(model => model.DataFinal)
+                </div>
+            </div>
+    </div>
+
+        <div class="row">
+            <div class="form-group col-md-12" style="text-align: end;">
+                <div class="col-md-12">
+                    @Html.ActionLink("Voltar", "Index")
+                    <input type="submit" value="Cadastrar" class="btn btn-default" style="margin-left: 10px;" />
+                </div>
+            </div>
+        </div>
+}

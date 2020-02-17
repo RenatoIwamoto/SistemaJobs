@@ -11,31 +11,22 @@ namespace SistemaJobs
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Funcionario
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class Cargos
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Funcionario()
+        public Cargos()
         {
-            this.Portfolio = new HashSet<Portfolio>();
+            this.VagaProjeto = new HashSet<VagaProjeto>();
         }
     
-        public int IdFuncionario { get; set; }
+        public int IdCargos { get; set; }
+        [Required(ErrorMessage = "O campo Cargos é obrigatório")]
+        [MaxLength(500)]
         public string Nome { get; set; }
-        public string Sobrenome { get; set; }
-        public string CPF { get; set; }
-        public string Telefone { get; set; }
-        public string Email { get; set; }
-        public string Estado { get; set; }
-        public string Cidade { get; set; }
-        public string Usuario { get; set; }
-        public string Senha { get; set; }
-        public string Imagem { get; set; }
-        public string Experiencia { get; set; }
-        public string Qualificacoes { get; set; }
-        public string Sobre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Portfolio> Portfolio { get; set; }
+        public virtual ICollection<VagaProjeto> VagaProjeto { get; set; }
     }
 }

@@ -1,13 +1,13 @@
 ﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<SistemaJobs.Empresa>
+@model PagedList.IPagedList<SistemaJobs.VagaProjeto>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2 style="text-align:center">Vagas de Emprego</h2>
+<h2 style="text-align:center">Vagas de Emprego e Projetos</h2>
 
-@using (Html.BeginForm("Index", "VagasEmprego", FormMethod.Get))
+@using (Html.BeginForm("Index", "VagaProjeto", FormMethod.Get))
 {
     <p style="text-align:center">
         @Html.TextBox("SearchString")

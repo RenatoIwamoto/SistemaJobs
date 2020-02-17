@@ -1,0 +1,69 @@
+﻿@model SistemaJobs.VagaProjeto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 style="text-align: center;">@Html.DisplayFor(model => model.Titulo)</h2>
+
+<div class="row">
+    <div class="col-md-4">
+
+    </div>
+
+    <div class="col-md-8">
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>@Html.DisplayNameFor(model => model.Descricao)</h4>
+            </div>
+
+            <div class="col-md-6">
+                @if (Model.Cargos.Nome == "vazio")
+                {
+                    <h4>Salário: R$ @Model.SalarioOrcamento</h4>
+                }
+                else
+                {
+                    <h4>Orçamento: R$ @Model.SalarioOrcamento</h4>
+                }
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>@Html.DisplayFor(model => model.Descricao)</p>
+            </div>
+
+            <div class="col-md-12">
+                Habilidades Necessárias: <p class="btn btn-primary btn-large">@Model.Competencias</p>
+            </div>
+
+            <div class="col-md-12">
+                <h4>Data de Entrega: @Model.DataFinal</h4>
+            </div>
+
+            <div class="col-md-12">
+                <h4>Cargos Disponíveis:</h4>
+
+                <hr style="border-top: 2px solid #6f6464;" />
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h6 class="btn btn-primary btn-large">@Model.Cargos.Nome</h6>
+                        <h6 class="btn btn-danger btn-large">Ocupado</h6>
+                        <h6 class="btn btn-success btn-large">Disponível</h6>
+                    </div>
+                </div>
+
+                <hr style="border-top: 2px solid #6f6464;" />
+            </div>
+
+            <div class="col-md-12" style="text-align:end;">
+                 @Html.ActionLink("Voltar", "Index")
+                <p class="btn btn-primary btn-large" style="margin-left: 10px; margin-bottom:10px;">Estou Interessado</p>
+            </div>
+        </div>
+
+        </div>
+    </div>
