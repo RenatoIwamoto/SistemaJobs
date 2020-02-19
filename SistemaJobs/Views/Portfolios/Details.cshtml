@@ -4,55 +4,86 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2 style="margin-top:50px; color: #385898;">Portfólio</h2>
+<hr class="hr-custom" />
 
-<div>
-    <h4>Portfolio</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Titulo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Titulo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-
-        <dd>
+<div class="form-horizontal">
+    @Html.ValidationSummary(true)
+    <div class="titulo-portfolio">
+        @Html.DisplayFor(model => model.Titulo, new { @class = "titulo-portfolio" })
+    </div>
+    <hr class="hr-custom"/>
+    <div class="row">
+        <div class="col-md-3">
+            <img src="~/Images/18c0033932.jpg" class="img-size" />
+        </div>
+        <div class="col-md-9">
             @Html.DisplayFor(model => model.Descricao)
-        </dd>
+            <hr class="hr-custom" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.TempoTrabalho, htmlAttributes: new { @class = "col-md-2 lbl-custom" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.TempoTrabalho)
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Imagem)
-        </dt>
+    <div>
+        <div class="pull-right">
+            <p>
+                @Html.ActionLink("Editar", "Edit", new { id = Model.IdPorfolio }) |
+                @Html.ActionLink("Voltar ao portfólio", "Index")
+            </p>
+        </div>
+    </div>
+    <hr class="hr-custom" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Imagem)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TempoTrabalho)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TempoTrabalho)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Funcionario.Nome)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Funcionario.Nome)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdPorfolio }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@*<div>
+        <h4>Portfolio</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Titulo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descricao)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Imagem)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Imagem)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TempoTrabalho)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TempoTrabalho)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Funcionario.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Funcionario.Nome)
+            </dd>
+
+        </dl>
+    </div>*@
+

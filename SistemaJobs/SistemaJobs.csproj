@@ -208,6 +208,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\18c0033932.jpg" />
     <Content Include="Images\logo-hiredit.png" />
     <Content Include="Images\sistemajobs.jpg" />
     <Content Include="Scripts\bootstrap.js" />
