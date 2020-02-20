@@ -22,7 +22,7 @@ namespace SistemaJobs
         [Required]
         [MaxLength(300)]
         public string Descricao { get; set; }
-        [Required]
+        [Required(ErrorMessage = "O campo é obrigatório, não digitar centavos")]
         public decimal SalarioOrcamento { get; set; }
         [Required]
         [MaxLength(200)]
