@@ -22,7 +22,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav pull-right">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Meu Perfil", "Details", "Funcionarios", new { id = 1 }, new { id = 1 })</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
@@ -30,6 +30,7 @@
             </div>
         </div>
     </div>
+
     <div class="container" style="background-color: #ffffff; width:100vw; height:100%;">
         <div class="container body-content">
             @RenderBody()

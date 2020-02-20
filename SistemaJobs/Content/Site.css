@@ -5,20 +5,26 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 60px;
+    padding-right: 60px;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
-}
+}*/
 
 /* styles for validation helpers */
 .field-validation-error {
     color: #b94a48;
+}
+
+.body-size {
+    background-color: #ffffff;
+    width: 100vw;
+    height: 100vh;
 }
 
 .field-validation-valid {
@@ -39,4 +45,56 @@ input[type="checkbox"].input-validation-error {
 
 .validation-summary-valid {
     display: none;
+}
+
+.lbl-custom {
+    font-size: 1.2em !important;
+    color: #385898
+}
+
+.titulo-portfolio {
+    font-size: 1.5em !important;
+    color: #808080;
+}
+
+.txt-custom {
+    font-size: 1.2em !important;
+}
+
+.btn-custom {
+    background: #385898 !important;
+    border: none !important;
+    color: #ffffff;
+    padding: 5px 30px 5px 30px !important;
+}
+
+.img-size {
+    max-width: 100%;
+}
+
+.hr-custom {
+    border: 0 !important;
+    height: 1px !important;
+    background: #333 !important;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc) !important;
+    margin: 30px 0 30px 0;
+}
+
+.a-custom-voltar {
+    background: #808080 !important;
+    border: none !important;
+    color: #ffffff;
+    padding: 7px 30px 7px 30px !important;
+}
+
+.a-custom-voltar:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+@media (max-width: 767px) {
+    .body-size {
+        height: 100%;
+    }
+
 }
