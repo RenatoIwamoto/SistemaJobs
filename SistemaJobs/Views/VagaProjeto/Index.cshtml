@@ -1,17 +1,17 @@
 ﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<SistemaJobs.VagaProjeto>
+@model PagedList.IPagedList<SistemaJobs.ViewModel.VagaProjetoViewModel>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2 style="text-align:center">Vagas de Emprego e Projetos</h2>
+<h2 style="text-align:center; color: #385898;">Vagas de Emprego e Projetos</h2>
 
 @using (Html.BeginForm("Index", "VagaProjeto", FormMethod.Get))
 {
     <p style="text-align:center">
-        @Html.TextBox("SearchString")
-        <input type="submit" value="Pesquisar" />
+        @Html.TextBox("SearchString", null, new { @class = "control-label lbl-custom" })
+        <input class = "control-label lbl-custom" type="submit" value="Pesquisar" />
     </p>
 }
 
@@ -23,5 +23,6 @@
 
 <!-- Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount-->
 <div style="text-align:center">
+
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
 </div>

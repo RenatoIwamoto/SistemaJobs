@@ -11,7 +11,9 @@
         <AssociationConnector Association="HiredItModel.FK_Port_Func" />
         <EntityTypeShape EntityType="HiredItModel.Cargos" Width="1.5" PointX="0.75" PointY="6.875" />
         <EntityTypeShape EntityType="HiredItModel.VagaProjeto" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
-        <AssociationConnector Association="HiredItModel.FK_VagaProjeto_Cargos" />
+        <EntityTypeShape EntityType="HiredItModel.Competencias" Width="1.5" PointX="5.25" PointY="7" />
+        <AssociationConnector Association="HiredItModel.FK_Cargos_VagaProjeto" />
+        <AssociationConnector Association="HiredItModel.FK_Competencias_VagaProjeto" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -11,22 +11,14 @@ namespace SistemaJobs
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Cargos
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Cargos()
-        {
-            this.VagaProjeto = new HashSet<VagaProjeto>();
-        }
-    
         public int IdCargos { get; set; }
-        [Required(ErrorMessage = "O campo Cargos é obrigatório")]
-        [MaxLength(500)]
         public string Nome { get; set; }
+        public int IdVagaProjeto { get; set; }
+        public int Status { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VagaProjeto> VagaProjeto { get; set; }
+        public virtual VagaProjeto VagaProjeto1 { get; set; }
     }
 }

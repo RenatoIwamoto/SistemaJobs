@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using SistemaJobs;
@@ -51,6 +52,10 @@ namespace SistemaJobs.Controllers
         {
             if (ModelState.IsValid)
             {
+                string pattern = @"[^0-9]";
+                Regex rgx = new Regex(pattern);
+                empresa.CNPJ = rgx.Replace(empresa.CNPJ, "");
+
                 db.Empresa.Add(empresa);
                 db.SaveChanges();
                 return RedirectToAction("Index");

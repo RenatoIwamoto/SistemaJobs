@@ -1,10 +1,14 @@
-﻿@model SistemaJobs.VagaProjeto
+﻿@model SistemaJobs.ViewModel.VagaProjetoViewModel
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2 style="text-align: center;">@Html.DisplayFor(model => model.Titulo)</h2>
+<style type="text/css" media="screen and (max-width:400px)">
+    .botaoInteressados {
+        font-size: 10px;
+    }
+</style>
 
 <div class="row">
     <div class="col-md-4">
@@ -13,57 +17,78 @@
 
     <div class="col-md-8">
 
-        <div class="row">
-            <div class="col-md-6">
-                <h4>@Html.DisplayNameFor(model => model.Descricao)</h4>
-            </div>
-
-            <div class="col-md-6">
-                @if (Model.Cargos.Nome == "vazio")
-                {
-                    <h4>Salário: R$ @Model.SalarioOrcamento</h4>
-                }
-                else
-                {
-                    <h4>Orçamento: R$ @Model.SalarioOrcamento</h4>
-                }
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-md-12">
+                <h2 style="margin-top:50px; color: #385898;">@Html.DisplayFor(model => model.Titulo)</h2>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-md-6">
+                <label class="lbl-custom">Descrição</label>
+            </div>
+
+            <div class="col-md-6" style="padding-left:0px;">
+                    <div class="col-md-12">
+                        <label class="lbl-custom">Salário: </label>
+                        <span class="txt-custom">R$ @Model.SalarioOrcamento</span>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-md-12 txt-custom">
                 <p>@Html.DisplayFor(model => model.Descricao)</p>
             </div>
 
             <div class="col-md-12">
-                Habilidades Necessárias: <p class="btn btn-primary btn-large">@Model.Competencias</p>
+                <label class="lbl-custom" style="margin-right:10px;">Habilidades Necessárias:</label>
+                @foreach (var p in ViewBag.ListaCompetencias)
+                {
+                    <span class="btn btn-primary btn-large">@p.NomeCompetencia</span>
+                }
+                </div>
+
+            <div class="col-md-12" style="margin-top:10px;">
+                <label class="lbl-custom">Data de Entrega:</label>
+                <span class="txt-custom">@Model.DataFinal</span>
             </div>
+        </div>
 
+        <div class="row">
             <div class="col-md-12">
-                <h4>Data de Entrega: @Model.DataFinal</h4>
-            </div>
+                <label class="lbl-custom">Cargos Disponíveis:</label>
 
-            <div class="col-md-12">
-                <h4>Cargos Disponíveis:</h4>
-
-                <hr style="border-top: 2px solid #6f6464;" />
+                <hr class="hr-custom" />
 
                 <div class="row">
                     <div class="col-md-12">
-                        <h6 class="btn btn-primary btn-large">@Model.Cargos.Nome</h6>
-                        <h6 class="btn btn-danger btn-large">Ocupado</h6>
-                        <h6 class="btn btn-success btn-large">Disponível</h6>
+
+                        @foreach (var p in ViewBag.ListaCargos)
+                        {
+                            <h6 class="btn btn-primary btn-large">@p.Nome</h6>
+
+                            if (@p.Status == 0)
+                            {
+                                <h6 class="btn btn-danger btn-large">Ocupado</h6>
+                            }
+                            else if (@p.Status == 1)
+                            {
+                                <h6 class="btn btn-success btn-large">Disponível</h6>
+                            }
+                            <br />
+                        }
                     </div>
                 </div>
 
-                <hr style="border-top: 2px solid #6f6464;" />
+                <hr class="hr-custom" />
             </div>
 
             <div class="col-md-12" style="text-align:end;">
-                 @Html.ActionLink("Voltar", "Index")
-                <p class="btn btn-primary btn-large" style="margin-left: 10px; margin-bottom:10px;">Estou Interessado</p>
+                @Html.ActionLink("Voltar", "Index", new { @class = "botaoInteressados" })
+                <input type="submit" value="Estou Interessado" class="btn-custom botaoInteressados" style="margin-left: 10px; margin-bottom:10px;" />
             </div>
         </div>
 
-        </div>
     </div>
+</div>

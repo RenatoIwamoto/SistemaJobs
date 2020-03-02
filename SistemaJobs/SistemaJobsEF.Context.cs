@@ -30,5 +30,6 @@ namespace SistemaJobs
         public virtual DbSet<Portfolio> Portfolio { get; set; }
         public virtual DbSet<Cargos> Cargos { get; set; }
         public virtual DbSet<VagaProjeto> VagaProjeto { get; set; }
+        public virtual DbSet<Competencias> Competencias { get; set; }
     }
 }

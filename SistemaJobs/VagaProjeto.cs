@@ -11,37 +11,29 @@ namespace SistemaJobs
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class VagaProjeto
     {
-        public int IdVagaProjeto { get; set; }
-        [Required]
-        [MaxLength(100)]
-        public string Titulo { get; set; }
-        [Required]
-        [MaxLength(300)]
-        public string Descricao { get; set; }
-        [Required(ErrorMessage = "O campo é obrigatório, não digitar centavos")]
-        public decimal SalarioOrcamento { get; set; }
-        [Required]
-        [MaxLength(200)]
-        public string Competencias { get; set; }
-        [Required]
-        public int QtdVagas { get; set; }
-        [Required]
-        [MaxLength(100)]
-        public string Cidade { get; set; }
-        [Required]
-        [MinLength(2)]
-        [MaxLength(2)]
-        public string Estado { get; set; }
-        [MaxLength(50)]
-        public string RegimeContratacao { get; set; }
-        [Required]
-        public System.DateTime DataFinal { get; set; }
-        public int IdCargos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public VagaProjeto()
+        {
+            this.Cargos1 = new HashSet<Cargos>();
+            this.Competencias1 = new HashSet<Competencias>();
+        }
     
-        public virtual Cargos Cargos { get; set; }
+        public int IdVagaProjeto { get; set; }
+        public string Titulo { get; set; }
+        public string Descricao { get; set; }
+        public decimal SalarioOrcamento { get; set; }
+        public int QtdVagas { get; set; }
+        public string Cidade { get; set; }
+        public string Estado { get; set; }
+        public string RegimeContratacao { get; set; }
+        public System.DateTime DataFinal { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cargos> Cargos1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Competencias> Competencias1 { get; set; }
     }
 }
