@@ -4,21 +4,32 @@
     ViewBag.Title = "Edit";
 }
 
-<h2 style="margin-top:50px; color: #385898;">Meu cadastro</h2>
+<h2 style="margin-top:70px; color: #385898;">Meu cadastro</h2>
 <hr class="hr-custom" />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Empresas", FormMethod.Post,
+                                      new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     @Html.HiddenFor(model => model.IdEmpresa)
+    <input type="hidden" name="ImagemSalva" id="ImagemSalva" value="@ViewBag.ImagemSalva" />
     <input type="hidden" value="@(ViewBag.Usuario)" name="Usuario" />
     <input type="hidden" value="@(ViewBag.Senha)" name="Senha" />
 
     <div class="form-horizontal">
         <div class="row">
-            <div class="col-md-2">s</div>
-            <div class="col-md-5" style="padding-right:0;">
+            <div class="col-md-4" style="padding-top:50px;">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Imagem, htmlAttributes: new { @class = "col-md-12 lbl-custom" })
+                    <div class="col-md-12">
+                        <input type="file" id="imagem" name="imagem" style="width:100%;" />
+                        @*@Html.TextBoxFor(model => model.Imagem, new { @class = "form-control" })*@
+                        @Html.ValidationMessageFor(model => model.Imagem)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-right:0;">
                 <div class="form-group">
                     @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-4 lbl-custom" })
                     <div class="col-md-8">
@@ -48,7 +59,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5" style="padding-left:0;">
+            <div class="col-md-4" style="padding-left:0;">
                 <div class="form-group">
                     @Html.LabelFor(model => model.Cidade, htmlAttributes: new { @class = "control-label col-md-4 lbl-custom" })
                     <div class="col-md-8">

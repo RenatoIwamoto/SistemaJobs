@@ -14,6 +14,7 @@ namespace SistemaJobs
     
     public partial class Empresa
     {
+        [Key]
         public int IdEmpresa { get; set; }
         public string Nome { get; set; }
         public string CNPJ { get; set; }
