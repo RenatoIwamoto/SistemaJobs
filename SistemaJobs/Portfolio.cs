@@ -14,6 +14,7 @@ namespace SistemaJobs
     
     public partial class Portfolio
     {
+        [Key]
         public int IdPorfolio { get; set; }
         public string Titulo { get; set; }
         public string Descricao { get; set; }
