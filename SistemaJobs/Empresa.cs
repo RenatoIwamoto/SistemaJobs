@@ -9,21 +9,57 @@
 
 namespace SistemaJobs
 {
+    using SistemaJobs.ViewModel;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+
     public partial class Empresa
     {
         public int IdEmpresa { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string Nome { get; set; }
+
+        [Required]
+        [Remote("ValidarUnicidade", "Empresas", ErrorMessage = "CNPJ já cadastrado")]
+        [ValidaDigitoCNPJ(ErrorMessage = "CNPJ inválido")]
         public string CNPJ { get; set; }
+
+        [Required]
+        [Remote("ValidarUnicidade", "Empresas", ErrorMessage = "Telefone já cadastrado")]
         public string Telefone { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", ErrorMessage = "Email inválido")]
+        [Remote("ValidarUnicidade", "Empresas", ErrorMessage = "Email já cadastrado")]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(2, MinimumLength = 2)]
         public string Estado { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string Cidade { get; set; }
+
+        [Required]
+        [StringLength(50, MinimumLength = 6)]
+        [Remote("ValidarUnicidade", "Empresas", ErrorMessage = "Usuario já cadastrado")]
         public string Usuario { get; set; }
+
+        [Required]
+        [StringLength(12, MinimumLength = 6)]
+        [Remote("ValidarUnicidade", "Empresas", ErrorMessage = "Senha já cadastrada")]
         public string Senha { get; set; }
+
+        [StringLength(500)]
         public string Sobre { get; set; }
+
+        [StringLength(200)]
         public string Imagem { get; set; }
     }
 }

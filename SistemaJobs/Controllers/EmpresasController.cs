@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using SistemaJobs;
+using SistemaJobs.ViewModel;
 
 namespace SistemaJobs.Controllers
 {
@@ -40,6 +41,7 @@ namespace SistemaJobs.Controllers
         // GET: Empresas/Create
         public ActionResult Create()
         {
+            PopularDdlEstado();
             return View();
         }
 
@@ -50,12 +52,10 @@ namespace SistemaJobs.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdEmpresa,Nome,CNPJ,Telefone,Email,Estado,Cidade,Usuario,Senha")] Empresa empresa)
         {
+            ValidarUnicidade(empresa);
+
             if (ModelState.IsValid)
             {
-                string pattern = @"[^0-9]";
-                Regex rgx = new Regex(pattern);
-                empresa.CNPJ = rgx.Replace(empresa.CNPJ, "");
-
                 db.Empresa.Add(empresa);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -119,6 +119,58 @@ namespace SistemaJobs.Controllers
             ddlEstadoItems.Add(new SelectListItem { Value = "TO", Text = "TO" });
 
             ViewBag.Estado = ddlEstadoItems;
+        }
+
+        // Verifica se o campo é único
+        public ActionResult ValidarUnicidade(Empresa empresa)
+        {
+            string pattern = @"[^0-9]";
+            Regex rgx = new Regex(pattern);
+
+            if (empresa.CNPJ != null)
+            {
+                empresa.CNPJ = rgx.Replace(empresa.CNPJ, "");
+            }
+
+            if (empresa.Telefone != null)
+            {
+                empresa.Telefone = rgx.Replace(empresa.Telefone, "");
+            }
+
+            var cnpj = db.Empresa.Where(u => u.CNPJ == empresa.CNPJ).Count() == 0;
+            var telefone = db.Empresa.Where(u => u.Telefone == empresa.Telefone).Count() == 0;
+            var email = db.Empresa.Where(u => u.Email == empresa.Email).Count() == 0;
+            var user = db.Empresa.Where(u => u.Usuario == empresa.Usuario).Count() == 0;
+            var senha = db.Empresa.Where(u => u.Senha == empresa.Senha).Count() == 0;
+
+            if (cnpj && telefone && email && user && senha)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else if (cnpj == false)
+            {
+                return Json(cnpj, JsonRequestBehavior.AllowGet);
+            }
+            else if (telefone == false)
+            {
+                return Json(telefone, JsonRequestBehavior.AllowGet);
+            }
+            else if (email == false)
+            {
+                return Json(email, JsonRequestBehavior.AllowGet);
+            }
+            else if (user == false)
+            {
+                return Json(user, JsonRequestBehavior.AllowGet);
+            }
+            else if (senha == false)
+            {
+                return Json(senha, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
         }
 
         // POST: Empresas/Edit/5

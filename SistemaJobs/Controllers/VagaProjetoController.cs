@@ -131,13 +131,33 @@ namespace SistemaJobs.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Titulo,Descricao,SalarioOrcamento,QtdVagas,Cidade,Estado,RegimeContratacao,DataFinal,ListaCargos,ListaCompetencias")] VagaProjetoViewModel viewModel)
         {
-            if (viewModel.QtdVagas == 0)
+            if (viewModel.QtdVagas == 0 && viewModel.ListaCargos == null && viewModel.ListaCompetencias == null)
+            {
+                ViewBag.Quantidade = "Insira a quantidade de vagas disponíveis";
+                ViewBag.message1 = "Competencias é um campo obrigatório";
+                ViewBag.message2 = "Cargos é um campo obrigatório";
+                PopularDdlEstado();
+                PopularDdlRegimeContratacao();
+                return View(viewModel);
+            }
+
+            else if (viewModel.QtdVagas == 0)
             {
                 ViewBag.Quantidade = "Insira a quantidade de vagas disponíveis";
                 PopularDdlEstado();
                 PopularDdlRegimeContratacao();
                 return View(viewModel);
             }
+
+            else if (viewModel.ListaCargos == null || viewModel.ListaCompetencias == null)
+            {
+                ViewBag.message1 = "Competencias é um campo obrigatório";
+                ViewBag.message2 = "Cargos é um campo obrigatório";
+                PopularDdlEstado();
+                PopularDdlRegimeContratacao();
+                return View(viewModel);
+            }
+
             if (ModelState.IsValid)
             {
                 VagaProjeto vagas = new VagaProjeto();

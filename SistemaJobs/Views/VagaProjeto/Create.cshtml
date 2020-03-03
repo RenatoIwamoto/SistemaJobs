@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-md-12">
                         @Html.ListBoxFor(m => m.ListaCompetencias, Enumerable.Empty<SelectListItem>(), new { @class = "form-control select2", @style = "width:100%;" })
-                        @Html.ValidationMessageFor(model => model.NomeCompetencia)
+                        <h5 style="color:#b94a48; line-height: 1.428571429;">@ViewBag.message1</h5>
                     </div>
                 </div>
 
@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-md-12">
                         @Html.ListBoxFor(m => m.ListaCargos, Enumerable.Empty<SelectListItem>(), new { @class = "form-control select2", @style = "width:100%;" })
-                        @Html.ValidationMessageFor(model => model.NomeCargo)
+                        <h5 style="color:#b94a48; line-height: 1.428571429;">@ViewBag.message2</h5>                    
                     </div>
                 </div>
             </div>

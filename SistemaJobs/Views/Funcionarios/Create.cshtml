@@ -5,6 +5,11 @@
     Layout = "~/Views/Shared/_LayoutInicial.cshtml";
 }
 
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6" style="background-color: rgba(255, 255, 255, 0.8); padding:45px;">
@@ -36,15 +41,16 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.CPF, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.CPF, new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.CPF, new { @class = "form-control", mask = "999.999.999-99" })
                     @Html.ValidationMessageFor(model => model.CPF)
+                    <span>@ViewBag.cpf</span>
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Telefone, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.Telefone, new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.Telefone, new { @class = "form-control", mask = "(99) 99999-9999" })
                     @Html.ValidationMessageFor(model => model.Telefone)
                 </div>
             </div>
@@ -60,7 +66,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Estado, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.Estado, new { @class = "form-control" })
+                    @Html.DropDownList("Estado", new SelectList(ViewBag.Estado, "Value", "Text"), "Select", htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Estado)
                 </div>
             </div>
@@ -100,9 +106,11 @@
             </div>
         }
     </div>
-<div class="col-md-3"></div>
+    <div class="col-md-3"></div>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerymask")
+    @Scripts.Render("~/scripts/CustomValidation.js")
 }
