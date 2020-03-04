@@ -54,6 +54,13 @@ namespace SistemaJobs.Controllers
 
             ValidarUnicidade(funcionario);
 
+            if (funcionario.Estado == null)
+            {
+                ViewBag.message1 = "Estado é um campo obrigatório";
+                PopularDdlEstado();
+                return View(funcionario);
+            }
+
             if (ModelState.IsValid)
             {
                 db.Funcionario.Add(funcionario);
@@ -145,7 +152,12 @@ namespace SistemaJobs.Controllers
             var user = db.Funcionario.Where(u => u.Usuario == funcionario.Usuario).Count() == 0;
             var senha = db.Funcionario.Where(u => u.Senha == funcionario.Senha).Count() == 0;
 
-            if (cpf && telefone && email && user && senha)
+            var telefone2 = db.Empresa.Where(u => u.Telefone == funcionario.Telefone).Count() == 0;
+            var email2 = db.Empresa.Where(u => u.Email == funcionario.Email).Count() == 0;
+            var user2 = db.Empresa.Where(u => u.Usuario == funcionario.Usuario).Count() == 0;
+            var senha2 = db.Empresa.Where(u => u.Senha == funcionario.Senha).Count() == 0;
+
+            if (cpf && telefone && email && user && senha && telefone2 && email2 && user2 && senha2)
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
@@ -153,19 +165,19 @@ namespace SistemaJobs.Controllers
             {
                 return Json(cpf, JsonRequestBehavior.AllowGet);
             }
-            else if (telefone == false)
+            else if (telefone == false || telefone2 == false)
             {
                 return Json(telefone, JsonRequestBehavior.AllowGet);
             }
-            else if (email == false)
+            else if (email == false || email2 == false)
             {
                 return Json(email, JsonRequestBehavior.AllowGet);
             }
-            else if (user == false)
+            else if (user == false || user2 == false)
             {
                 return Json(user, JsonRequestBehavior.AllowGet);
             }
-            else if (senha == false)
+            else if (senha == false || senha2 == false)
             {
                 return Json(senha, JsonRequestBehavior.AllowGet);
             }

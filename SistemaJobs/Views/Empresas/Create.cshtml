@@ -57,7 +57,7 @@
                 @Html.LabelFor(model => model.Estado, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.DropDownList("Estado", new SelectList(ViewBag.Estado, "Value", "Text"), "Select", htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Estado)
+                    <h5 style="color:#b94a48; line-height: 1.428571429;">@ViewBag.message1</h5>
                 </div>
             </div>
 
