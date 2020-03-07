@@ -6,11 +6,24 @@
 <link href="~/Content/css/select2.min.css" rel="stylesheet" />
 <script>
     $(document).ready(function () {
-        $(".select2").select2({
+        var s2 = $(".select2").select2({
             tags: true,
-            multiple: true,
-            tokenSeparators: [',', ' ']
+            tokenSeparators: [',', ' '],
         });
+        var texto = ["asda","Foo","sa","Bar"];
+
+        //var re = /\s*;\s*/;
+        //var texto2 = "ViewBag.ola".split(re);
+        //var texto3 = string.Join(",", texto2.ToArray());
+
+        //alert(texto);
+        //alert(texto2);
+        //alert(texto3);
+
+
+        var vals = ["Trade Fair", "Party"];
+
+        s2.val(texto).trigger("change"); 
     });
 </script>
 <script src="~/Scripts/select2.min.js"></script>
@@ -52,7 +65,7 @@
                         @Html.LabelFor(model => model.NomeCompetencia, "Competências", htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
-                        @Html.ListBoxFor(m => m.ListaCompetencias, Enumerable.Empty<SelectListItem>(), new { @class = "form-control select2", @style = "width:100%;" })
+                        @Html.ListBoxFor(m => m.ListaCompetencias, (MultiSelectList)ViewBag.Competencias, new { @Disable = false, @class = "form-control select2", @style = "width:100%;" })
                         @Html.ValidationMessageFor(model => model.NomeCompetencia)
                     </div>
                 </div>
@@ -62,11 +75,18 @@
                         @Html.LabelFor(model => model.NomeCargo, "Cargos", htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
-                        @Html.ListBoxFor(m => m.ListaCargos, Enumerable.Empty<SelectListItem>(), new { @class = "form-control select2", @style = "width:100%;" })
+                        @Html.ListBoxFor(m => m.ListaCargos, (MultiSelectList)ViewBag.Cargos, new { @class = "form-control select2", @style = "width:100%;" })
                         @Html.ValidationMessageFor(model => model.NomeCargo)
                     </div>
                 </div>
             </div>
+
+            <select multiple name="event_type[]" class="form-control select2">
+                <option>Trade Fair</option>
+                <option>Party</option>
+                <option>Foo</option>
+                <option>Bar</option>
+            </select>
 
             <div class="form-group col-md-12">
                 <div class="col-md-2" style="padding:0px">
@@ -127,7 +147,7 @@
                         @Html.LabelFor(model => model.DataFinal, htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
-                        @Html.TextBoxFor(model => model.DataFinal, new { @class = "form-control", type = "date", @style = "width:auto;" })
+                        @Html.TextBoxFor(model => model.DataFinal, new { @class = "form-control", type = "string", @style = "width:auto;", mask = "99/99/9999" })
                         @Html.ValidationMessageFor(model => model.DataFinal)
                     </div>
                 </div>
@@ -144,4 +164,8 @@
         </div>
 
     </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquerymask")
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -209,33 +210,36 @@ namespace SistemaJobs.Controllers
                 return HttpNotFound();
             }
 
-            //Cargos cargos = db.Cargos.Where(c => c.IdVagaProjeto == id).FirstOrDefault();
-            //Competencias competencias = db.Competencias.Where(c => c.IdVagaProjeto == id).FirstOrDefault();
-
-            var cargos = from s in db.Cargos select s;
-            cargos = cargos.Where(s => s.IdVagaProjeto == id);
-
-            var competencias = from s in db.Competencias select s;
-            competencias = competencias.Where(s => s.IdVagaProjeto == id);
-
-            ViewBag.ListaCargos = cargos.ToList();
-            ViewBag.ListaCompetencias = competencias.ToList();
-
+           // foreach (var item in cargos)
+            //{
+                //ViewBag.ola = ViewBag.ola + "," + item.Nome;
+            //}
 
             VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
             cliVM.VagaProjetoViewModelId = vagaProjeto.IdVagaProjeto;
             cliVM.Titulo = vagaProjeto.Titulo;
             cliVM.Descricao = vagaProjeto.Descricao;
-            cliVM.SalarioOrcamento = vagaProjeto.SalarioOrcamento;
+            cliVM.SalarioOrcamento = (int)vagaProjeto.SalarioOrcamento;
             cliVM.QtdVagas = vagaProjeto.QtdVagas;
             cliVM.Cidade = vagaProjeto.Cidade;
             cliVM.Estado = vagaProjeto.Estado;
-            cliVM.RegimeContratacao = vagaProjeto.RegimeContratacao;
-            //cliVM.ListaCargos = cargos;
-            //cliVM.ListaCompetencias = competencias;
+            cliVM.RegimeContratacao = vagaProjeto.DataFinal.ToString("dd/MM/yyyy");
+            cliVM.DataFinal = vagaProjeto.DataFinal;
 
-            //ViewBag.ListaCargos = cargos.ToList();
-            //ViewBag.ListaCompetencias = competencias.ToList();
+            var cargolist = db.Cargos.Select(c => new {
+                CargoID = c.IdCargos,
+                CargoName = c.Nome,
+                CargoVaga = c.IdVagaProjeto
+            }).Where(m => m.CargoVaga == id).ToList();            
+            ViewBag.Cargos = new MultiSelectList(cargolist, "CargoID", "CargoName", "CargoVaga");
+
+            var competencialist = db.Competencias.Select(c => new {
+                CompetenciaID = c.IdCompetencias,
+                CompetenciaName = c.NomeCompetencia,
+                CompetenciaVaga = c.IdVagaProjeto
+            }).Where(m => m.CompetenciaVaga == id).ToList();
+            ViewBag.Competencias = new MultiSelectList(competencialist, "CompetenciaID", "CompetenciaName", "CompetenciaVaga");
+
 
             PopularDdlEstado();
             PopularDdlRegimeContratacao();
@@ -252,9 +256,11 @@ namespace SistemaJobs.Controllers
         {
             if (ModelState.IsValid)
             {
+                var cargos = from s in db.Cargos select s;
+                cargos = cargos.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
 
-                Cargos cargos = db.Cargos.Where(c => c.IdVagaProjeto == viewModel.VagaProjetoViewModelId).FirstOrDefault();
-                Competencias competencias = db.Competencias.Where(c => c.IdVagaProjeto == viewModel.VagaProjetoViewModelId).FirstOrDefault();
+                var competencias = from s in db.Competencias select s;
+                competencias = competencias.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
 
                 VagaProjeto vagas = new VagaProjeto();
                 vagas.IdVagaProjeto = viewModel.VagaProjetoViewModelId;
@@ -266,18 +272,39 @@ namespace SistemaJobs.Controllers
                 vagas.Estado = viewModel.Estado;
                 vagas.RegimeContratacao = viewModel.RegimeContratacao;
                 vagas.DataFinal = viewModel.DataFinal;
-
-                cargos.Nome = string.Join(",", viewModel.ListaCargos.ToArray());
-                cargos.Status = 1;
-                cargos.VagaProjeto1 = vagas;
-
-                competencias.NomeCompetencia = string.Join(",", viewModel.ListaCompetencias.ToArray());
-                competencias.VagaProjeto = vagas;
-
                 db.Entry(vagas).State = EntityState.Modified;
-                db.Entry(cargos).State = EntityState.Modified;
-                db.Entry(competencias).State = EntityState.Modified;
 
+                    foreach (var item in cargos)
+                    {
+                        var cargo = db.Cargos.FirstOrDefault(cp => cp.IdCargos == item.IdCargos);
+                        db.Cargos.Remove(cargo);
+                    }
+
+                    foreach (var item in viewModel.ListaCargos)
+                    {
+                        Cargos cargo2 = new Cargos();
+                        cargo2.Nome = item;
+                        cargo2.Status = 1;
+                        cargo2.VagaProjeto1 = vagas;
+                        db.Cargos.Add(cargo2);
+                    }
+
+                    foreach (var item in competencias)
+                    {
+                        var competencia = db.Competencias.FirstOrDefault(cp => cp.IdCompetencias == item.IdCompetencias);
+                        db.Competencias.Remove(competencia);
+                    }
+
+                    foreach (var item in viewModel.ListaCompetencias)
+                    {
+                        Competencias competencia2 = new Competencias();
+                        competencia2.NomeCompetencia = item;
+                        competencia2.VagaProjeto = vagas;
+                        db.Competencias.Add(competencia2);
+                    }
+
+                //cargos.Nome = string.Join(",", viewModel.ListaCargos.ToArray());
+                //db.Entry(competencias).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
