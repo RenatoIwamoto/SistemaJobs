@@ -7,6 +7,8 @@
     @Styles.Render("~/Content/css")
     <link rel="stylesheet" type="text/css" href="~/Content/main.css">
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+
 
 </head>
 <body>
@@ -30,6 +32,7 @@
             </div>
         </div>
     </div>
+
     <div class="container body-size">
         <div class="container body-content wrapper">
             @RenderBody()
@@ -39,7 +42,6 @@
         </div>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

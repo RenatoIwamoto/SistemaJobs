@@ -1,0 +1,94 @@
+﻿@model SistemaJobs.ViewModel.VagaProjetoViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<style type="text/css" media="screen and (max-width:400px)">
+    .botaoInteressados {
+        font-size: 10px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-4">
+
+    </div>
+
+    <div class="col-md-8">
+
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-md-12">
+                <h2 style="margin-top:50px; color: #385898;">@Html.DisplayFor(model => model.Titulo)</h2>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-md-6">
+                <label class="lbl-custom">Descrição</label>
+            </div>
+
+            <div class="col-md-6" style="padding-left:0px;">
+                    <div class="col-md-12">
+                        <label class="lbl-custom">Salário: </label>
+                        <span class="txt-custom">R$ @Model.SalarioOrcamento</span>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-md-12 txt-custom">
+                <p>@Html.DisplayFor(model => model.Descricao)</p>
+            </div>
+
+            <div class="col-md-12">
+                <label class="lbl-custom" style="margin-right:10px;">Habilidades Necessárias:</label>
+                @foreach (var p in ViewBag.ListaCompetencias)
+                {
+                    <span class="btn btn-primary btn-large">@p.NomeCompetencia</span>
+                }
+                </div>
+
+            <div class="col-md-12" style="margin-top:10px;">
+                <label class="lbl-custom">Data de Entrega:</label>
+                <span class="txt-custom">@Model.DataFinal</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="lbl-custom">Cargos Disponíveis:</label>
+
+                <hr class="hr-custom" />
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        @foreach (var p in ViewBag.ListaCargos)
+                        {
+                            <h6 class="btn btn-primary btn-large">@p.Nome</h6>
+
+                            if (@p.Status == 0)
+                            {
+                                <h6 class="btn btn-danger btn-large">Ocupado</h6>
+                            }
+                            else if (@p.Status == 1)
+                            {
+                                <h6 class="btn btn-success btn-large">Disponível</h6>
+                            }
+                            <br />
+                        }
+                    </div>
+                </div>
+
+                <hr class="hr-custom" />
+            </div>
+
+            <div class="col-md-12" style="text-align:end;">
+                @Html.ActionLink("Voltar", "Index", new { @class = "botaoInteressados" })
+                <input type="submit" value="Estou Interessado" class="btn-custom botaoInteressados" style="margin-left: 10px; margin-bottom:10px;" />
+            </div>
+        </div>
+
+    </div>
+</div>

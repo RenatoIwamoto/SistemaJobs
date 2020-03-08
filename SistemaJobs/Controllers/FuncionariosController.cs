@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using SistemaJobs;
@@ -45,6 +46,7 @@ namespace SistemaJobs.Controllers
         // GET: Funcionarios/Create
         public ActionResult Create()
         {
+            PopularDdlEstado();
             return View();
         }
 
@@ -55,6 +57,16 @@ namespace SistemaJobs.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdFuncionario,Nome,Sobrenome,CPF,Telefone,Email,Estado,Cidade,Usuario,Senha")] Funcionario funcionario)
         {
+
+            ValidarUnicidade(funcionario);
+
+            if (funcionario.Estado == null)
+            {
+                ViewBag.message1 = "Estado é um campo obrigatório";
+                PopularDdlEstado();
+                return View(funcionario);
+            }
+
             if (ModelState.IsValid)
             {
                 db.Funcionario.Add(funcionario);
@@ -123,6 +135,63 @@ namespace SistemaJobs.Controllers
             ddlEstadoItems.Add(new SelectListItem { Value = "TO", Text = "TO" });
 
             ViewBag.Estado = ddlEstadoItems;
+        }
+
+        // Verifica se o campo é único
+        public ActionResult ValidarUnicidade(Funcionario funcionario)
+        {
+            string pattern = @"[^0-9]";
+            Regex rgx = new Regex(pattern);
+
+            if (funcionario.CPF != null)
+            {
+                funcionario.CPF = rgx.Replace(funcionario.CPF, "");
+            }
+
+            if (funcionario.Telefone != null)
+            {
+                funcionario.Telefone = rgx.Replace(funcionario.Telefone, "");
+            }
+
+            var cpf = db.Funcionario.Where(u => u.CPF == funcionario.CPF).Count() == 0;
+            var telefone = db.Funcionario.Where(u => u.Telefone == funcionario.Telefone).Count() == 0;
+            var email = db.Funcionario.Where(u => u.Email == funcionario.Email).Count() == 0;
+            var user = db.Funcionario.Where(u => u.Usuario == funcionario.Usuario).Count() == 0;
+            var senha = db.Funcionario.Where(u => u.Senha == funcionario.Senha).Count() == 0;
+
+            var telefone2 = db.Empresa.Where(u => u.Telefone == funcionario.Telefone).Count() == 0;
+            var email2 = db.Empresa.Where(u => u.Email == funcionario.Email).Count() == 0;
+            var user2 = db.Empresa.Where(u => u.Usuario == funcionario.Usuario).Count() == 0;
+            var senha2 = db.Empresa.Where(u => u.Senha == funcionario.Senha).Count() == 0;
+
+            if (cpf && telefone && email && user && senha && telefone2 && email2 && user2 && senha2)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else if (cpf == false)
+            {
+                return Json(cpf, JsonRequestBehavior.AllowGet);
+            }
+            else if (telefone == false || telefone2 == false)
+            {
+                return Json(telefone, JsonRequestBehavior.AllowGet);
+            }
+            else if (email == false || email2 == false)
+            {
+                return Json(email, JsonRequestBehavior.AllowGet);
+            }
+            else if (user == false || user2 == false)
+            {
+                return Json(user, JsonRequestBehavior.AllowGet);
+            }
+            else if (senha == false || senha2 == false)
+            {
+                return Json(senha, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
         }
 
         // POST: Funcionarios/Edit/5

@@ -1,0 +1,31 @@
+﻿@model SistemaJobs.ViewModel.VagaProjetoViewModel
+
+    <div class="well">
+        <table style="width: -webkit-fill-available">
+            <tr>
+                <td>
+                    @Model.Titulo
+                    <br />
+                    @if (Model.NomeCargo == "vazio")
+                    {
+                        <p>Salário: R$ @Model.SalarioOrcamento</p>
+                    }
+                    else
+                    {
+                        <p>Orçamento: R$ @Model.SalarioOrcamento</p>
+                    }
+                </td>
+                <td style="text-align: right;">
+                    @Html.ActionLink("Ver Mais", "Details", new { id = Model.VagaProjetoViewModelId }, htmlAttributes: new { @class = "btn btn-primary btn-large" })
+                    @if (Model.QtdVagas > 1)
+                    {
+                        <p style="margin-top:5px; font-size:12px;">@Model.QtdVagas vagas disponíveis</p>
+                    }
+                    else if (Model.QtdVagas == 1)
+                    {
+                        <p style="margin-top:5px; font-size:12px;">@Model.QtdVagas vaga disponível</p>
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
