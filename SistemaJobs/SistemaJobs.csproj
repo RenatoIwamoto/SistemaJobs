@@ -178,6 +178,7 @@
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\FuncionariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PortfoliosController.cs" />
     <Compile Include="Controllers\VagaProjetoController.cs" />
     <Compile Include="Empresa.cs">
@@ -189,8 +190,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="KeyAttribute.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\EmpresaModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Portfolio.cs">
       <DependentUpon>SistemaJobsEF.tt</DependentUpon>
@@ -212,6 +213,7 @@
       <DependentUpon>SistemaJobsEF.edmx</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\VmFuncionarioEmpresa.cs" />
     <Compile Include="VagaProjeto.cs">
       <DependentUpon>SistemaJobsEF.tt</DependentUpon>
     </Compile>
@@ -230,7 +232,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\18c0033932.jpg" />
     <Content Include="Images\logo-hiredit.png" />
     <Content Include="Images\sistemajobs.jpg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -375,6 +376,7 @@
     <Content Include="Views\Portfolios\Details.cshtml" />
     <Content Include="Views\Portfolios\Edit.cshtml" />
     <Content Include="Views\Portfolios\Index.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Shared\_CardVagasEmprego.cshtml" />
     <Content Include="Views\VagaProjeto\Create.cshtml" />
     <Content Include="Views\VagaProjeto\Delete.cshtml" />

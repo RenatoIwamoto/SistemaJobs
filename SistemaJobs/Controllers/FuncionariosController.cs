@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -25,6 +26,8 @@ namespace SistemaJobs.Controllers
         // GET: Funcionarios/Details/5
         public ActionResult Details(int? id)
         {
+            id = 1;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -34,6 +37,9 @@ namespace SistemaJobs.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Imagem = funcionario.Imagem;
+
             return View(funcionario);
         }
 
@@ -88,6 +94,7 @@ namespace SistemaJobs.Controllers
                 return HttpNotFound();
             }
 
+            ViewBag.ImagemSalva = funcionario.Imagem;
             ViewBag.Usuario = funcionario.Usuario;
             ViewBag.Senha = funcionario.Senha;
             PopularDdlEstado();
@@ -192,9 +199,35 @@ namespace SistemaJobs.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdFuncionario,Nome,Sobrenome,CPF,Telefone,Email,Estado,Cidade,Usuario,Senha,Imagem,Qualificacoes,Experiencia,Sobre")] Funcionario funcionario)
+        public ActionResult Edit([Bind(Include = "IdFuncionario,Nome,Sobrenome,CPF,Telefone,Email,Estado,Cidade,Usuario,Senha,Imagem,Qualificacoes,Experiencia,Sobre")] Funcionario funcionario, string ImagemSalva)
         {
             funcionario.IdFuncionario = 1;
+
+            bool imgValidada = false;
+            HttpPostedFileBase imagem = Request.Files[0];
+
+            if (imagem.FileName != "")
+            {
+                imgValidada = ValidaImagem(imagem);
+
+                if (imgValidada)
+                {
+                    //Salva o arquivo
+                    if (imagem.ContentLength > 0)
+                    {
+                        var uploadPath = Server.MapPath("~/Images");
+                        string caminhoArquivo = Path.Combine(@uploadPath, Path.GetFileName(imagem.FileName));
+
+                        imagem.SaveAs(caminhoArquivo);
+                    }
+                }
+                else
+                {
+                    return View(funcionario);
+                }
+            }
+
+            funcionario.Imagem = imgValidada && imagem.FileName != "" ? imagem.FileName : ImagemSalva;
 
             if (ModelState.IsValid)
             {
@@ -206,6 +239,30 @@ namespace SistemaJobs.Controllers
             PopularDdlEstado();
 
             return View(funcionario);
+        }
+
+        public bool ValidaImagem(HttpPostedFileBase imagem)
+        {
+            var supportedTypes = new[] { "jpeg", "jpg", "gif", "png" };
+            var imagemExt = Path.GetExtension(imagem.FileName).Substring(1);
+
+            if (imagem == null || imagem.ContentLength == 0)
+            {
+                ModelState.AddModelError("imagem", "Este campo é obrigatório");
+                return false;
+            }
+            else if (!supportedTypes.Contains(imagemExt))
+            {
+                ModelState.AddModelError("imagem", "Escolha uma imagem GIF, JPG ou PNG.");
+                return false;
+            }
+            //else if (imagem.ContentLength > 1024)
+            //{
+            //    ModelState.AddModelError("imagem", "A imagem deve ter no máximo 1mb.");
+            //    return false;
+            //}
+
+            return true;
         }
 
         // GET: Funcionarios/Delete/5

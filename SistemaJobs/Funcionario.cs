@@ -22,6 +22,7 @@ namespace SistemaJobs
             this.Portfolio = new HashSet<Portfolio>();
         }
 
+        [Key]
         public int IdFuncionario { get; set; }
 
         [Required]

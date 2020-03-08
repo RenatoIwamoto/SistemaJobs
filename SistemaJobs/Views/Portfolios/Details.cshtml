@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<h2 style="margin-top:50px; color: #385898;">Portfólio</h2>
+<h2 style="margin-top:70px; color: #385898;">Portfólio</h2>
 <hr class="hr-custom" />
 
 <div class="form-horizontal">
@@ -15,7 +15,7 @@
     <hr class="hr-custom"/>
     <div class="row">
         <div class="col-md-3">
-            <img src="~/Images/18c0033932.jpg" class="img-size" />
+            <img src="~/Images/@(ViewBag.Imagem)" class="img-size" />
         </div>
         <div class="col-md-9">
             @Html.DisplayFor(model => model.Descricao)

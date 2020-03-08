@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -26,6 +27,8 @@ namespace SistemaJobs.Controllers
         // GET: Empresas/Details/5
         public ActionResult Details(int? id)
         {
+            id = 1;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -35,6 +38,8 @@ namespace SistemaJobs.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Imagem = empresa.Imagem;
             return View(empresa);
         }
 
@@ -86,6 +91,7 @@ namespace SistemaJobs.Controllers
                 return HttpNotFound();
             }
 
+            ViewBag.ImagemSalva = empresa.Imagem;
             ViewBag.Usuario = empresa.Usuario;
             ViewBag.Senha = empresa.Senha;
             PopularDdlEstado();
@@ -190,17 +196,67 @@ namespace SistemaJobs.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdEmpresa,Nome,CNPJ,Telefone,Email,Estado,Cidade,Usuario,Senha,Sobre")] Empresa empresa)
+        public ActionResult Edit([Bind(Include = "IdEmpresa,Nome,CNPJ,Telefone,Email,Estado,Cidade,Usuario,Senha,Sobre")] Empresa empresa, string ImagemSalva)
         {
             empresa.IdEmpresa = 1;
+
+            bool imgValidada = false;
+            HttpPostedFileBase imagem = Request.Files[0];
+
+            if (imagem.FileName != "")
+            {
+                imgValidada = ValidaImagem(imagem);
+
+                if (imgValidada)
+                {
+                    //Salva o arquivo
+                    if (imagem.ContentLength > 0)
+                    {
+                        var uploadPath = Server.MapPath("~/Images");
+                        string caminhoArquivo = Path.Combine(@uploadPath, Path.GetFileName(imagem.FileName));
+
+                        imagem.SaveAs(caminhoArquivo);
+                    }
+                }
+                else
+                {
+                    return View(empresa);
+                }
+            }
+
+            empresa.Imagem = imgValidada && imagem.FileName != "" ? imagem.FileName : ImagemSalva;
 
             if (ModelState.IsValid)
             {
                 db.Entry(empresa).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Edit");
+                return RedirectToAction("Details");
             }
             return View(empresa);
+        }
+
+        public bool ValidaImagem(HttpPostedFileBase imagem)
+        {
+            var supportedTypes = new[] { "jpeg", "jpg", "gif", "png" };
+            var imagemExt = Path.GetExtension(imagem.FileName).Substring(1);
+
+            if (imagem == null || imagem.ContentLength == 0)
+            {
+                ModelState.AddModelError("imagem", "Este campo é obrigatório");
+                return false;
+            }
+            else if (!supportedTypes.Contains(imagemExt))
+            {
+                ModelState.AddModelError("imagem", "Escolha uma imagem GIF, JPG ou PNG.");
+                return false;
+            }
+            //else if (imagem.ContentLength > 1024)
+            //{
+            //    ModelState.AddModelError("imagem", "A imagem deve ter no máximo 1mb.");
+            //    return false;
+            //}
+
+            return true;
         }
 
         // GET: Empresas/Delete/5

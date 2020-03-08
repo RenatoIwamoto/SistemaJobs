@@ -9,6 +9,7 @@
 
 namespace SistemaJobs
 {
+    using SistemaJobs.ViewModels;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -28,6 +29,7 @@ namespace SistemaJobs
         public virtual DbSet<Empresa> Empresa { get; set; }
         public virtual DbSet<Funcionario> Funcionario { get; set; }
         public virtual DbSet<Portfolio> Portfolio { get; set; }
+        public virtual DbSet<VmFuncionarioEmpresa> VmFuncionarioEmpresa { get; set; }
         public virtual DbSet<Cargos> Cargos { get; set; }
         public virtual DbSet<VagaProjeto> VagaProjeto { get; set; }
         public virtual DbSet<Competencias> Competencias { get; set; }

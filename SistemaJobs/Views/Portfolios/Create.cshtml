@@ -4,10 +4,11 @@
     ViewBag.Title = "Create";
 }
 
-<h2 style="margin-top:50px; color: #385898;">Cadastrar Portfólio</h2>
+<h2 style="margin-top:70px; color: #385898;">Cadastrar Portfólio</h2>
 <hr class="hr-custom" />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Portfolios", FormMethod.Post,
+                                      new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" value="@(ViewBag.IdFuncionario)" name="IdFuncionario" />
@@ -25,7 +26,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "col-md-12 lbl-custom" })
             <div class="col-md-12">
-                @Html.TextArea("Experiencia", null, new { @class = "form-control", @cols = 40, @rows = 5 })
+                @Html.TextArea("Descricao", null, new { @class = "form-control", @cols = 40, @rows = 5 })
                 @Html.ValidationMessageFor(model => model.Descricao)
             </div>
         </div>
@@ -35,7 +36,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Imagem, htmlAttributes: new { @class = "col-md-12 lbl-custom" })
                     <div class="col-md-12">
-                        @Html.TextBoxFor(model => model.Imagem, new { @class = "form-control" })
+                        <input type="file" id="imagem" name="imagem" />
+                        @*@Html.TextBoxFor(model => model.Imagem, new { type = "file", @class = "form-control" })*@
                         @Html.ValidationMessageFor(model => model.Imagem)
                     </div>
                 </div>

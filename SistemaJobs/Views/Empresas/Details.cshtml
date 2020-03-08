@@ -4,47 +4,47 @@
     ViewBag.Title = "Details";
 }
 
-<h2 style="margin-top:50px; color: #385898;">Meu Perfil</h2><span>@Html.ActionLink("Editar Perfil", "Edit", new { id = Model.IdEmpresa })</span>
+<h2 style="margin-top:70px; color: #385898;">Meu Perfil</h2><span>@Html.ActionLink("Editar Perfil", "Edit", new { id = Model.IdEmpresa })</span>
 <hr class="hr-custom" />
 
 <div class="form-horizontal">
     <div class="row">
-        <div class="col-md-2">s</div>
-        <div class="col-md-5" style="padding-right:0;">
+        <div class="col-md-4">
+            <img src="~/Images/@(ViewBag.Imagem)" class="img-size" />
+        </div>
+        <div class="col-md-8" style="padding-right:0;">
             <div class="form-group">
-                @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-4 lbl-custom", style = "padding-top:0;" })
-                <div class="col-md-8 txt-custom">
+                @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "col-md-2 lbl-custom", style = "padding-top:0;" })
+                <div class="col-md-10 txt-custom">
                     @Html.DisplayFor(model => model.Nome)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.CNPJ, htmlAttributes: new { @class = "control-label col-md-4 lbl-custom", style = "padding-top:0;" })
-                <div class="col-md-8 txt-custom">
+                @Html.LabelFor(model => model.CNPJ, htmlAttributes: new { @class = "col-md-2 lbl-custom", style = "padding-top:0;" })
+                <div class="col-md-10 txt-custom">
                     @Html.DisplayFor(model => model.CNPJ, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Telefone, htmlAttributes: new { @class = "control-label col-md-4 lbl-custom", style = "padding-top:0;" })
-                <div class="col-md-8 txt-custom">
+                @Html.LabelFor(model => model.Telefone, htmlAttributes: new { @class = "col-md-2 lbl-custom", style = "padding-top:0;" })
+                <div class="col-md-10 txt-custom">
                     @Html.DisplayFor(model => model.Telefone, new { @class = "form-control" })
                 </div>
             </div>
-        </div>
-        <div class="col-md-5" style="padding-left:0;">
             <div class="form-group">
-                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-4 lbl-custom", style = "padding-top:0;" })
-                <div class="col-md-8 txt-custom">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "col-md-2 lbl-custom", style = "padding-top:0;" })
+                <div class="col-md-10 txt-custom">
                     @Html.DisplayFor(model => model.Email, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Cidade, htmlAttributes: new { @class = "control-label col-md-4 lbl-custom", style = "padding-top:0;" })
-                <div class="col-md-8 txt-custom">
+                @Html.LabelFor(model => model.Cidade, htmlAttributes: new { @class = "col-md-2 lbl-custom", style = "padding-top:0;" })
+                <div class="col-md-10 txt-custom">
                     @Html.DisplayFor(model => model.Cidade, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-4 lbl-custom", style = "padding-top:0;" })
+                @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "col-md-2 lbl-custom", style = "padding-top:0;" })
                 <div class="col-md-5 txt-custom">
                     @Html.DisplayFor(model => model.Estado)
                 </div>
