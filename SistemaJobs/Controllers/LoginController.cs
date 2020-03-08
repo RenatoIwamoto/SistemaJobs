@@ -25,41 +25,47 @@ namespace SistemaJobs.Controllers
         {
             VmFuncionarioEmpresa vm = new VmFuncionarioEmpresa();
 
+            //var errors = ModelState.Values.SelectMany(v => v.Errors);
             // esta action trata o post (login)
             if (ModelState.IsValid) //verifica se é válido
             {
                 using (HiredItEntities db = new HiredItEntities())
                 {
-                    var funcLogin = db.Funcionario.FirstOrDefault(e => e.Usuario == model.Funcionario.Usuario && e.Senha == model.Funcionario.Senha);
-                    var empLogin = db.Empresa.FirstOrDefault(e => e.Usuario.Equals(model.Empresa.Usuario) && e.Senha.Equals(model.Empresa.Senha));
+                    var funcLogin = db.Funcionario.FirstOrDefault(f => f.Usuario == model.Usuario && f.Senha == model.Senha);
+                    var empLogin = db.Empresa.FirstOrDefault(e => e.Usuario.Equals(model.Usuario) && e.Senha.Equals(model.Senha));
 
                     if (funcLogin != null)
                     {
-                        vm.Funcionario = funcLogin;
+                        vm.Usuario = funcLogin.Usuario;
+                        vm.Senha = funcLogin.Senha;
                     }
                     if (empLogin != null)
                     {
-                        vm.Empresa = empLogin;
+                        vm.Usuario = empLogin.Usuario;
+                        vm.Senha = empLogin.Senha;
                     }
                     
-                    if (vm.Funcionario != null || vm.Empresa != null)
+                    if (vm.Usuario != null || vm.Senha != null)
                     {
-                        if (vm.Funcionario != null)
+                        if (funcLogin != null)
                         {
-                            Session["usuarioLogadoID"] = vm.Funcionario.IdFuncionario.ToString();
+                            Session["usuarioLogadoID"] = funcLogin.IdFuncionario.ToString();
                             Session["tipoUsuario"] = "funcionario";
-                            FormsAuthentication.SetAuthCookie(vm.Funcionario.Usuario.ToString(), false);
+                            FormsAuthentication.SetAuthCookie(funcLogin.Usuario.ToString(), false);
                         }
-                        if (vm.Empresa != null)
+                        if (empLogin != null)
                         {
-                            Session["usuarioLogadoID"] = vm.Empresa.IdEmpresa.ToString();
+                            Session["usuarioLogadoID"] = empLogin.IdEmpresa.ToString();
                             Session["tipoUsuario"] = "empresa";
-                            FormsAuthentication.SetAuthCookie(vm.Empresa.Usuario.ToString(), false);
+                            FormsAuthentication.SetAuthCookie(empLogin.Usuario.ToString(), false);
                         }
 
                         db.Dispose();
 
-                        return RedirectToAction("Index", "Home");
+                        if (funcLogin != null)
+                            return RedirectToAction("Details", "Funcionarios");
+
+                        return RedirectToAction("Details", "Empresas");
                     }
                     else
                     {

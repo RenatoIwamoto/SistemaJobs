@@ -19,14 +19,13 @@ namespace SistemaJobs.Controllers
         // GET: Funcionarios
         public ActionResult Index()
         {
-            return this.RedirectToAction("Index", "Home");
-            //return View(db.Funcionario.ToList());
+            return View();
         }
 
         // GET: Funcionarios/Details/5
         public ActionResult Details(int? id)
         {
-            id = 1;
+            id = Convert.ToInt32(Session["usuarioLogadoID"]);
 
             if (id == null)
             {
@@ -74,14 +73,12 @@ namespace SistemaJobs.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(funcionario);
+            return RedirectToAction("Login", "Login");
         }
 
         // GET: Funcionarios/Edit/5
         public ActionResult Edit(int? id)
         {
-            id = 1;
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

@@ -20,14 +20,13 @@ namespace SistemaJobs.Controllers
         // GET: Empresas
         public ActionResult Index()
         {
-            return this.RedirectToAction("Index", "Home");
-            //return View(db.Empresa.ToList());
+            return View();
         }
 
         // GET: Empresas/Details/5
         public ActionResult Details(int? id)
         {
-            id = 1;
+            id = Convert.ToInt32(Session["usuarioLogadoID"]);
 
             if (id == null)
             {
@@ -79,8 +78,6 @@ namespace SistemaJobs.Controllers
         // GET: Empresas/Edit/5
         public ActionResult Edit(int? id)
         {
-            id = 1;
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

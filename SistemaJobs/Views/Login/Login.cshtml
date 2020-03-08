@@ -15,20 +15,20 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <div class="row">
-        <div class="col-md-5" style="background-color: rgba(255, 255, 255, 0.9); padding:45px;">
+    <div class="row" style="display:flex; justify-content:center;">
+        <div class="col-md-6" style="background-color: rgba(255, 255, 255, 0.9); padding:45px;">
             <h2 style="margin-bottom:20px;margin-top:0; color: #385898;">Login</h2>
             <div class="form-group">
                 <div class="col-md-12">
-                    @Html.TextBoxFor(model => model.Funcionario.Usuario, new { placeholder = "Usuário", @class = "form-control" })
-                    <h5 class="text-error-message col-md-10 col-md-offset-1">@Html.ValidationMessageFor(model => model.Funcionario.Usuario)</h5>
+                    @Html.TextBoxFor(model => model.Usuario, new { placeholder = "Usuário", @class = "form-control" })
+                    <h5 class="text-error-message col-md-10 col-md-offset-1">@Html.ValidationMessageFor(model => model.Usuario)</h5>
 
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-12">
-                    @Html.PasswordFor(model => model.Funcionario.Senha, new { placeholder = "Senha", @class = "form-control" })
-                    <h5 class="text-error-message col-md-10 col-md-offset-1">@Html.ValidationMessageFor(model => model.Funcionario.Senha)</h5>
+                    @Html.PasswordFor(model => model.Senha, new { placeholder = "Senha", @class = "form-control" })
+                    <h5 class="text-error-message col-md-10 col-md-offset-1">@Html.ValidationMessageFor(model => model.Senha)</h5>
                     <h5 style="color:red;">@ViewBag.ErrorMessage</h5>
                 </div>
             </div>
@@ -39,19 +39,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5 col-md-offset-2" style="background-color: rgba(255, 255, 255, 0.9); padding:45px;">
+        @*<div class="col-md-5 col-md-offset-2" style="background-color: rgba(255, 255, 255, 0.9); padding:45px;">
             <h2 style="margin-bottom:20px;margin-top:0; color: #385898;">Login Empresas</h2>
             <div class="form-group">
                 <div class="col-md-12">
-                    @Html.TextBoxFor(model => model.Empresa.Usuario, new { placeholder = "Usuário", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.Usuario, new { placeholder = "Usuário", @class = "form-control" })
                     <h5 class="text-error-message col-md-10 col-md-offset-1">@Html.ValidationMessageFor(model => model.Empresa.Usuario)</h5>
 
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-12">
-                    @Html.PasswordFor(model => model.Empresa.Senha, new { placeholder = "Senha", @class = "form-control" })
-                    <h5 class="text-error-message col-md-10 col-md-offset-1">@Html.ValidationMessageFor(model => model.Empresa.Senha)</h5>
+                    @Html.PasswordFor(model => model.Senha, new { placeholder = "Senha", @class = "form-control" })
+                    <h5 class="text-error-message col-md-10 col-md-offset-1">@Html.ValidationMessageFor(model => model.Senha)</h5>
                     <h5 style="color:red;">@ViewBag.ErrorMessage</h5>
                 </div>
             </div>
@@ -61,6 +61,6 @@
                     <input type="submit" value="Entrar" class="btn btn-default pull-right" />
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
 }

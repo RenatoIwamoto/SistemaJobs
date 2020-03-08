@@ -42,7 +42,9 @@ namespace SistemaJobs.Controllers
         // GET: Portfolios/Create
         public ActionResult Create()
         {
-            ViewBag.IdFuncionario = 1;
+            var idFuncionario = Convert.ToInt32(Session["usuarioLogadoID"]);
+
+            ViewBag.IdFuncionario = db.Funcionario.FirstOrDefault(f => f.IdFuncionario == idFuncionario);
             //ViewBag.IdFuncionario = new SelectList(db.Funcionario, "IdFuncionario", "Nome");
             return View();
         }
