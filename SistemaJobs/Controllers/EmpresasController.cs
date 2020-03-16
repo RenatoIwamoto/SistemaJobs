@@ -59,13 +59,6 @@ namespace SistemaJobs.Controllers
         {
             ValidarUnicidade(empresa);
 
-            if (empresa.Estado == null)
-            {
-                ViewBag.message1 = "Estado é um campo obrigatório";
-                PopularDdlEstado();
-                return View(empresa);
-            }
-
             if (ModelState.IsValid)
             {
                 db.Empresa.Add(empresa);
@@ -73,6 +66,7 @@ namespace SistemaJobs.Controllers
                 return RedirectToAction("Index");
             }
 
+            PopularDdlEstado();
             return View(empresa);
         }
 
@@ -167,23 +161,23 @@ namespace SistemaJobs.Controllers
             }
             else if (cnpj == false)
             {
-                return Json(cnpj, JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
             else if (telefone == false || telefone2 == false)
             {
-                return Json(telefone, JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
             else if (email == false || email2 == false)
             {
-                return Json(email, JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
             else if (user == false || user2 == false)
             {
-                return Json(user, JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
             else if (senha == false || senha2 == false)
             {
-                return Json(senha, JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
             else
             {

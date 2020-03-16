@@ -6,26 +6,34 @@
 <link href="~/Content/css/select2.min.css" rel="stylesheet" />
 <script>
     $(document).ready(function () {
-        var s2 = $(".select2").select2({
+        var s1 = $(".select2").select2({
             tags: true,
             tokenSeparators: [',', ' '],
         });
-        var texto = ["asda","Foo","sa","Bar"];
 
-        //var re = /\s*;\s*/;
-        //var texto2 = "ViewBag.ola".split(re);
-        //var texto3 = string.Join(",", texto2.ToArray());
+        var s2 = $(".estadoselect2").select2({
+            tags: true,
+            width: '100px',
+        });
 
-        //alert(texto);
-        //alert(texto2);
-        //alert(texto3);
+        var s3 = $(".regimecontratacaoselect2").select2({
+            tags: true,
+        });
+                
+        var array = @Html.Raw(Json.Encode(@ViewBag.Comp));
+        var array2 = @Html.Raw(Json.Encode(@ViewBag.EstadoList));
+        var array3 = @Html.Raw(Json.Encode(@ViewBag.RegimeContratacaoList));
 
-
-        var vals = ["Trade Fair", "Party"];
-
-        s2.val(texto).trigger("change"); 
+        s1.val(array).trigger("change");
+        s2.val(array2).trigger("change");
+        s3.val(array3).trigger("change");
     });
 </script>
+<style>
+.select2-container .select2-selection--single {
+    height: 34px !important;
+}
+</style>
 <script src="~/Scripts/select2.min.js"></script>
 
 <h2 style="margin-top:50px; color: #385898;">Editar Vaga de emprego</h2>
@@ -35,7 +43,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-    @Html.HiddenFor(model => model.VagaProjetoViewModelId)
+    @Html.HiddenFor(model => model.VagaProjetoViewModelId, new { @id = "id" })
 
     <div class="form-horizontal">
         <div class="row">
@@ -44,7 +52,7 @@
                     @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label lbl-custom" })*
                 </div>
                 <div class="col-md-12">
-                    @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control", @id = "titulo" })
                     @Html.ValidationMessageFor(model => model.Titulo)
                 </div>
             </div>
@@ -54,7 +62,7 @@
                     @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label lbl-custom" })*
                 </div>
                 <div class="col-md-12">
-                    @Html.TextAreaFor(model => model.Descricao, new { @class = "form-control", @cols = 40, @rows = 5, @style = "max-width: 100%" })
+                    @Html.TextAreaFor(model => model.Descricao, new { @class = "form-control", @cols = 40, @rows = 5, @style = "max-width: 100%", @id = "descricao" })
                     @Html.ValidationMessageFor(model => model.Descricao)
                 </div>
             </div>
@@ -65,8 +73,13 @@
                         @Html.LabelFor(model => model.NomeCompetencia, "Competências", htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
-                        @Html.ListBoxFor(m => m.ListaCompetencias, (MultiSelectList)ViewBag.Competencias, new { @Disable = false, @class = "form-control select2", @style = "width:100%;" })
-                        @Html.ValidationMessageFor(model => model.NomeCompetencia)
+                        <select multiple class="form-control select2" id="ListaCompetencias" name="ListaCompetencias">
+                            @foreach (var p in ViewBag.ListaCompetencias)
+                            {
+                                <option style="width:100%;">@p.NomeCompetencia</option>
+                            }
+                        </select>
+                        <h5 style="color:#b94a48; line-height: 1.428571429;">@ViewBag.message1</h5>
                     </div>
                 </div>
 
@@ -75,18 +88,16 @@
                         @Html.LabelFor(model => model.NomeCargo, "Cargos", htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
-                        @Html.ListBoxFor(m => m.ListaCargos, (MultiSelectList)ViewBag.Cargos, new { @class = "form-control select2", @style = "width:100%;" })
-                        @Html.ValidationMessageFor(model => model.NomeCargo)
+                        <select multiple class="form-control select2" id="ListaCargos" name="ListaCargos">
+                            @foreach (var p in ViewBag.ListaCargos)
+                            {
+                                <option style="width:100%;">@p.Nome</option>
+                            }
+                        </select>
+                        <h5 style="color:#b94a48; line-height: 1.428571429;">@ViewBag.message2</h5>
                     </div>
                 </div>
             </div>
-
-            <select multiple name="event_type[]" class="form-control select2">
-                <option>Trade Fair</option>
-                <option>Party</option>
-                <option>Foo</option>
-                <option>Bar</option>
-            </select>
 
             <div class="form-group col-md-12">
                 <div class="col-md-2" style="padding:0px">
@@ -94,7 +105,12 @@
                         @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
-                        @Html.DropDownList("Estado", new SelectList(ViewBag.Estado, "Value", "Text"), "Select", htmlAttributes: new { @class = "form-control", @style = "width:auto;" })
+                        <select class="form-control estadoselect2" id="Estado" name="Estado" style="height:200px;">
+                            @foreach (var p in ViewBag.Estado)
+                            {
+                                <option style="width:auto;">@p.Value</option>
+                            }
+                        </select>
                         @Html.ValidationMessageFor(model => model.Estado)
                     </div>
                 </div>
@@ -104,7 +120,7 @@
                         @Html.LabelFor(model => model.Cidade, htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
-                        @Html.TextBoxFor(model => model.Cidade, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.Cidade, new { @class = "form-control", @id = "cidade" })
                         @Html.ValidationMessageFor(model => model.Cidade)
                     </div>
                 </div>
@@ -114,7 +130,12 @@
                         @Html.LabelFor(model => model.RegimeContratacao, htmlAttributes: new { @class = "control-label lbl-custom" })
                     </div>
                     <div class="col-md-12">
-                        @Html.DropDownList("RegimeContratacao", new SelectList(ViewBag.RegimeContratacao, "Value", "Text"), "Select", htmlAttributes: new { @class = "form-control", @style = "width:auto;" })
+                        <select class="form-control regimecontratacaoselect2" id="RegimeContratacao" name="RegimeContratacao" style="height:200px;">
+                            @foreach (var p in ViewBag.RegimeContratacao)
+                            {
+                                <option style="width:auto;">@p.Value</option>
+                            }
+                        </select>
                         @Html.ValidationMessageFor(model => model.RegimeContratacao)
                     </div>
                 </div>
@@ -124,7 +145,7 @@
                         @Html.LabelFor(model => model.SalarioOrcamento, "Salário", htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
-                        @Html.TextBoxFor(model => model.SalarioOrcamento, new { @class = "form-control", type = "number", @style = "width:120px;" })
+                        @Html.TextBoxFor(model => model.SalarioOrcamento, new { @class = "form-control", type = "number", @style = "width:120px;", @id = "salario" })
                         @Html.ValidationMessageFor(model => model.SalarioOrcamento)
                     </div>
                 </div>
@@ -136,7 +157,7 @@
                         @Html.LabelFor(model => model.QtdVagas, htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
-                        @Html.TextBoxFor(model => model.QtdVagas, new { @class = "form-control", @style = "width:90px;", type = "number" })
+                        @Html.TextBoxFor(model => model.QtdVagas, new { @class = "form-control", @style = "width:90px;", type = "number", @id = "qtd" })
                         @Html.ValidationMessageFor(model => model.QtdVagas)
                         <h5 style="color:#b94a48; line-height: 1.428571429;">@ViewBag.Quantidade</h5>
                     </div>
@@ -147,7 +168,7 @@
                         @Html.LabelFor(model => model.DataFinal, htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
-                        @Html.TextBoxFor(model => model.DataFinal, new { @class = "form-control", type = "string", @style = "width:auto;", mask = "99/99/9999" })
+                        @Html.TextBoxFor(model => model.DataFinal, new { @class = "form-control", type = "string", @style = "width:auto;", mask = "99/99/9999", @id = "data" })
                         @Html.ValidationMessageFor(model => model.DataFinal)
                     </div>
                 </div>
@@ -165,6 +186,7 @@
 
     </div>
 }
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquerymask")
