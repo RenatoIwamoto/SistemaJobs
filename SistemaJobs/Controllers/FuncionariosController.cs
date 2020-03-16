@@ -19,7 +19,8 @@ namespace SistemaJobs.Controllers
         // GET: Funcionarios
         public ActionResult Index()
         {
-            return View();
+            return this.RedirectToAction("Index", "Home");
+            //return View();
         }
 
         // GET: Funcionarios/Details/5
@@ -73,7 +74,7 @@ namespace SistemaJobs.Controllers
                 return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Login", "Login");
+            return View();
         }
 
         // GET: Funcionarios/Edit/5

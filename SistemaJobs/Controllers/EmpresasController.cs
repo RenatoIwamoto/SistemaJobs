@@ -20,7 +20,8 @@ namespace SistemaJobs.Controllers
         // GET: Empresas
         public ActionResult Index()
         {
-            return View();
+            return this.RedirectToAction("Index", "Home");
+            //return View();
         }
 
         // GET: Empresas/Details/5
