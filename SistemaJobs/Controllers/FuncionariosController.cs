@@ -60,21 +60,14 @@ namespace SistemaJobs.Controllers
 
             ValidarUnicidade(funcionario);
 
-            if (funcionario.Estado == null)
-            {
-                ViewBag.message1 = "Estado é um campo obrigatório";
-                PopularDdlEstado();
-                return View(funcionario);
-            }
-
             if (ModelState.IsValid)
             {
                 db.Funcionario.Add(funcionario);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            return View();
+            PopularDdlEstado();
+            return View(funcionario);
         }
 
         // GET: Funcionarios/Edit/5
@@ -168,23 +161,23 @@ namespace SistemaJobs.Controllers
             }
             else if (cpf == false)
             {
-                return Json(cpf, JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
             else if (telefone == false || telefone2 == false)
             {
-                return Json(telefone, JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
             else if (email == false || email2 == false)
             {
-                return Json(email, JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
             else if (user == false || user2 == false)
             {
-                return Json(user, JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
             else if (senha == false || senha2 == false)
             {
-                return Json(senha, JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
             else
             {

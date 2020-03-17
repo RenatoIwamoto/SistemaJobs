@@ -40,7 +40,6 @@ namespace SistemaJobs
         public string Email { get; set; }
 
         [Required]
-        [StringLength(2, MinimumLength = 2)]
         public string Estado { get; set; }
 
         [Required]

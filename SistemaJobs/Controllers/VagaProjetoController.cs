@@ -209,12 +209,7 @@ namespace SistemaJobs.Controllers
             {
                 return HttpNotFound();
             }
-
-           // foreach (var item in cargos)
-            //{
-                //ViewBag.ola = ViewBag.ola + "," + item.Nome;
-            //}
-
+     
             VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
             cliVM.VagaProjetoViewModelId = vagaProjeto.IdVagaProjeto;
             cliVM.Titulo = vagaProjeto.Titulo;
@@ -226,23 +221,20 @@ namespace SistemaJobs.Controllers
             cliVM.RegimeContratacao = vagaProjeto.DataFinal.ToString("dd/MM/yyyy");
             cliVM.DataFinal = vagaProjeto.DataFinal;
 
-            var cargolist = db.Cargos.Select(c => new {
-                CargoID = c.IdCargos,
-                CargoName = c.Nome,
-                CargoVaga = c.IdVagaProjeto
-            }).Where(m => m.CargoVaga == id).ToList();            
-            ViewBag.Cargos = new MultiSelectList(cargolist, "CargoID", "CargoName", "CargoVaga");
 
-            var competencialist = db.Competencias.Select(c => new {
-                CompetenciaID = c.IdCompetencias,
-                CompetenciaName = c.NomeCompetencia,
-                CompetenciaVaga = c.IdVagaProjeto
-            }).Where(m => m.CompetenciaVaga == id).ToList();
-            ViewBag.Competencias = new MultiSelectList(competencialist, "CompetenciaID", "CompetenciaName", "CompetenciaVaga");
+            var competencias = from s in db.Competencias select s;
+            competencias = competencias.Where(s => s.IdVagaProjeto == id);
+            ViewBag.ListaCompetencias = competencias.ToList();
 
+            var cargos = from s in db.Cargos select s;
+            cargos = cargos.Where(s => s.IdVagaProjeto == id);
+            ViewBag.ListaCargos = cargos.ToList();
 
+            ViewBag.EstadoList = vagaProjeto.Estado;
+            ViewBag.RegimeContratacaoList = vagaProjeto.RegimeContratacao;
             PopularDdlEstado();
             PopularDdlRegimeContratacao();
+            PopularCargoCompetencia(vagaProjeto.IdVagaProjeto);
 
             return View(cliVM);
         }
@@ -250,18 +242,63 @@ namespace SistemaJobs.Controllers
         // POST: VagaProjeto/Edit/5
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VagaProjetoViewModelId,Titulo,Descricao,SalarioOrcamento,QtdVagas,Cidade,Estado,RegimeContratacao,DataFinal,ListaCargos,Status,ListaCompetencias")] VagaProjetoViewModel viewModel)
+        public ActionResult Edit([Bind(Include = "VagaProjetoViewModelId,Titulo,Descricao,SalarioOrcamento,QtdVagas,Cidade,Estado,RegimeContratacao,DataFinal,ListaCargos,ListaCompetencias")] VagaProjetoViewModel viewModel)
         {
-            if (ModelState.IsValid)
+
+            if (viewModel.ListaCompetencias == null && viewModel.ListaCargos == null)
             {
-                var cargos = from s in db.Cargos select s;
-                cargos = cargos.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
+                ViewBag.message1 = "Competencias é um campo obrigatório";
+                ViewBag.message2 = "Cargos é um campo obrigatório";
+                PopularCargoCompetencia(viewModel.VagaProjetoViewModelId);
+                PopularDdlEstado();
+                PopularDdlRegimeContratacao();
 
-                var competencias = from s in db.Competencias select s;
-                competencias = competencias.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
+                ViewBag.EstadoList = viewModel.Estado;
+                ViewBag.RegimeContratacaoList = viewModel.RegimeContratacao;
+                ViewBag.ListaCargos = new List<SelectListItem>();
+                ViewBag.ListaCompetencias = new List<SelectListItem>();
 
+                return View(viewModel);
+            }
+            else if (viewModel.ListaCompetencias == null)
+            {
+                ViewBag.message1 = "Competencias é um campo obrigatório";
+                PopularCargoCompetencia(viewModel.VagaProjetoViewModelId);
+
+                var cargos1 = from s in db.Cargos select s;
+                cargos1 = cargos1.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
+
+                ViewBag.EstadoList = viewModel.Estado;
+                ViewBag.RegimeContratacaoList = viewModel.RegimeContratacao;
+                ViewBag.ListaCargos = cargos1.ToList();
+                ViewBag.ListaCompetencias = new List<SelectListItem>();
+
+                PopularDdlEstado();
+                PopularDdlRegimeContratacao();
+                return View(viewModel);
+            }
+            else if (viewModel.ListaCargos == null)
+            {
+                ViewBag.message2 = "Cargos é um campo obrigatório";
+                PopularCargoCompetencia(viewModel.VagaProjetoViewModelId);
+
+                var competencia1 = from s in db.Competencias select s;
+                competencia1 = competencia1.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
+
+                ViewBag.EstadoList = viewModel.Estado;
+                ViewBag.RegimeContratacaoList = viewModel.RegimeContratacao;
+                ViewBag.ListaCargos = new List<SelectListItem>();
+                ViewBag.ListaCompetencias = competencia1.ToList();
+
+                PopularDdlEstado();
+                PopularDdlRegimeContratacao();
+                return View(viewModel);
+            }
+            else if (ModelState.IsValid)
+            {
                 VagaProjeto vagas = new VagaProjeto();
                 vagas.IdVagaProjeto = viewModel.VagaProjetoViewModelId;
                 vagas.Titulo = viewModel.Titulo;
@@ -274,43 +311,99 @@ namespace SistemaJobs.Controllers
                 vagas.DataFinal = viewModel.DataFinal;
                 db.Entry(vagas).State = EntityState.Modified;
 
-                    foreach (var item in cargos)
-                    {
-                        var cargo = db.Cargos.FirstOrDefault(cp => cp.IdCargos == item.IdCargos);
-                        db.Cargos.Remove(cargo);
-                    }
 
-                    foreach (var item in viewModel.ListaCargos)
-                    {
-                        Cargos cargo2 = new Cargos();
-                        cargo2.Nome = item;
-                        cargo2.Status = 1;
-                        cargo2.VagaProjeto1 = vagas;
-                        db.Cargos.Add(cargo2);
-                    }
+                var cargos = from s in db.Cargos select s;
+                cargos = cargos.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
 
-                    foreach (var item in competencias)
-                    {
-                        var competencia = db.Competencias.FirstOrDefault(cp => cp.IdCompetencias == item.IdCompetencias);
-                        db.Competencias.Remove(competencia);
-                    }
+                var competencias = from s in db.Competencias select s;
+                competencias = competencias.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
 
-                    foreach (var item in viewModel.ListaCompetencias)
-                    {
-                        Competencias competencia2 = new Competencias();
-                        competencia2.NomeCompetencia = item;
-                        competencia2.VagaProjeto = vagas;
-                        db.Competencias.Add(competencia2);
-                    }
+                foreach (var item in cargos)
+                {
+                    var cargo = db.Cargos.FirstOrDefault(cp => cp.IdCargos == item.IdCargos);
+                    db.Cargos.Remove(cargo);
+                }
 
-                //cargos.Nome = string.Join(",", viewModel.ListaCargos.ToArray());
-                //db.Entry(competencias).State = EntityState.Modified;
+                foreach (var item in viewModel.ListaCargos)
+                {
+                    Cargos cargo2 = new Cargos();
+                    cargo2.Nome = item;
+                    cargo2.Status = 1;
+                    cargo2.VagaProjeto1 = vagas;
+                    db.Cargos.Add(cargo2);
+                }
+
+                foreach (var item in competencias)
+                {
+                    var competencia = db.Competencias.FirstOrDefault(cp => cp.IdCompetencias == item.IdCompetencias);
+                    db.Competencias.Remove(competencia);
+                }
+
+                foreach (var item in viewModel.ListaCompetencias)
+                {
+                    Competencias competencia2 = new Competencias();
+                    competencia2.NomeCompetencia = item;
+                    competencia2.VagaProjeto = vagas;
+                    db.Competencias.Add(competencia2);
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            ViewBag.EstadoList = viewModel.Estado;
+            ViewBag.RegimeContratacaoList = viewModel.RegimeContratacao;
+            PopularCargoCompetencia(viewModel.VagaProjetoViewModelId);
+            PopularViewModelVagas(viewModel.VagaProjetoViewModelId);
             return View(viewModel);
         }
 
+        protected void PopularViewModelVagas(int id)
+        {
+            var competencias1 = from s in db.Competencias select s;
+            competencias1 = competencias1.Where(s => s.IdVagaProjeto == id);
+            ViewBag.ListaCompetencias = competencias1.ToList();
+
+            var cargos1 = from s in db.Cargos select s;
+            cargos1 = cargos1.Where(s => s.IdVagaProjeto == id);
+            ViewBag.ListaCargos = cargos1.ToList();
+
+            PopularDdlEstado();
+            PopularDdlRegimeContratacao();
+        }
+
+        //Popula a lista de Cargos e Competências no Select 2
+        protected void PopularCargoCompetencia(int id)
+        {
+            var cargolist = db.Cargos.Select(c => new {
+                CargoID = c.IdCargos,
+                CargoName = c.Nome,
+                CargoVaga = c.IdVagaProjeto
+            }).Where(m => m.CargoVaga == id).ToList();
+
+            var competencialist = db.Competencias.Select(c => new {
+                CompetenciaID = c.IdCompetencias,
+                CompetenciaName = c.NomeCompetencia,
+                CompetenciaVaga = c.IdVagaProjeto
+            }).Where(m => m.CompetenciaVaga == id).ToList();
+
+            string aux = "";
+            foreach (var item in cargolist)
+            {
+                aux = aux + "," + item.CargoName;
+            }
+
+            string[] aux2 = aux.Split(',').ToArray();
+            ViewBag.Carg = aux2;
+
+            foreach (var item in competencialist)
+            {
+                aux = aux + "," + item.CompetenciaName;
+            }
+            aux2 = aux.Split(',').ToArray();
+            ViewBag.Comp = aux2;
+        }
+        
         // GET: VagaProjeto/Delete/5
         public ActionResult Delete(int? id)
         {

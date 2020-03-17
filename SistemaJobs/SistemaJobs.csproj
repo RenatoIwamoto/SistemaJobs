@@ -213,13 +213,13 @@
       <DependentUpon>SistemaJobsEF.edmx</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\VmFuncionarioEmpresa.cs" />
     <Compile Include="VagaProjeto.cs">
       <DependentUpon>SistemaJobsEF.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\CustomValidationCPFAttribute.cs" />
     <Compile Include="ViewModel\VagaProjetoViewModel.cs" />
     <Compile Include="ViewModel\ValidaDigitoCNPJ.cs" />
-    <Compile Include="ViewModels\VmFuncionarioEmpresa.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
