@@ -69,7 +69,7 @@ namespace SistemaJobs.Controllers
                     }
                     else
                     {
-                        ViewBag.ErrorMessage = "User Name ou Senha está incorreto!";
+                        ViewBag.ErrorMessage = "Usuário ou Senha está incorreto!";
                     }
                 }
             }
