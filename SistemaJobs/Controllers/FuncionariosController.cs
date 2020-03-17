@@ -197,10 +197,8 @@ namespace SistemaJobs.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdFuncionario,Nome,Sobrenome,CPF,Telefone,Email,Estado,Cidade,Usuario,Senha,Imagem,Qualificacoes,Experiencia,Sobre")] Funcionario funcionario, string ImagemSalva)
+        public ActionResult Edit([Bind(Include = "IdFuncionario,Nome,Sobrenome,CPF,Telefone,Email,Estado,Cidade,Usuario,Senha,Imagem,Experiencia,Qualificacoes,Sobre")] Funcionario funcionario, string ImagemSalva)
         {
-            funcionario.IdFuncionario = 1;
-
             bool imgValidada = false;
             HttpPostedFileBase imagem = Request.Files[0];
 

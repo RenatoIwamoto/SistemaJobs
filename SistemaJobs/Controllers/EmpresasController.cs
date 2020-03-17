@@ -196,8 +196,6 @@ namespace SistemaJobs.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IdEmpresa,Nome,CNPJ,Telefone,Email,Estado,Cidade,Usuario,Senha,Sobre")] Empresa empresa, string ImagemSalva)
         {
-            empresa.IdEmpresa = 1;
-
             bool imgValidada = false;
             HttpPostedFileBase imagem = Request.Files[0];
 
