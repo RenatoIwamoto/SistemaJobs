@@ -16,6 +16,7 @@ namespace SistemaJobs.Controllers
             FormsAuthentication.SignOut();
             Session.Clear();
 
+            //return RedirectToAction("Index", "Home");
             return View();
         }
 

@@ -18,6 +18,7 @@ namespace SistemaJobs.Controllers
         private HiredItEntities db = new HiredItEntities();
 
         // GET: Empresas
+        [Authorize]
         public ActionResult Index()
         {
             return this.RedirectToAction("Index", "Home");
@@ -25,6 +26,7 @@ namespace SistemaJobs.Controllers
         }
 
         // GET: Empresas/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             id = Convert.ToInt32(Session["usuarioLogadoID"]);
@@ -40,6 +42,9 @@ namespace SistemaJobs.Controllers
             }
 
             ViewBag.Imagem = empresa.Imagem;
+            empresa.CNPJ = Convert.ToUInt64(empresa.CNPJ).ToString(@"00\.000\.000\/0000\-00");
+            empresa.Telefone = Convert.ToUInt64(empresa.Telefone).ToString(@"\(00\)00000\-0000");
+
             return View(empresa);
         }
 
@@ -71,6 +76,7 @@ namespace SistemaJobs.Controllers
         }
 
         // GET: Empresas/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -219,6 +225,16 @@ namespace SistemaJobs.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(empresa).State = EntityState.Modified;
+
+                string pattern = @"[^0-9]";
+                Regex rgx = new Regex(pattern);
+
+                if (empresa.CNPJ != null)
+                    empresa.CNPJ = rgx.Replace(empresa.CNPJ, "");
+
+                if (empresa.Telefone != null)
+                    empresa.Telefone = rgx.Replace(empresa.Telefone, "");
+
                 db.SaveChanges();
                 return RedirectToAction("Details");
             }
@@ -250,6 +266,7 @@ namespace SistemaJobs.Controllers
         }
 
         // GET: Empresas/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)

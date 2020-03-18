@@ -17,6 +17,7 @@ namespace SistemaJobs.Controllers
         private HiredItEntities db = new HiredItEntities();
 
         // GET: Funcionarios
+        [Authorize]
         public ActionResult Index()
         {
             return this.RedirectToAction("Index", "Home");
@@ -39,6 +40,8 @@ namespace SistemaJobs.Controllers
             }
 
             ViewBag.Imagem = funcionario.Imagem;
+            funcionario.CPF = Convert.ToUInt64(funcionario.CPF).ToString(@"000\.000\.000\-00");
+            funcionario.Telefone = Convert.ToUInt64(funcionario.Telefone).ToString(@"\(00\)00000\-0000");
 
             return View(funcionario);
         }
@@ -71,6 +74,7 @@ namespace SistemaJobs.Controllers
         }
 
         // GET: Funcionarios/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -221,6 +225,16 @@ namespace SistemaJobs.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(funcionario).State = EntityState.Modified;
+
+                string pattern = @"[^0-9]";
+                Regex rgx = new Regex(pattern);
+
+                if (funcionario.CPF != null)
+                    funcionario.CPF = rgx.Replace(funcionario.CPF, "");
+
+                if (funcionario.Telefone != null)
+                    funcionario.Telefone = rgx.Replace(funcionario.Telefone, "");
+
                 db.SaveChanges();
                 return RedirectToAction("Details");
             }
@@ -255,6 +269,7 @@ namespace SistemaJobs.Controllers
         }
 
         // GET: Funcionarios/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)

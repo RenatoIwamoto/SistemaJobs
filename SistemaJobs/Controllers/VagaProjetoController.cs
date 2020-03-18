@@ -12,6 +12,7 @@ using SistemaJobs.ViewModel;
 
 namespace SistemaJobs.Controllers
 {
+    [Authorize]
     public class VagaProjetoController : Controller
     {
         private HiredItEntities db = new HiredItEntities();
