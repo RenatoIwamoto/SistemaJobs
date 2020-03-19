@@ -5,11 +5,12 @@
     ViewBag.Title = "Index";
 }
 
-<h2 style="text-align:center; color: #385898;">Vagas de Emprego e Projetos</h2>
+<h2 style="text-align:center;color:#385898;margin-top:80px;">Vagas de Emprego e Projetos</h2>
+<hr class="hr-custom" />
 
 @using (Html.BeginForm("Index", "VagaProjeto", FormMethod.Get))
 {
-    <p style="text-align:center">
+    <p style="text-align:center;margin-bottom:50px;">
         @Html.TextBox("SearchString", null, new { @class = "control-label lbl-custom" })
         <input class = "control-label lbl-custom" type="submit" value="Pesquisar" />
     </p>

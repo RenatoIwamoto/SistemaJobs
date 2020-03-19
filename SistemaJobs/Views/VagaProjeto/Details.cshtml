@@ -11,28 +11,28 @@
 </style>
 
 <div class="row">
-    <div class="col-md-4">
+    @*<div class="col-md-4">
 
-    </div>
+    </div>*@
 
-    <div class="col-md-8">
+    <div>
 
-        <div class="row" style="margin-bottom: 10px;">
+        <div class="row" style="margin-bottom:10px;margin-top:50px;">
             <div class="col-md-12">
                 <h2 style="margin-top:50px; color: #385898;">@Html.DisplayFor(model => model.Titulo)</h2>
             </div>
         </div>
-
+        <hr class="hr-custom" />
         <div class="row" style="margin-bottom: 10px;">
             <div class="col-md-6">
                 <label class="lbl-custom">Descrição</label>
             </div>
 
             <div class="col-md-6" style="padding-left:0px;">
-                    <div class="col-md-12">
-                        <label class="lbl-custom">Salário: </label>
-                        <span class="txt-custom">R$ @Model.SalarioOrcamento</span>
-                    </div>
+                <div class="col-md-12">
+                    <label class="lbl-custom">Salário: </label>
+                    <span class="txt-custom">R$ @Model.SalarioOrcamento</span>
+                </div>
             </div>
         </div>
 
@@ -47,7 +47,7 @@
                 {
                     <span class="btn btn-primary btn-large">@p.NomeCompetencia</span>
                 }
-                </div>
+            </div>
 
             <div class="col-md-12" style="margin-top:10px;">
                 <label class="lbl-custom">Data de Entrega:</label>
@@ -58,8 +58,6 @@
         <div class="row">
             <div class="col-md-12">
                 <label class="lbl-custom">Cargos Disponíveis:</label>
-
-                <hr class="hr-custom" />
 
                 <div class="row">
                     <div class="col-md-12">
