@@ -30,7 +30,14 @@
 
             <div class="col-md-6" style="padding-left:0px;">
                 <div class="col-md-12">
-                    <label class="lbl-custom">Salário: </label>
+                    @if (Model.TipoVaga == "0")
+                    {
+                        <label class="lbl-custom">Salário: </label>
+                    }
+                    else
+                    {
+                        <label class="lbl-custom">Orçamento: </label>
+                    }
                     <span class="txt-custom">R$ @Model.SalarioOrcamento</span>
                 </div>
             </div>

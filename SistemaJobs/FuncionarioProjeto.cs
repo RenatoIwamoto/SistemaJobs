@@ -12,15 +12,14 @@ namespace SistemaJobs
     using System;
     using System.Collections.Generic;
     
-    public partial class Portfolio
+    public partial class FuncionarioProjeto
     {
-        public int IdPorfolio { get; set; }
-        public string Titulo { get; set; }
-        public string Descricao { get; set; }
-        public string Imagem { get; set; }
-        public Nullable<int> TempoTrabalho { get; set; }
-        public Nullable<int> IdFuncionario { get; set; }
+        public int IdFuncionarioProjeto { get; set; }
+        public int IdFuncionario { get; set; }
+        public int IdVagaProjeto { get; set; }
+        public int Ativo { get; set; }
     
         public virtual Funcionario Funcionario { get; set; }
+        public virtual VagaProjeto VagaProjeto { get; set; }
     }
 }

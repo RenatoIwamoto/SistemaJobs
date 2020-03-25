@@ -187,6 +187,9 @@
     <Compile Include="Funcionario.cs">
       <DependentUpon>SistemaJobsEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="FuncionarioProjeto.cs">
+      <DependentUpon>SistemaJobsEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

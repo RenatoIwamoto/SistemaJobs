@@ -14,6 +14,10 @@
         <EntityTypeShape EntityType="HiredItModel.Competencias" Width="1.5" PointX="5.25" PointY="7" />
         <AssociationConnector Association="HiredItModel.FK_Cargos_VagaProjeto" />
         <AssociationConnector Association="HiredItModel.FK_Competencias_VagaProjeto" />
+        <EntityTypeShape EntityType="HiredItModel.FuncionarioProjeto" Width="1.5" PointX="7.25" PointY="3.25" />
+        <AssociationConnector Association="HiredItModel.FK_VagaProjeto_Empresa" />
+        <AssociationConnector Association="HiredItModel.FK_FuncionarioProjeto1" />
+        <AssociationConnector Association="HiredItModel.FK_FuncionarioProjeto2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

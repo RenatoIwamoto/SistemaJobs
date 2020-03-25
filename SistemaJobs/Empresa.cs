@@ -17,6 +17,12 @@ namespace SistemaJobs
 
     public partial class Empresa
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Empresa()
+        {
+            this.VagaProjeto = new HashSet<VagaProjeto>();
+        }
+
         [Key]
         public int IdEmpresa { get; set; }
 
@@ -61,5 +67,8 @@ namespace SistemaJobs
 
         [StringLength(200)]
         public string Imagem { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VagaProjeto> VagaProjeto { get; set; }
     }
 }

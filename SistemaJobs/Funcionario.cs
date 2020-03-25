@@ -10,6 +10,7 @@
 namespace SistemaJobs
 {
     using SistemaJobs.ViewModel;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
@@ -20,6 +21,7 @@ namespace SistemaJobs
         public Funcionario()
         {
             this.Portfolio = new HashSet<Portfolio>();
+            this.FuncionarioProjeto = new HashSet<FuncionarioProjeto>();
         }
 
         [Key]
@@ -76,5 +78,7 @@ namespace SistemaJobs
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Portfolio> Portfolio { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FuncionarioProjeto> FuncionarioProjeto { get; set; }
     }
 }

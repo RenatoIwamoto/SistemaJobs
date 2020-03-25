@@ -39,15 +39,12 @@ namespace SistemaJobs.ViewModel
 
         [Required]
         public System.DateTime DataFinal { get; set; }
-        //Cargos
 
-        public string NomeCargo { get; set; }
+        [Required]
+        public string TipoVaga { get; set; }
 
         [Required]
         public int Status { get; set; }
-        //Competencias
-
-        public string NomeCompetencia { get; set; }
 
         public string[] ListaCargos { get; set; }
 
