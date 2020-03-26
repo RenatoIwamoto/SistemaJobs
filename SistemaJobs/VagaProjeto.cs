@@ -20,6 +20,7 @@ namespace SistemaJobs
             this.Cargos1 = new HashSet<Cargos>();
             this.Competencias1 = new HashSet<Competencias>();
             this.FuncionarioProjeto = new HashSet<FuncionarioProjeto>();
+            this.Candidato = new HashSet<Candidato>();
         }
     
         public int IdVagaProjeto { get; set; }
@@ -41,5 +42,7 @@ namespace SistemaJobs
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FuncionarioProjeto> FuncionarioProjeto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Candidato> Candidato { get; set; }
     }
 }

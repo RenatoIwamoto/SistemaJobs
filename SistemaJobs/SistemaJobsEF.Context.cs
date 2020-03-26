@@ -34,5 +34,6 @@ namespace SistemaJobs
         public virtual DbSet<FuncionarioProjeto> FuncionarioProjeto { get; set; }
 
         public System.Data.Entity.DbSet<SistemaJobs.ViewModel.VagaProjetoViewModel> VagaProjetoViewModels { get; set; }
+        public virtual DbSet<Candidato> Candidato { get; set; }
     }
 }

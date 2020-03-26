@@ -9,12 +9,9 @@
 
 namespace SistemaJobs
 {
-    using SistemaJobs.ViewModel;
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
-
+    
     public partial class Funcionario
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,63 +19,29 @@ namespace SistemaJobs
         {
             this.Portfolio = new HashSet<Portfolio>();
             this.FuncionarioProjeto = new HashSet<FuncionarioProjeto>();
+            this.Candidato = new HashSet<Candidato>();
         }
-
-        [Key]
+    
         public int IdFuncionario { get; set; }
-
-        [Required]
-        [StringLength(50, MinimumLength = 3)]
         public string Nome { get; set; }
-
-        [Required]
-        [StringLength(100)]
         public string Sobrenome { get; set; }
-
-        [Required]
-        [Remote("ValidarUnicidade", "Funcionarios", ErrorMessage = "CPF já cadastrado")]
-        [CustomValidationCPF(ErrorMessage = "CPF inválido")]
         public string CPF { get; set; }
-
-        [Required]
-        [Remote("ValidarUnicidade", "Funcionarios", ErrorMessage = "Telefone já cadastrado")]
         public string Telefone { get; set; }
-
-        [Required]
-        [StringLength(100)]
-        [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", ErrorMessage = "Email inválido")]
-        [Remote("ValidarUnicidade", "Funcionarios", ErrorMessage = "Email já cadastrado")]
         public string Email { get; set; }
-
-        [Required]
         public string Estado { get; set; }
-
-        [Required]
-        [StringLength(100)]
         public string Cidade { get; set; }
-
-        [Required]
-        [StringLength(50, MinimumLength = 6)]
-        [Remote("ValidarUnicidade", "Funcionarios", ErrorMessage = "Usuario já cadastrado")]
         public string Usuario { get; set; }
-
-        [Required]
-        [StringLength(12, MinimumLength = 6)]
-        [Remote("ValidarUnicidade", "Funcionarios", ErrorMessage = "Senha já cadastrada")]
         public string Senha { get; set; }
-
-        [StringLength(200)]
         public string Imagem { get; set; }
-        [StringLength(500)]
         public string Experiencia { get; set; }
-        [StringLength(500)]
         public string Qualificacoes { get; set; }
-        [StringLength(500)]
         public string Sobre { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Portfolio> Portfolio { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FuncionarioProjeto> FuncionarioProjeto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Candidato> Candidato { get; set; }
     }
 }

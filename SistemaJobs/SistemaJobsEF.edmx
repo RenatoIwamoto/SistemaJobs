@@ -5,14 +5,22 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HiredItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Candidato">
+          <Key>
+            <PropertyRef Name="IdCandidato" />
+          </Key>
+          <Property Name="IdCandidato" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdVagaProjeto" Type="int" Nullable="false" />
+          <Property Name="IdFuncionario" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Cargos">
           <Key>
             <PropertyRef Name="IdCargos" />
           </Key>
           <Property Name="IdCargos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nome" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="IdVagaProjeto" Type="int" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="IdVagaProjeto" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Competencias">
           <Key>
@@ -35,8 +43,8 @@
           <Property Name="Cidade" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Senha" Type="varchar" MaxLength="12" Nullable="false" />
-          <Property Name="Imagem" Type="varchar" MaxLength="200" />
           <Property Name="Sobre" Type="varchar" MaxLength="500" />
+          <Property Name="Imagem" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Funcionario">
           <Key>
@@ -93,6 +101,30 @@
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="TipoVaga" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Candidato_Funcionario">
+          <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1" />
+          <End Role="Candidato" Type="Self.Candidato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionario">
+              <PropertyRef Name="IdFuncionario" />
+            </Principal>
+            <Dependent Role="Candidato">
+              <PropertyRef Name="IdFuncionario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Candidato_VagaProjeto">
+          <End Role="VagaProjeto" Type="Self.VagaProjeto" Multiplicity="1" />
+          <End Role="Candidato" Type="Self.Candidato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VagaProjeto">
+              <PropertyRef Name="IdVagaProjeto" />
+            </Principal>
+            <Dependent Role="Candidato">
+              <PropertyRef Name="IdVagaProjeto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Cargos_VagaProjeto">
           <End Role="VagaProjeto" Type="Self.VagaProjeto" Multiplicity="1" />
           <End Role="Cargos" Type="Self.Cargos" Multiplicity="*" />
@@ -166,6 +198,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="HiredItModelStoreContainer">
+          <EntitySet Name="Candidato" EntityType="Self.Candidato" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cargos" EntityType="Self.Cargos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Competencias" EntityType="Self.Competencias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
@@ -173,6 +206,14 @@
           <EntitySet Name="FuncionarioProjeto" EntityType="Self.FuncionarioProjeto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Portfolio" EntityType="Self.Portfolio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VagaProjeto" EntityType="Self.VagaProjeto" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Candidato_Funcionario" Association="Self.FK_Candidato_Funcionario">
+            <End Role="Funcionario" EntitySet="Funcionario" />
+            <End Role="Candidato" EntitySet="Candidato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Candidato_VagaProjeto" Association="Self.FK_Candidato_VagaProjeto">
+            <End Role="VagaProjeto" EntitySet="VagaProjeto" />
+            <End Role="Candidato" EntitySet="Candidato" />
+          </AssociationSet>
           <AssociationSet Name="FK_Cargos_VagaProjeto" Association="Self.FK_Cargos_VagaProjeto">
             <End Role="VagaProjeto" EntitySet="VagaProjeto" />
             <End Role="Cargos" EntitySet="Cargos" />
@@ -239,6 +280,7 @@
           <Property Name="Qualificacoes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Sobre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="FuncionarioProjeto" Relationship="HiredItModel.FK_FuncionarioProjeto1" FromRole="Funcionario" ToRole="FuncionarioProjeto" />
+          <NavigationProperty Name="Candidato" Relationship="HiredItModel.FK_Candidato_Funcionario" FromRole="Funcionario" ToRole="Candidato" />
         </EntityType>
         <EntityContainer Name="HiredItEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Empresa" EntityType="Self.Empresa" />
@@ -271,6 +313,15 @@
           <AssociationSet Name="FK_FuncionarioProjeto2" Association="HiredItModel.FK_FuncionarioProjeto2">
             <End Role="VagaProjeto" EntitySet="VagaProjeto" />
             <End Role="FuncionarioProjeto" EntitySet="FuncionarioProjeto" />
+          </AssociationSet>
+          <EntitySet Name="Candidato" EntityType="HiredItModel.Candidato" />
+          <AssociationSet Name="FK_Candidato_Funcionario" Association="HiredItModel.FK_Candidato_Funcionario">
+            <End Role="Funcionario" EntitySet="Funcionario" />
+            <End Role="Candidato" EntitySet="Candidato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Candidato_VagaProjeto" Association="HiredItModel.FK_Candidato_VagaProjeto">
+            <End Role="VagaProjeto" EntitySet="VagaProjeto" />
+            <End Role="Candidato" EntitySet="Candidato" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Portfolio">
@@ -326,6 +377,7 @@
           <Property Name="TipoVaga" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Empresa" Relationship="HiredItModel.FK_VagaProjeto_Empresa" FromRole="VagaProjeto" ToRole="Empresa" />
           <NavigationProperty Name="FuncionarioProjeto" Relationship="HiredItModel.FK_FuncionarioProjeto2" FromRole="VagaProjeto" ToRole="FuncionarioProjeto" />
+          <NavigationProperty Name="Candidato" Relationship="HiredItModel.FK_Candidato_VagaProjeto" FromRole="VagaProjeto" ToRole="Candidato" />
         </EntityType>
         <EntityType Name="Competencias">
           <Key>
@@ -403,6 +455,40 @@
               <PropertyRef Name="IdVagaProjeto" />
             </Principal>
             <Dependent Role="FuncionarioProjeto">
+              <PropertyRef Name="IdVagaProjeto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Candidato">
+          <Key>
+            <PropertyRef Name="IdCandidato" />
+          </Key>
+          <Property Name="IdCandidato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdVagaProjeto" Type="Int32" Nullable="false" />
+          <Property Name="IdFuncionario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Funcionario" Relationship="HiredItModel.FK_Candidato_Funcionario" FromRole="Candidato" ToRole="Funcionario" />
+          <NavigationProperty Name="VagaProjeto" Relationship="HiredItModel.FK_Candidato_VagaProjeto" FromRole="Candidato" ToRole="VagaProjeto" />
+        </EntityType>
+        <Association Name="FK_Candidato_Funcionario">
+          <End Type="HiredItModel.Funcionario" Role="Funcionario" Multiplicity="1" />
+          <End Type="HiredItModel.Candidato" Role="Candidato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionario">
+              <PropertyRef Name="IdFuncionario" />
+            </Principal>
+            <Dependent Role="Candidato">
+              <PropertyRef Name="IdFuncionario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Candidato_VagaProjeto">
+          <End Type="HiredItModel.VagaProjeto" Role="VagaProjeto" Multiplicity="1" />
+          <End Type="HiredItModel.Candidato" Role="Candidato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VagaProjeto">
+              <PropertyRef Name="IdVagaProjeto" />
+            </Principal>
+            <Dependent Role="Candidato">
               <PropertyRef Name="IdVagaProjeto" />
             </Dependent>
           </ReferentialConstraint>
@@ -505,6 +591,15 @@
                 <ScalarProperty Name="IdVagaProjeto" ColumnName="IdVagaProjeto" />
                 <ScalarProperty Name="IdFuncionario" ColumnName="IdFuncionario" />
                 <ScalarProperty Name="IdFuncionarioProjeto" ColumnName="IdFuncionarioProjeto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Candidato">
+            <EntityTypeMapping TypeName="HiredItModel.Candidato">
+              <MappingFragment StoreEntitySet="Candidato">
+                <ScalarProperty Name="IdFuncionario" ColumnName="IdFuncionario" />
+                <ScalarProperty Name="IdVagaProjeto" ColumnName="IdVagaProjeto" />
+                <ScalarProperty Name="IdCandidato" ColumnName="IdCandidato" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

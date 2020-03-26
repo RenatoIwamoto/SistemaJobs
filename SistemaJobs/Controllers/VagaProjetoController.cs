@@ -119,6 +119,7 @@ namespace SistemaJobs.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             VagaProjeto vagaProjeto = db.VagaProjeto.Find(id);
 
             if (vagaProjeto == null)
@@ -128,9 +129,14 @@ namespace SistemaJobs.Controllers
 
             var cargos = db.Cargos.Where(s => s.IdVagaProjeto == id);
             var competencias = db.Competencias.Where(s => s.IdVagaProjeto == id);
+            var nomeEmpresa = vagaProjeto.Empresa.Nome;
+            var imagemEmpresa = vagaProjeto.Empresa.Imagem;
 
             ViewBag.ListaCargos = cargos.ToList();
             ViewBag.ListaCompetencias = competencias.ToList();
+            ViewBag.IdVaga = id;
+            ViewBag.NomeEmpresa = nomeEmpresa;
+            ViewBag.Imagem = imagemEmpresa;
 
             VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
                 cliVM.Titulo = vagaProjeto.Titulo;

@@ -122,6 +122,15 @@ input[type="checkbox"].input-validation-error {
     text-decoration: none;
 }
 
+.voltar-projeto {
+    margin-right: 5px;
+}
+
+.botaoInteressados:hover {
+    color: white;
+    text-decoration: none;
+}
+
 @media (max-width: 767px) {
     .body-size {
         height: 100%;
