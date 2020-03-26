@@ -1,0 +1,42 @@
+﻿@model SistemaJobs.Candidato
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Candidato</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Funcionario.Nome)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Funcionario.Nome)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.VagaProjeto.Titulo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.VagaProjeto.Titulo)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.IdCandidato }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

@@ -36,6 +36,7 @@
 
                     @if (Session["tipoUsuario"].ToString() == "funcionario")
                     {
+                        <li>@Html.ActionLink("Meu Portfólio", "Index", "Portfolios")</li>
                         <li>@Html.ActionLink("Vagas de Emprego", "Index", "VagaProjeto")</li>
                     }
                     <li>@Html.ActionLink("Sair", "Login", "Login")</li>

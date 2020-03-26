@@ -1,0 +1,47 @@
+﻿@model IEnumerable<SistemaJobs.Candidato>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Funcionario.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VagaProjeto.Titulo)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Funcionario.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VagaProjeto.Titulo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.IdCandidato }) |
+                @Html.ActionLink("Details", "Details", new { id=item.IdCandidato }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.IdCandidato })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

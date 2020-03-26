@@ -168,6 +168,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Candidato.cs">
+      <DependentUpon>SistemaJobsEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Cargos.cs">
       <DependentUpon>SistemaJobsEF.tt</DependentUpon>
     </Compile>
@@ -175,6 +178,7 @@
       <DependentUpon>SistemaJobsEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CandidatosController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\FuncionariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -386,6 +390,11 @@
     <Content Include="Views\VagaProjeto\Edit.cshtml" />
     <Content Include="Views\VagaProjeto\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Candidatos\Create.cshtml" />
+    <Content Include="Views\Candidatos\Delete.cshtml" />
+    <Content Include="Views\Candidatos\Details.cshtml" />
+    <Content Include="Views\Candidatos\Edit.cshtml" />
+    <Content Include="Views\Candidatos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
