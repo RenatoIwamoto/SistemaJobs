@@ -18,58 +18,98 @@ namespace SistemaJobs.Controllers
         private HiredItEntities db = new HiredItEntities();
 
         // GET: VagaProjeto
-        public ViewResult Index(string currentFilter, string searchString, int? page)
+        public ActionResult Index(string currentFilter, string searchString, int? page)
         {
-            if (searchString != null)
+            if (Session["tipoUsuario"] == "funcionario")
             {
-                page = 1;
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewBag.CurrentFilter = searchString;
+
+                var vagas = db.VagaProjeto.Where(s => s.QtdVagas >= 1);
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    vagas = vagas.Where(s => s.Titulo.ToUpper().Contains(searchString.ToUpper()));
+                }
+
+                List<VagaProjetoViewModel> listaVagaProjetoVM = new List<VagaProjetoViewModel>();
+
+                var listaVagas = (from vag in vagas
+                                  join car in db.Cargos on vag.IdVagaProjeto equals car.IdVagaProjeto
+                                  join com in db.Competencias on vag.IdVagaProjeto equals com.IdVagaProjeto
+                                  select new
+                                  {
+                                      vag.IdVagaProjeto,
+                                      vag.Titulo,
+                                      vag.SalarioOrcamento,
+                                      vag.QtdVagas,
+                                      vag.TipoVaga
+                                  }).OrderByDescending(s => s.IdVagaProjeto).ToList();
+
+                var list = listaVagas.DistinctBy(s => s.IdVagaProjeto);
+
+
+                foreach (var item in list)
+                {
+                    VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
+                    cliVM.VagaProjetoViewModelId = item.IdVagaProjeto;
+                    cliVM.Titulo = item.Titulo;
+                    cliVM.SalarioOrcamento = item.SalarioOrcamento;
+                    cliVM.QtdVagas = item.QtdVagas;
+                    cliVM.TipoVaga = item.TipoVaga;
+                    listaVagaProjetoVM.Add(cliVM);
+                }
+
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+
+                return View(listaVagaProjetoVM.ToPagedList(pageNumber, pageSize));
             }
             else
             {
-                searchString = currentFilter;
+                var IdEmpresa = Convert.ToInt32(Session["usuarioLogadoID"]);
+                var vagas = db.VagaProjeto.Where(s => s.IdEmpresa == IdEmpresa);
+
+                List<VagaProjetoViewModel> listaVagaProjetoVM = new List<VagaProjetoViewModel>();
+
+                var listaVagas = (from vag in vagas
+                                  join car in db.Cargos on vag.IdVagaProjeto equals car.IdVagaProjeto
+                                  join com in db.Competencias on vag.IdVagaProjeto equals com.IdVagaProjeto
+                                  select new
+                                  {
+                                      vag.IdVagaProjeto,
+                                      vag.Titulo,
+                                      vag.SalarioOrcamento,
+                                      vag.QtdVagas,
+                                      vag.TipoVaga
+                                  }).OrderByDescending(s => s.IdVagaProjeto).ToList();
+
+                var list = listaVagas.DistinctBy(s => s.IdVagaProjeto);
+
+                foreach (var item in list)
+                {
+                    VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
+                    cliVM.VagaProjetoViewModelId = item.IdVagaProjeto;
+                    cliVM.Titulo = item.Titulo;
+                    cliVM.SalarioOrcamento = item.SalarioOrcamento;
+                    cliVM.QtdVagas = item.QtdVagas;
+                    cliVM.TipoVaga = item.TipoVaga;
+                    listaVagaProjetoVM.Add(cliVM);
+                }
+
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+
+                return View(listaVagaProjetoVM.ToPagedList(pageNumber, pageSize));
             }
-
-            ViewBag.CurrentFilter = searchString;
-
-            var vagas = db.VagaProjeto.Where(s => s.QtdVagas >= 1);
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                vagas = vagas.Where(s => s.Titulo.ToUpper().Contains(searchString.ToUpper()));
-            }
-
-            List<VagaProjetoViewModel> listaVagaProjetoVM = new List<VagaProjetoViewModel>();
-
-            var listaVagas = (from vag in vagas
-                              join car in db.Cargos on vag.IdVagaProjeto equals car.IdVagaProjeto
-                              join com in db.Competencias on vag.IdVagaProjeto equals com.IdVagaProjeto
-                              select new
-                              {
-                                  vag.IdVagaProjeto,
-                                  vag.Titulo,
-                                  vag.SalarioOrcamento,
-                                  vag.QtdVagas,
-                                  vag.TipoVaga
-                              }).OrderByDescending(s => s.IdVagaProjeto).ToList();
-
-            var list = listaVagas.DistinctBy(s => s.IdVagaProjeto);
-
-
-            foreach (var item in list)
-            {
-                VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
-                cliVM.VagaProjetoViewModelId = item.IdVagaProjeto;
-                cliVM.Titulo = item.Titulo;
-                cliVM.SalarioOrcamento = item.SalarioOrcamento;
-                cliVM.QtdVagas = item.QtdVagas;
-                cliVM.TipoVaga = item.TipoVaga;
-                listaVagaProjetoVM.Add(cliVM);
-            }
-
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            
-            return View(listaVagaProjetoVM.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: VagaProjeto/Details/5
@@ -105,10 +145,17 @@ namespace SistemaJobs.Controllers
         // GET: VagaProjeto/Create
         public ActionResult Create()
         {
-            PopularDdlEstado();
-            PopularDdlRegimeContratacao();
-            PopularDdlTipoVaga();
-            return View();
+            if (Session["tipoUsuario"] == "empresa")
+            {            
+                PopularDdlEstado();
+                PopularDdlRegimeContratacao();
+                PopularDdlTipoVaga();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: VagaProjeto/Create
@@ -199,43 +246,60 @@ namespace SistemaJobs.Controllers
         // GET: VagaProjeto/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["tipoUsuario"] == "empresa")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                VagaProjeto vagaProjeto = db.VagaProjeto.Find(id);
+                if (vagaProjeto == null)
+                {
+                    return HttpNotFound();
+                }
+
+                VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
+                cliVM.VagaProjetoViewModelId = vagaProjeto.IdVagaProjeto;
+                cliVM.Titulo = vagaProjeto.Titulo;
+                cliVM.Descricao = vagaProjeto.Descricao;
+                cliVM.SalarioOrcamento = (int)vagaProjeto.SalarioOrcamento;
+                cliVM.QtdVagas = vagaProjeto.QtdVagas;
+                cliVM.Cidade = vagaProjeto.Cidade;
+                cliVM.Estado = vagaProjeto.Estado;
+                cliVM.RegimeContratacao = vagaProjeto.DataFinal.ToString("dd/MM/yyyy");
+                cliVM.DataFinal = vagaProjeto.DataFinal;
+                cliVM.TipoVaga = vagaProjeto.TipoVaga;
+
+
+                var competencias = db.Competencias.Where(s => s.IdVagaProjeto == id);
+                ViewBag.ListaCompetencias = competencias.ToList();
+
+                var cargos = db.Cargos.Where(s => s.IdVagaProjeto == id);
+                ViewBag.ListaCargos = cargos.ToList();
+
+                ViewBag.EstadoList = vagaProjeto.Estado;
+                ViewBag.RegimeContratacaoList = vagaProjeto.RegimeContratacao;
+
+                if (vagaProjeto.TipoVaga == "0")
+                {
+                    ViewBag.TipoVagaList = "Vaga de Emprego";
+                }
+                else
+                {
+                    ViewBag.TipoVagaList = "Projeto Freelancer";
+                }
+
+                PopularDdlEstado();
+                PopularDdlRegimeContratacao();
+                PopularDdlTipoVaga();
+                PopularCargoCompetencia(vagaProjeto.IdVagaProjeto);
+
+                return View(cliVM);
             }
-            VagaProjeto vagaProjeto = db.VagaProjeto.Find(id);
-            if (vagaProjeto == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
-     
-            VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
-            cliVM.VagaProjetoViewModelId = vagaProjeto.IdVagaProjeto;
-            cliVM.Titulo = vagaProjeto.Titulo;
-            cliVM.Descricao = vagaProjeto.Descricao;
-            cliVM.SalarioOrcamento = (int)vagaProjeto.SalarioOrcamento;
-            cliVM.QtdVagas = vagaProjeto.QtdVagas;
-            cliVM.Cidade = vagaProjeto.Cidade;
-            cliVM.Estado = vagaProjeto.Estado;
-            cliVM.RegimeContratacao = vagaProjeto.DataFinal.ToString("dd/MM/yyyy");
-            cliVM.DataFinal = vagaProjeto.DataFinal;
-
-
-            var competencias = from s in db.Competencias select s;
-            competencias = competencias.Where(s => s.IdVagaProjeto == id);
-            ViewBag.ListaCompetencias = competencias.ToList();
-
-            var cargos = from s in db.Cargos select s;
-            cargos = cargos.Where(s => s.IdVagaProjeto == id);
-            ViewBag.ListaCargos = cargos.ToList();
-
-            ViewBag.EstadoList = vagaProjeto.Estado;
-            ViewBag.RegimeContratacaoList = vagaProjeto.RegimeContratacao;
-            PopularDdlEstado();
-            PopularDdlRegimeContratacao();
-            PopularCargoCompetencia(vagaProjeto.IdVagaProjeto);
-
-            return View(cliVM);
         }
 
         // POST: VagaProjeto/Edit/5
@@ -244,8 +308,9 @@ namespace SistemaJobs.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VagaProjetoViewModelId,Titulo,Descricao,SalarioOrcamento,QtdVagas,Cidade,Estado,RegimeContratacao,DataFinal,ListaCargos,ListaCompetencias")] VagaProjetoViewModel viewModel)
+        public ActionResult Edit([Bind(Include = "VagaProjetoViewModelId,Titulo,Descricao,SalarioOrcamento,QtdVagas,Cidade,Estado,RegimeContratacao,DataFinal,TipoVaga,ListaCargos,ListaCompetencias")] VagaProjetoViewModel viewModel)
         {
+            string tipoVagaAux = null;
 
             if (viewModel.ListaCompetencias == null && viewModel.ListaCargos == null)
             {
@@ -254,9 +319,12 @@ namespace SistemaJobs.Controllers
                 PopularCargoCompetencia(viewModel.VagaProjetoViewModelId);
                 PopularDdlEstado();
                 PopularDdlRegimeContratacao();
+                PopularDdlTipoVaga();
 
                 ViewBag.EstadoList = viewModel.Estado;
                 ViewBag.RegimeContratacaoList = viewModel.RegimeContratacao;
+                ViewBag.TipoVagaList = viewModel.TipoVaga;
+
                 ViewBag.ListaCargos = new List<SelectListItem>();
                 ViewBag.ListaCompetencias = new List<SelectListItem>();
 
@@ -267,16 +335,18 @@ namespace SistemaJobs.Controllers
                 ViewBag.message1 = "Competencias é um campo obrigatório";
                 PopularCargoCompetencia(viewModel.VagaProjetoViewModelId);
 
-                var cargos1 = from s in db.Cargos select s;
-                cargos1 = cargos1.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
+                var cargos1 = db.Cargos.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
 
                 ViewBag.EstadoList = viewModel.Estado;
                 ViewBag.RegimeContratacaoList = viewModel.RegimeContratacao;
+                ViewBag.TipoVagaList = viewModel.TipoVaga;
+
                 ViewBag.ListaCargos = cargos1.ToList();
                 ViewBag.ListaCompetencias = new List<SelectListItem>();
 
                 PopularDdlEstado();
                 PopularDdlRegimeContratacao();
+                PopularDdlTipoVaga();
                 return View(viewModel);
             }
             else if (viewModel.ListaCargos == null)
@@ -284,20 +354,55 @@ namespace SistemaJobs.Controllers
                 ViewBag.message2 = "Cargos é um campo obrigatório";
                 PopularCargoCompetencia(viewModel.VagaProjetoViewModelId);
 
-                var competencia1 = from s in db.Competencias select s;
-                competencia1 = competencia1.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
+                var competencia1 = db.Competencias.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
 
                 ViewBag.EstadoList = viewModel.Estado;
                 ViewBag.RegimeContratacaoList = viewModel.RegimeContratacao;
+                ViewBag.TipoVagaList = viewModel.TipoVaga;
+
                 ViewBag.ListaCargos = new List<SelectListItem>();
                 ViewBag.ListaCompetencias = competencia1.ToList();
 
                 PopularDdlEstado();
                 PopularDdlRegimeContratacao();
+                PopularDdlTipoVaga();
                 return View(viewModel);
             }
-            else if (ModelState.IsValid)
+
+            if (viewModel.TipoVaga == "Vaga de Emprego")
             {
+                tipoVagaAux = "0";
+            }
+            else if (viewModel.TipoVaga == "Projeto Freelancer")
+            {
+                tipoVagaAux = "1";
+            }
+            else
+            {
+                ViewBag.message3 = "Apenas Vaga de Emprego e Projeto Freelancer serão aceitos como tipos válidos";
+
+                PopularCargoCompetencia(viewModel.VagaProjetoViewModelId);
+                PopularDdlEstado();
+                PopularDdlRegimeContratacao();
+                PopularDdlTipoVaga();
+
+                ViewBag.EstadoList = viewModel.Estado;
+                ViewBag.RegimeContratacaoList = viewModel.RegimeContratacao;
+                ViewBag.TipoVagaList = viewModel.TipoVaga;
+
+                var cargos1 = db.Cargos.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
+                ViewBag.ListaCargos = cargos1.ToList();
+
+                var competencia1 = db.Competencias.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
+                ViewBag.ListaCompetencias = competencia1.ToList();
+
+                return View(viewModel);
+            }
+
+            if (ModelState.IsValid)
+            {
+                var IdEmpresa = Convert.ToInt32(Session["usuarioLogadoID"]);
+
                 VagaProjeto vagas = new VagaProjeto();
                 vagas.IdVagaProjeto = viewModel.VagaProjetoViewModelId;
                 vagas.Titulo = viewModel.Titulo;
@@ -308,14 +413,13 @@ namespace SistemaJobs.Controllers
                 vagas.Estado = viewModel.Estado;
                 vagas.RegimeContratacao = viewModel.RegimeContratacao;
                 vagas.DataFinal = viewModel.DataFinal;
+                vagas.TipoVaga = tipoVagaAux;
+                vagas.IdEmpresa = IdEmpresa;
                 db.Entry(vagas).State = EntityState.Modified;
 
 
-                var cargos = from s in db.Cargos select s;
-                cargos = cargos.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
-
-                var competencias = from s in db.Competencias select s;
-                competencias = competencias.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
+                var cargos = db.Cargos.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
+                var competencias = db.Competencias.Where(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId);
 
                 foreach (var item in cargos)
                 {
@@ -352,6 +456,8 @@ namespace SistemaJobs.Controllers
 
             ViewBag.EstadoList = viewModel.Estado;
             ViewBag.RegimeContratacaoList = viewModel.RegimeContratacao;
+            ViewBag.TipoVagaList = viewModel.TipoVaga;
+
             PopularCargoCompetencia(viewModel.VagaProjetoViewModelId);
             PopularViewModelVagas(viewModel.VagaProjetoViewModelId);
             return View(viewModel);
@@ -359,16 +465,15 @@ namespace SistemaJobs.Controllers
 
         protected void PopularViewModelVagas(int id)
         {
-            var competencias1 = from s in db.Competencias select s;
-            competencias1 = competencias1.Where(s => s.IdVagaProjeto == id);
+            var competencias1 = db.Competencias.Where(s => s.IdVagaProjeto == id);
             ViewBag.ListaCompetencias = competencias1.ToList();
 
-            var cargos1 = from s in db.Cargos select s;
-            cargos1 = cargos1.Where(s => s.IdVagaProjeto == id);
+            var cargos1 = db.Cargos.Where(s => s.IdVagaProjeto == id);
             ViewBag.ListaCargos = cargos1.ToList();
 
             PopularDdlEstado();
             PopularDdlRegimeContratacao();
+            PopularDdlTipoVaga();
         }
 
         //Popula a lista de Cargos e Competências no Select 2

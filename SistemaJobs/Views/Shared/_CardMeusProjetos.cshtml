@@ -1,0 +1,18 @@
+﻿@model SistemaJobs.FuncionarioProjeto
+
+<div class="well">
+    <table style="width: -webkit-fill-available">
+        <tr>
+            <td>
+                @Model.VagaProjeto.Titulo
+                <br />
+                Orçamento: R$ @Model.VagaProjeto.SalarioOrcamento
+                <br />
+                Descrição: @Model.VagaProjeto.Descricao
+            </td>
+            <td style="text-align: right;">
+                @Html.ActionLink("Detalhes", "Details", new { id = Model.IdFuncionarioProjeto }, htmlAttributes: new { @class = "btn btn-primary btn-large" })
+            </td>
+        </tr>
+    </table>
+</div>

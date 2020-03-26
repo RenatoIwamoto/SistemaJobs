@@ -1,0 +1,24 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<SistemaJobs.FuncionarioProjeto>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="text-align:center;color:#385898;margin-top:80px;">Meus Projetos</h2>
+<hr class="hr-custom" />
+
+@using (Html.BeginForm("Index", "MeusProjetos", FormMethod.Get))
+{
+}
+
+@foreach (var p in Model)
+{
+    @Html.Partial("_CardMeusProjetos", p)
+}
+
+<!-- Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount-->
+<div style="text-align:center">
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>

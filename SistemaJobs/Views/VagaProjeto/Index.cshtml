@@ -5,15 +5,31 @@
     ViewBag.Title = "Index";
 }
 
-<h2 style="text-align:center;color:#385898;margin-top:80px;">Vagas de Emprego e Projetos</h2>
+@if (Session["tipoUsuario"].ToString() == "funcionario")
+{
+    <h2 style="text-align:center;color:#385898;margin-top:80px;">Vagas de Emprego e Projetos</h2>
+}
+else
+{
+    <h2 style="text-align:center;color:#385898;margin-top:80px;">Listagem de Vagas de Emprego e Projetos</h2>
+}
 <hr class="hr-custom" />
+
+@if (Session["tipoUsuario"].ToString() == "empresa")
+{<div style = "text-align: right; margin-bottom:10px;">
+    @Html.ActionLink("Cadastrar Vaga ou Projeto", "Create", "VagaProjeto", htmlAttributes: new { @class = "btn btn-primary btn-large" })
+</div>
+}
 
 @using (Html.BeginForm("Index", "VagaProjeto", FormMethod.Get))
 {
-    <p style="text-align:center;margin-bottom:50px;">
-        @Html.TextBox("SearchString", null, new { @class = "control-label lbl-custom" })
-        <input class = "control-label lbl-custom" type="submit" value="Pesquisar" />
-    </p>
+    if (Session["tipoUsuario"].ToString() == "funcionario")
+    {
+        <p style="text-align:center;margin-bottom:50px;">
+            @Html.TextBox("SearchString", null, new { @class = "control-label lbl-custom" })
+            <input class="control-label lbl-custom" type="submit" value="Pesquisar" />
+        </p>
+    }
 }
 
 @foreach (var p in Model)

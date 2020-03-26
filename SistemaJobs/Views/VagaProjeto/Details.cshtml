@@ -91,7 +91,10 @@
 
             <div class="col-md-12" style="text-align:end;">
                 @Html.ActionLink("Voltar", "Index", new { @class = "botaoInteressados" })
-                <input type="submit" value="Estou Interessado" class="btn-custom botaoInteressados" style="margin-left: 10px; margin-bottom:10px;" />
+                @if (Session["tipoUsuario"].ToString() == "funcionario")
+                {
+                    <input type="submit" value="Estou Interessado" class="btn-custom botaoInteressados" style="margin-left: 10px; margin-bottom:10px;" />
+                }
             </div>
         </div>
 

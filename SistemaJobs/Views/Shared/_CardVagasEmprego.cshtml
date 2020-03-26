@@ -16,6 +16,10 @@
                     }
                 </td>
                 <td style="text-align: right;">
+                    @if (Session["tipoUsuario"].ToString() == "empresa")
+                    {
+                        @Html.ActionLink("Editar", "Edit", new { id = Model.VagaProjetoViewModelId }, htmlAttributes: new { @class = "btn btn-danger btn-large" })
+                    }
                     @Html.ActionLink("Ver Mais", "Details", new { id = Model.VagaProjetoViewModelId }, htmlAttributes: new { @class = "btn btn-primary btn-large" })
                     @if (Model.QtdVagas > 1)
                     {
