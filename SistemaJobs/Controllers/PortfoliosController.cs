@@ -17,10 +17,11 @@ namespace SistemaJobs.Controllers
         private HiredItEntities db = new HiredItEntities();
 
         // GET: Portfolios
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             //var portfolio = db.Portfolio.Include(p => p.Funcionario);
-            return View(db.Portfolio.ToList());
+            var portfolio = db.Portfolio.Where(p => p.IdFuncionario == id);
+            return View(portfolio.ToList());
         }
 
         // GET: Portfolios/Details/5

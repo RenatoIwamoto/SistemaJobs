@@ -32,8 +32,11 @@
     <div>
         <div class="pull-right">
             <p>
-                @Html.ActionLink("Editar", "Edit", new { id = Model.IdPorfolio }) |
-                @Html.ActionLink("Voltar ao portfólio", "Index")
+                @if (Session["tipoUsuario"].ToString() == "funcionario")
+                {
+                    @Html.ActionLink("Editar | ", "Edit", new { id = Model.IdPorfolio });
+                }
+                @Html.ActionLink("Voltar ao portfólio", "Index", new { id = Model.IdFuncionario })
             </p>
         </div>
     </div>

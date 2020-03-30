@@ -56,7 +56,7 @@
 
         <div>
             <div style="text-align:right;">
-                @Html.ActionLink("Voltar", "Index", null, htmlAttributes: new { @class = "a-custom-voltar" })
+                @Html.ActionLink("Voltar | ", "Index", new { id = Model.IdFuncionario})
                 <input type="submit" value="Salvar" class="btn-custom" />
             </div>
         </div>

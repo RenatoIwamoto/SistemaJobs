@@ -33,14 +33,26 @@ namespace SistemaJobs.Controllers
             {
                 return HttpNotFound();
             }
+
+            candidato.Funcionario.Telefone = Convert.ToUInt64(candidato.Funcionario.Telefone).ToString(@"\(00\)00000\-0000");
+
             return View(candidato);
         }
 
         // GET: Candidatos/Create
         public ActionResult Create()
         {
-            ViewBag.IdFuncionario = new SelectList(db.Funcionario, "IdFuncionario", "Nome");
-            ViewBag.IdVagaProjeto = new SelectList(db.VagaProjeto, "IdVagaProjeto", "Titulo");
+            //ViewBag.IdFuncionario = new SelectList(db.Funcionario, "IdFuncionario", "Nome");
+            //ViewBag.IdVagaProjeto = new SelectList(db.VagaProjeto, "IdVagaProjeto", "Titulo");
+
+            var idVaga = Convert.ToInt32(Request["vagaId"]);
+
+            var cargos = db.Cargos.Where(s => s.IdVagaProjeto == idVaga && s.Status == 1);
+
+            ViewBag.ListaCargos = cargos.ToList();
+            ViewBag.IdFuncionario = Request["funcId"];
+            ViewBag.IdVagaProjeto = Request["vagaId"];
+
             return View();
         }
 
@@ -49,17 +61,24 @@ namespace SistemaJobs.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdCandidato,IdVagaProjeto,IdFuncionario")] Candidato candidato)
+        public ActionResult Create([Bind(Include = "IdCandidato,IdVagaProjeto,IdFuncionario,Cargo")] Candidato candidato)
         {
+            var cargo = Request.Form["Cargo"];
+
             if (ModelState.IsValid)
             {
+                candidato.VagaDesejada = cargo;
                 db.Candidato.Add(candidato);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdFuncionario = new SelectList(db.Funcionario, "IdFuncionario", "Nome", candidato.IdFuncionario);
-            ViewBag.IdVagaProjeto = new SelectList(db.VagaProjeto, "IdVagaProjeto", "Titulo", candidato.IdVagaProjeto);
+            //ViewBag.IdFuncionario = new SelectList(db.Funcionario, "IdFuncionario", "Nome", candidato.IdFuncionario);
+            //ViewBag.IdVagaProjeto = new SelectList(db.VagaProjeto, "IdVagaProjeto", "Titulo", candidato.IdVagaProjeto);
+
+            //ViewBag.IdFuncionario = Request["funcId"];
+            //ViewBag.IdVagaProjeto = Request["vagaId"];
+
             return View(candidato);
         }
 

@@ -36,8 +36,12 @@
 
                     @if (Session["tipoUsuario"].ToString() == "funcionario")
                     {
-                        <li>@Html.ActionLink("Meu Portfólio", "Index", "Portfolios")</li>
+                        <li>@Html.ActionLink("Meu Portfólio", "Index", "Portfolios", new { id = Session["usuarioLogadoID"] }, null)</li>
                         <li>@Html.ActionLink("Vagas de Emprego", "Index", "VagaProjeto")</li>
+                    }
+                    @if (Session["tipoUsuario"].ToString() == "empresa")
+                    {
+                        <li>@Html.ActionLink("Candidatos", "Index", "Candidatos")</li>
                     }
                     <li>@Html.ActionLink("Sair", "Login", "Login")</li>
                 </ul>

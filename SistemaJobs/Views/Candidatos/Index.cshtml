@@ -1,22 +1,61 @@
 ﻿@model IEnumerable<SistemaJobs.Candidato>
 
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
 }
 
-<!DOCTYPE html>
+<h2 style="margin-top:70px !important; color: #385898;">Candidatos</h2>
+<hr class="hr-custom" />
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
+
+@foreach (var item in Model)
+{
+    <div class="div-candidatos">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-md-12 lbl-custom">Nome:</label>
+                            <div class="col-md-12 txt-custom">
+                                @Html.DisplayFor(modelItem => item.Funcionario.Nome)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-md-12 lbl-custom">Interessado na vaga:</label>
+                            <div class="col-md-12 txt-custom">
+                                @Html.DisplayFor(modelItem => item.VagaProjeto.Titulo)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-md-12 lbl-custom">Cargo desejado:</label>
+                            <div class="col-md-12 txt-custom">
+                                @Html.DisplayFor(modelItem => item.VagaDesejada)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                @Html.ActionLink("Ver Perfil", "Details", new { id = item.IdCandidato })
+            </div>
+        </div>
+    </div>
+    <hr class="hr-custom" />
+}
+
+
+@*<table class="table">
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VagaDesejada)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Funcionario.Nome)
             </th>
@@ -25,23 +64,25 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Funcionario.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VagaProjeto.Titulo)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.IdCandidato }) |
-                @Html.ActionLink("Details", "Details", new { id=item.IdCandidato }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.IdCandidato })
-            </td>
-        </tr>
-    }
-    
-    </table>
-</body>
-</html>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VagaDesejada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Funcionario.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VagaProjeto.Titulo)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IdCandidato }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.IdCandidato }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.IdCandidato })
+                </td>
+            </tr>
+        }
+
+    </table>*@

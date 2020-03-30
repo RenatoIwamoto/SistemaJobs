@@ -391,10 +391,8 @@
     <Content Include="Views\VagaProjeto\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Candidatos\Create.cshtml" />
-    <Content Include="Views\Candidatos\Delete.cshtml" />
-    <Content Include="Views\Candidatos\Details.cshtml" />
-    <Content Include="Views\Candidatos\Edit.cshtml" />
     <Content Include="Views\Candidatos\Index.cshtml" />
+    <Content Include="Views\Candidatos\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,9 +4,12 @@
     ViewBag.Title = "Index";
 }
 
-<h2 style="margin-top:70px !important; color: #385898;">Meu Portfólio</h2>
+<h2 style="margin-top:70px !important; color: #385898;">Portfólio</h2>
 <p>
-    @Html.ActionLink("Novo Item", "Create")
+    @if (Session["tipoUsuario"].ToString() == "funcionario")
+    {
+        @Html.ActionLink("Novo Item", "Create")
+    }
 </p>
 <hr class="hr-custom" />
 
@@ -18,7 +21,7 @@
         <div class="descricao-port">
             @Html.DisplayFor(modelItem => item.Titulo)
         </div>
-        @Html.ActionLink("+ Ver detalhes", "Details", new { id = item.IdPorfolio }, htmlAttributes: new { @class = "font-detalhes" }) | @Html.ActionLink("Excluir", "Delete", new { id = item.IdPorfolio }, htmlAttributes: new { @class = "font-detalhes" })
+        @Html.ActionLink("+ Ver detalhes ", "Details", new { id = item.IdPorfolio }, htmlAttributes: new { @class = "font-detalhes" }) @if (Session["tipoUsuario"].ToString() == "funcionario") { @Html.ActionLink("| Excluir", "Delete", new { id = item.IdPorfolio }, htmlAttributes: new { @class = "font-detalhes" }) }
     </div>
     }
 </div>

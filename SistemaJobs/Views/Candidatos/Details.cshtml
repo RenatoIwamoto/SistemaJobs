@@ -1,42 +1,126 @@
 ﻿@model SistemaJobs.Candidato
 
-@{
-    Layout = null;
-}
+<h2 style="margin-top:70px; color: #385898;">Detalhe Candidato</h2>
+<hr class="hr-custom" />
 
-<!DOCTYPE html>
+<div>
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col-md-3">
+            <img src="~/Images/@(Model.Funcionario.Imagem)" style="max-width:70%;max-height:70%;" />
+            @*<h3 style="color: #385898;">@ViewBag.NomeEmpresa</h3>*@
+        </div>
+        <div class="col-md-9">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Funcionario.Nome, htmlAttributes: new { @class = "col-md-12 lbl-custom", style = "padding-top:0;" })
+                    <div class="col-md-12 txt-custom">
+                        @Html.DisplayFor(model => model.Funcionario.Nome)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Funcionario.Sobrenome, htmlAttributes: new { @class = "col-md-12 lbl-custom", style = "padding-top:0;" })
+                    <div class="col-md-12 txt-custom">
+                        @Html.DisplayFor(model => model.Funcionario.Sobrenome, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Funcionario.Email, htmlAttributes: new { @class = "col-md-12 lbl-custom", style = "padding-top:0;" })
+                    <div class="col-md-12 txt-custom">
+                        @Html.DisplayFor(model => model.Funcionario.Email, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Funcionario.Telefone, htmlAttributes: new { @class = "col-md-12 lbl-custom", style = "padding-top:0;" })
+                    <div class="col-md-12 txt-custom">
+                        @Html.DisplayFor(model => model.Funcionario.Telefone, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Funcionario.Cidade, htmlAttributes: new { @class = "col-md-12 lbl-custom", style = "padding-top:0;" })
+                    <div class="col-md-12 txt-custom">
+                        @Html.DisplayFor(model => model.Funcionario.Cidade, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Funcionario.Estado, htmlAttributes: new { @class = "col-md-12 lbl-custom", style = "padding-top:0;" })
+                    <div class="col-md-12 txt-custom">
+                        @Html.DisplayFor(model => model.Funcionario.Estado)
+                    </div>
+                </div>
+                @Html.ActionLink("Ver Portfólio", "Index", "Portfolios", new { id = Model.Funcionario.IdFuncionario }, new { @class = "btn-custom botaoInteressados" })
+            </div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>Candidato</h4>
-        <hr />
-        <dl class="dl-horizontal">
+        </div>
+    </div>
+    <hr class="hr-custom" />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="lbl-custom">Experiência Profissional</label>
+                <div class="txt-custom">
+                    <div style="padding-right:20px;">
+                        @Html.DisplayFor(model => model.Funcionario.Experiencia)
+                    </div>
+                </div>
+                @*@Html.TextArea("Experiencia", null, new { @class = "form-control", @cols = 40, @rows = 5, @style = "max-width: 95%" })*@
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="lbl-custom">Qualificações</label>
+                <div class="txt-custom">
+                    <div style="padding-right:20px;">
+                        @Html.DisplayFor(model => model.Funcionario.Qualificacoes)
+                    </div>
+                </div>
+                @*@Html.TextArea("Qualificacoes", null, new { @class = "form-control", @cols = 40, @rows = 5, @style = "max-width: 95%" })*@
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="lbl-custom">Sobre</label>
+                <div class="txt-custom">
+                    <div style="padding-right:20px;">
+                        @Html.DisplayFor(model => model.Funcionario.Sobre)
+                    </div>
+                </div>
+                @*@Html.TextArea("Sobre", null, new { @class = "form-control", @cols = 40, @rows = 5, @style = "max-width: 95%" })*@
+            </div>
+        </div>
+    </div>
+    @*<dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.VagaDesejada)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.VagaDesejada)
+            </dd>
+
             <dt>
                 @Html.DisplayNameFor(model => model.Funcionario.Nome)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Funcionario.Nome)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.VagaProjeto.Titulo)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.VagaProjeto.Titulo)
             </dd>
-    
-        </dl>
-    </div>
-    <p>
+
+        </dl>*@
+</div>
+@*<p>
         @Html.ActionLink("Edit", "Edit", new { id = Model.IdCandidato }) |
         @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+    </p>*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jquerymask")
+}
