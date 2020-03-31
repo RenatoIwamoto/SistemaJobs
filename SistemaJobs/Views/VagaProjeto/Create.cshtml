@@ -144,7 +144,14 @@
             <div class="row">
                 <div class="form-group col-md-12" style=" margin-top:30px; text-align: end;">
                     <div class="col-md-12">
-                        @Html.ActionLink("Voltar", "Index")
+                        @if (ViewBag.tipoVagaParam == "0")
+                        {
+                            @Html.ActionLink("Voltar |", "Index")
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Voltar |", "Index", "MeusProjetos")
+                        }
                         <input type="submit" value="Cadastrar" class="btn-custom" style="margin-left: 10px;" />
                     </div>
                 </div>

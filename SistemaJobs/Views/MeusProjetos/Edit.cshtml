@@ -1,4 +1,4 @@
-﻿@model SistemaJobs.FuncionarioProjeto
+﻿@model SistemaJobs.ViewModel.VagaProjetoViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -9,45 +9,86 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>FuncionarioProjeto</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.IdFuncionarioProjeto)
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.VagaProjetoViewModelId, new { @id = "id" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdFuncionario, "IdFuncionario", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdFuncionario", String.Empty)
-                @Html.ValidationMessageFor(model => model.IdFuncionario)
+    <div class="row">
+        @*<div class="col-md-4">
+
+            </div>*@
+
+        <div>
+
+            <div class="row" style="margin-bottom:10px;margin-top:50px;">
+                <div class="col-md-12">
+                    <h2 style="margin-top:50px; color: #385898;">@Html.DisplayFor(model => model.Titulo)</h2>
+                </div>
             </div>
-        </div>
+            <hr class="hr-custom" />
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-6">
+                    <label class="lbl-custom">Descrição</label>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdVagaProjeto, "IdVagaProjeto", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdVagaProjeto", String.Empty)
-                @Html.ValidationMessageFor(model => model.IdVagaProjeto)
+                <div class="col-md-6" style="padding-left:0px;">
+                    <div class="col-md-12">
+                        <label class="lbl-custom">Orçamento: </label>
+                        <span class="txt-custom">R$ @Model.SalarioOrcamento</span>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Ativo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Ativo)
-                @Html.ValidationMessageFor(model => model.Ativo)
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-12 txt-custom">
+                    <p>@Html.DisplayFor(model => model.Descricao)</p>
+                </div>
+
+                <div class="col-md-12">
+                    <label class="lbl-custom" style="margin-right:10px;">Habilidades Necessárias:</label>
+                    @foreach (var p in ViewBag.ListaCompetencias)
+                    {
+                        <span class="btn btn-primary btn-large">@p.NomeCompetencia</span>
+                    }
+                </div>
+
+                <div class="col-md-12" style="margin-top:10px;">
+                    <label class="lbl-custom">Data de Entrega:</label>
+                    <span class="txt-custom">@Model.DataFinal</span>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="lbl-custom">Cidade:</label>
+                    <span class="txt-custom">@Model.Cidade</span>
+                </div>
+                <div class="col-md-12" style="margin-top:10px;">
+                    <label class="lbl-custom">Estado:</label>
+                    <span class="txt-custom">@Model.Estado</span>
+                </div>
+                <div class="col-md-12" style="margin-top:10px;">
+                    <label class="lbl-custom">Integrantes do Projeto:</label>
+                    <br />
+                    @foreach (var p in ViewBag.candidatos)
+                    {
+                    <div style="margin-top:10px;">
+                        <input type="checkbox" name="checks" value="@p.Funcionario.IdFuncionario" />
+                        @p.Funcionario.Nome
+                        <span class="btn btn-primary btn-success">@p.Candidato.IdCandidato</span>
+                    </div>
+                    }
+                </div>
+                <hr class="hr-custom" />
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12" style=" margin-top:30px; text-align: end;">
+                    <div class="col-md-12">
+                        @Html.ActionLink("Voltar |", "Index")
+                        <input type="submit" value="Remover Candidatos" class="btn-custom" style="margin-left: 10px;" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

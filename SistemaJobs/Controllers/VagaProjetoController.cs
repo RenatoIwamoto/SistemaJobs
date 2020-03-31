@@ -76,7 +76,7 @@ namespace SistemaJobs.Controllers
             else
             {
                 var IdEmpresa = Convert.ToInt32(Session["usuarioLogadoID"]);
-                var vagas = db.VagaProjeto.Where(s => s.IdEmpresa == IdEmpresa);
+                var vagas = db.VagaProjeto.Where(s => s.IdEmpresa == IdEmpresa && s.TipoVaga == "0");
 
                 List<VagaProjetoViewModel> listaVagaProjetoVM = new List<VagaProjetoViewModel>();
 
@@ -127,32 +127,44 @@ namespace SistemaJobs.Controllers
                 return HttpNotFound();
             }
 
-            var cargos = db.Cargos.Where(s => s.IdVagaProjeto == id);
-            var competencias = db.Competencias.Where(s => s.IdVagaProjeto == id);
-            var nomeEmpresa = vagaProjeto.Empresa.Nome;
-            var imagemEmpresa = vagaProjeto.Empresa.Imagem;
+            var IdUsuarioLogado = Convert.ToInt32(Session["usuarioLogadoID"]);
+            var TipoUsuarioLogado = Session["tipoUsuario"];
 
-            ViewBag.ListaCargos = cargos.ToList();
-            ViewBag.ListaCompetencias = competencias.ToList();
-            ViewBag.IdVaga = id;
-            ViewBag.NomeEmpresa = nomeEmpresa;
-            ViewBag.Imagem = imagemEmpresa;
+            if (TipoUsuarioLogado == "funcionario" || (TipoUsuarioLogado == "empresa" && vagaProjeto.TipoVaga == "0" && vagaProjeto.IdEmpresa == IdUsuarioLogado))
+            {
 
-            VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
+                var cargos = db.Cargos.Where(s => s.IdVagaProjeto == id);
+                var competencias = db.Competencias.Where(s => s.IdVagaProjeto == id);
+                var nomeEmpresa = vagaProjeto.Empresa.Nome;
+                var imagemEmpresa = vagaProjeto.Empresa.Imagem;
+
+                ViewBag.ListaCargos = cargos.ToList();
+                ViewBag.ListaCompetencias = competencias.ToList();
+                ViewBag.IdVaga = id;
+                ViewBag.NomeEmpresa = nomeEmpresa;
+                ViewBag.Imagem = imagemEmpresa;
+
+                VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
                 cliVM.Titulo = vagaProjeto.Titulo;
                 cliVM.Descricao = vagaProjeto.Descricao;
                 cliVM.SalarioOrcamento = vagaProjeto.SalarioOrcamento;
                 cliVM.DataFinal = vagaProjeto.DataFinal;
                 cliVM.TipoVaga = vagaProjeto.TipoVaga;
 
-            return View(cliVM);
+                return View(cliVM);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: VagaProjeto/Create
-        public ActionResult Create()
+        public ActionResult Create(string tipoVagaParam)
         {
             if (Session["tipoUsuario"] == "empresa")
-            {            
+            {
+                ViewBag.tipoVagaParam = tipoVagaParam;
                 PopularDdlEstado();
                 PopularDdlRegimeContratacao();
                 PopularDdlTipoVaga();
@@ -240,7 +252,15 @@ namespace SistemaJobs.Controllers
                 }
 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (vagas.TipoVaga == "0")
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index2", "MeusProjetos", new { });
+                }
             }
 
             PopularDdlEstado();
@@ -252,18 +272,18 @@ namespace SistemaJobs.Controllers
         // GET: VagaProjeto/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["tipoUsuario"] == "empresa")
-            {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                VagaProjeto vagaProjeto = db.VagaProjeto.Find(id);
-                if (vagaProjeto == null)
-                {
-                    return HttpNotFound();
-                }
+          if (id == null)
+          {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+          }
+            VagaProjeto vagaProjeto = db.VagaProjeto.Find(id);
+          if (vagaProjeto == null)
+          {
+            return HttpNotFound();
+          }
 
+          if (Session["tipoUsuario"] == "empresa" && vagaProjeto.TipoVaga == "0")
+          {
                 VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
                 cliVM.VagaProjetoViewModelId = vagaProjeto.IdVagaProjeto;
                 cliVM.Titulo = vagaProjeto.Titulo;
@@ -457,7 +477,15 @@ namespace SistemaJobs.Controllers
                 }
 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (vagas.TipoVaga == "0")
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index2", "MeusProjetos", new {});
+                }
             }
 
             ViewBag.EstadoList = viewModel.Estado;

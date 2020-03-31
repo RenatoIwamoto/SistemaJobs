@@ -11,14 +11,14 @@ namespace SistemaJobs
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class FuncionarioProjeto
     {
         public int IdFuncionarioProjeto { get; set; }
         public int IdFuncionario { get; set; }
         public int IdVagaProjeto { get; set; }
         public int Ativo { get; set; }
-    
+
         public virtual Funcionario Funcionario { get; set; }
         public virtual VagaProjeto VagaProjeto { get; set; }
     }

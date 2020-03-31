@@ -25,6 +25,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav pull-right">
+
                     @if (Session["tipoUsuario"].ToString() == "funcionario")
                     {
                         <li>@Html.ActionLink("Meus Projetos", "Index", "MeusProjetos")</li>
@@ -32,15 +33,15 @@
                     }
                     else
                     {
-                        <li>@Html.ActionLink("Meus Projetos", "Index", "MeusProjetos")</li>
+                        <li>@Html.ActionLink("Meus Projetos", "Index2", "MeusProjetos")</li>
                         <li>@Html.ActionLink("Meu Perfil", "Details", "Empresas", new { id = @Session["usuarioLogadoID"] }, new { id = @Session["usuarioLogadoID"] })</li>
                     }
 
                     @if (Session["tipoUsuario"].ToString() == "funcionario")
                     {
                         <li>@Html.ActionLink("Meu Portfólio", "Index", "Portfolios")</li>
-                        <li>@Html.ActionLink("Vagas de Emprego", "Index", "VagaProjeto")</li>
                     }
+                    <li>@Html.ActionLink("Vagas de Emprego", "Index", "VagaProjeto")</li>
                     <li>@Html.ActionLink("Sair", "Login", "Login")</li>
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@

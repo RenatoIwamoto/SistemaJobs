@@ -397,6 +397,7 @@
     <Content Include="Views\MeusProjetos\Details.cshtml" />
     <Content Include="Views\MeusProjetos\Edit.cshtml" />
     <Content Include="Views\MeusProjetos\Index.cshtml" />
+    <Content Include="Views\MeusProjetos\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,15 +11,9 @@
 }
 else
 {
-    <h2 style="text-align:center;color:#385898;margin-top:80px;">Listagem de Vagas de Emprego e Projetos</h2>
+    <h2 style="margin-top:70px; color: #385898;">Vagas de Emprego</h2><span>@Html.ActionLink("Cadastrar Vaga de Emprego", "Create", "VagaProjeto", new { tipoVagaParam = "0" }, new { tipoVagaParam = "0" })</span>
 }
 <hr class="hr-custom" />
-
-@if (Session["tipoUsuario"].ToString() == "empresa")
-{<div style = "text-align: right; margin-bottom:10px;">
-    @Html.ActionLink("Cadastrar Vaga ou Projeto", "Create", "VagaProjeto", htmlAttributes: new { @class = "btn btn-primary btn-large" })
-</div>
-}
 
 @using (Html.BeginForm("Index", "VagaProjeto", FormMethod.Get))
 {
