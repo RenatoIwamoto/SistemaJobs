@@ -90,7 +90,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Senha, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.Senha, new { @class = "form-control" })
+                    @Html.PasswordFor(model => model.Senha, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Senha)
                 </div>
             </div>

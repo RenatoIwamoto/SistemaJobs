@@ -121,6 +121,22 @@ namespace SistemaJobs.Controllers
             return View();
         }
 
+        public ActionResult SalvarFuncionarioProjeto()
+        {
+            var idFuncionario = Convert.ToInt32(Request["idFuncionario"]);
+            var idVaga = Convert.ToInt32(Request["idVaga"]);
+
+            FuncionarioProjeto funcionarioProjeto = new FuncionarioProjeto();
+
+            funcionarioProjeto.IdFuncionario = idFuncionario;
+            funcionarioProjeto.IdVagaProjeto = idVaga;
+            funcionarioProjeto.Ativo = 1;
+            db.FuncionarioProjeto.Add(funcionarioProjeto);
+            db.SaveChanges();
+
+            return RedirectToAction("Details", "Candidatos", new { id = idFuncionario });
+        }
+
         // POST: VagaProjeto/Create
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.

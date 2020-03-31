@@ -150,6 +150,12 @@ input[type="checkbox"].input-validation-error {
     font-weight: bold;
 }
 
+.contratado {
+    padding: 5px 10px;
+    background: #098e55;
+    color: white;
+}
+
 @media (max-width: 767px) {
     .body-size {
         height: 100%;

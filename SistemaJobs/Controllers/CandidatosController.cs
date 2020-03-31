@@ -10,6 +10,7 @@ using SistemaJobs;
 
 namespace SistemaJobs.Controllers
 {
+    [Authorize]
     public class CandidatosController : Controller
     {
         private HiredItEntities db = new HiredItEntities();
@@ -35,6 +36,7 @@ namespace SistemaJobs.Controllers
             }
 
             candidato.Funcionario.Telefone = Convert.ToUInt64(candidato.Funcionario.Telefone).ToString(@"\(00\)00000\-0000");
+            ViewBag.Contratado = db.FuncionarioProjeto.FirstOrDefault(c => c.IdFuncionario == candidato.IdFuncionario && c.IdVagaProjeto == candidato.IdVagaProjeto);
 
             return View(candidato);
         }

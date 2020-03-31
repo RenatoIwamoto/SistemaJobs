@@ -64,7 +64,6 @@
                         @Html.DisplayFor(model => model.Funcionario.Experiencia)
                     </div>
                 </div>
-                @*@Html.TextArea("Experiencia", null, new { @class = "form-control", @cols = 40, @rows = 5, @style = "max-width: 95%" })*@
             </div>
         </div>
         <div class="col-md-4">
@@ -75,7 +74,6 @@
                         @Html.DisplayFor(model => model.Funcionario.Qualificacoes)
                     </div>
                 </div>
-                @*@Html.TextArea("Qualificacoes", null, new { @class = "form-control", @cols = 40, @rows = 5, @style = "max-width: 95%" })*@
             </div>
         </div>
         <div class="col-md-4">
@@ -86,36 +84,49 @@
                         @Html.DisplayFor(model => model.Funcionario.Sobre)
                     </div>
                 </div>
-                @*@Html.TextArea("Sobre", null, new { @class = "form-control", @cols = 40, @rows = 5, @style = "max-width: 95%" })*@
             </div>
         </div>
     </div>
-    @*<dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.VagaDesejada)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.VagaDesejada)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Funcionario.Nome)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Funcionario.Nome)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.VagaProjeto.Titulo)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.VagaProjeto.Titulo)
-            </dd>
-
-        </dl>*@
+    <hr class="hr-custom" />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="lbl-custom">Projeto</label>
+                <div class="txt-custom">
+                    <div style="padding-right:20px;">
+                        @Html.DisplayFor(model => model.VagaProjeto.Titulo)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="lbl-custom">Cargo Desejado</label>
+                <div class="txt-custom">
+                    <div style="padding-right:20px;">
+                        @Html.DisplayFor(model => model.VagaDesejada)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="lbl-custom"></label>
+                <div class="txt-custom">
+                    <div style="padding-right:20px;">
+                        @if (ViewBag.Contratado == null)
+                        {
+                            @Html.ActionLink("Contratar", "SalvarFuncionarioProjeto", "VagaProjeto", new { idFuncionario = Model.Funcionario.IdFuncionario, idVaga = Model.VagaProjeto.IdVagaProjeto }, new { @class = "btn-custom botaoInteressados" })
+                        }
+                        else
+                        {
+                            <span class="contratado">Já vinculado</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @*<p>
         @Html.ActionLink("Edit", "Edit", new { id = Model.IdCandidato }) |
