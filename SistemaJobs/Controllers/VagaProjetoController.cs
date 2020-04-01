@@ -282,7 +282,9 @@ namespace SistemaJobs.Controllers
             return HttpNotFound();
           }
 
-          if (Session["tipoUsuario"] == "empresa" && vagaProjeto.TipoVaga == "0")
+            var IdUsuarioLogado = Convert.ToInt32(Session["usuarioLogadoID"]);
+
+            if (Session["tipoUsuario"] == "empresa" && vagaProjeto.IdEmpresa == IdUsuarioLogado)
           {
                 VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
                 cliVM.VagaProjetoViewModelId = vagaProjeto.IdVagaProjeto;

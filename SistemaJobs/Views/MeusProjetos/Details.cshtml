@@ -71,11 +71,14 @@
                 {
                     <div style="margin-top:10px;">
                         @p.Funcionario.Nome
-                        <span class="btn btn-primary btn-success">@p.IdCandidato</span>
+                        <span class="btn btn-primary btn-success">@p.VagaDesejada</span>
                     </div>
                 }
             </div>
             <hr class="hr-custom" />
         </div>
-        </div>
+            <div class="col-md-12" style="text-align:end;">
+                @Html.ActionLink("Voltar", "Index")
+            </div>
+    </div>
 </div>

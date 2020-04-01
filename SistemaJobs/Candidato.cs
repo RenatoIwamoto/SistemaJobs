@@ -17,6 +17,7 @@ namespace SistemaJobs
         public int IdCandidato { get; set; }
         public int IdVagaProjeto { get; set; }
         public int IdFuncionario { get; set; }
+        public string VagaDesejada { get; set; }
     
         public virtual Funcionario Funcionario { get; set; }
         public virtual VagaProjeto VagaProjeto { get; set; }

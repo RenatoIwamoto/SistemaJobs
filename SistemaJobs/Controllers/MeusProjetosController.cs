@@ -189,7 +189,7 @@ namespace SistemaJobs.Controllers
                 return HttpNotFound();
             }
 
-            if (TipoUsuarioLogado == "empresa" && IdUsuarioLogado == vagaProjeto.IdEmpresa)
+            if (TipoUsuarioLogado == "empresa" && IdUsuarioLogado == vagaProjeto.IdEmpresa && vagaProjeto.TipoVaga == "1")
             {
                 var competencias = db.Competencias.Where(s => s.IdVagaProjeto == id);
                 ViewBag.ListaCompetencias = competencias.ToList();
