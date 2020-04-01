@@ -26,49 +26,6 @@ namespace SistemaJobs.Controllers
             var IdUsuarioLogado = Convert.ToInt32(Session["usuarioLogadoID"]);
             var TipoUsuarioLogado = Session["tipoUsuario"];
 
-            if (TipoUsuarioLogado == "funcionario")
-            {
-            var funcionarioProjeto = db.FuncionarioProjeto.Include(f => f.Funcionario).Include(f => f.VagaProjeto);
-            List<FuncionarioProjeto> listaVagaProjetoVM = new List<FuncionarioProjeto>();
-
-                var listaVagas = (from vag in funcionarioProjeto
-                                  select new
-                                  {
-                                      vag.IdFuncionarioProjeto,
-                                      vag.IdFuncionario,
-                                      vag.Funcionario,
-                                      vag.VagaProjeto,
-                                      vag.Ativo
-                                  }).OrderByDescending(s => s.IdFuncionarioProjeto).ToList();
-                var list = listaVagas.DistinctBy(s => s.IdFuncionarioProjeto);
-                list = list.Where(s => s.IdFuncionario == IdUsuarioLogado && s.Ativo == 1);
-
-                foreach (var item in list)
-                {
-                    FuncionarioProjeto cliVM = new FuncionarioProjeto(); //ViewModel
-                    cliVM.IdFuncionarioProjeto = item.IdFuncionarioProjeto;
-                    cliVM.Funcionario = item.Funcionario;
-                    cliVM.VagaProjeto = item.VagaProjeto;
-                    listaVagaProjetoVM.Add(cliVM);
-                }
-
-                int pageSize = 3;
-                int pageNumber = (page ?? 1);
-
-                return View(listaVagaProjetoVM.ToPagedList(pageNumber, pageSize));
-            }
-            else
-            {
-                return RedirectToAction("Index2");
-            }
-        }
-
-        // GET: MeusProjetos
-        public ActionResult Index2(int? page)
-        {
-            var IdUsuarioLogado = Convert.ToInt32(Session["usuarioLogadoID"]);
-            var TipoUsuarioLogado = Session["tipoUsuario"];
-
             if (TipoUsuarioLogado == "empresa")
             {
                 var empresaProjeto = db.VagaProjeto.Where(s => s.IdEmpresa == IdUsuarioLogado && s.TipoVaga == "1");
@@ -105,7 +62,31 @@ namespace SistemaJobs.Controllers
             }
             else
             {
-                return RedirectToAction("Index");
+                string select = "SELECT * FROM FuncionarioProjeto INNER JOIN VagaProjeto ON FuncionarioProjeto.IdVagaProjeto = VagaProjeto.IdVagaProjeto AND FuncionarioProjeto.Ativo = 1 AND FuncionarioProjeto.IdFuncionario = " + IdUsuarioLogado;
+                IEnumerable<FuncionarioProjeto> data = db.Database.SqlQuery<FuncionarioProjeto>(select);
+                List<VagaProjetoViewModel> listaVagaProjetoVM = new List<VagaProjetoViewModel>();
+                data = data.OrderByDescending(s => s.IdFuncionarioProjeto).ToList();
+
+                foreach (var item in data)
+                {
+                    VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
+                    VagaProjeto vagaProjeto = db.VagaProjeto.Find(item.IdVagaProjeto);
+                    FuncionarioProjeto funcionarioProjeto = db.FuncionarioProjeto.Find(item.IdFuncionarioProjeto);
+
+                    cliVM.VagaProjetoViewModelId = item.IdVagaProjeto;
+                    cliVM.Titulo = vagaProjeto.Titulo;
+                    cliVM.SalarioOrcamento = vagaProjeto.SalarioOrcamento;
+                    cliVM.QtdVagas = vagaProjeto.QtdVagas;
+                    cliVM.TipoVaga = vagaProjeto.TipoVaga;
+                    cliVM.Descricao = vagaProjeto.Descricao;
+                    cliVM.FuncionarioProjeto = funcionarioProjeto;
+                    listaVagaProjetoVM.Add(cliVM);
+                }
+
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                ViewBag.FuncionarioParam = HttpContext.Request.Path;
+                return View(listaVagaProjetoVM.ToPagedList(pageNumber, pageSize));
             }
         }
 
@@ -130,19 +111,26 @@ namespace SistemaJobs.Controllers
                 var competencias = db.Competencias.Where(s => s.IdVagaProjeto == funcionarioProjeto.IdVagaProjeto);
                 ViewBag.ListaCompetencias = competencias.ToList();
 
-                var funcionarioList = db.FuncionarioProjeto.Where(s => s.VagaProjeto.IdVagaProjeto == funcionarioProjeto.IdVagaProjeto && s.Ativo == 1);
+                string select = "select * from Candidato inner join FuncionarioProjeto on Candidato.IdVagaProjeto = FuncionarioProjeto.IdVagaProjeto and Candidato.IdFuncionario = FuncionarioProjeto.IdFuncionario WHERE FuncionarioProjeto.Ativo = 1 and FuncionarioProjeto.IdVagaProjeto = " + funcionarioProjeto.IdVagaProjeto;
+                IEnumerable<Candidato> data = db.Database.SqlQuery<Candidato>(select);
+                List<VagaProjetoViewModel> listaVagaProjetoVM = new List<VagaProjetoViewModel>();
 
-                var funcionario_candidato = (from func in funcionarioList
-                                             join cad in db.Candidato on func.IdVagaProjeto equals cad.IdVagaProjeto
-                                             select cad).ToList();
+                foreach (var item in data)
+                {
+                    Funcionario funcionario = db.Funcionario.Find(item.IdFuncionario);
+                    Candidato candidato = db.Candidato.Find(item.IdCandidato);
 
-                ViewBag.candidatos = funcionario_candidato.DistinctBy(s => s.IdCandidato);
-
+                    VagaProjetoViewModel vagaProjetoViewModel2 = new VagaProjetoViewModel();
+                    vagaProjetoViewModel2.Candidato = candidato;
+                    vagaProjetoViewModel2.Funcionario = funcionario;
+                    listaVagaProjetoVM.Add(vagaProjetoViewModel2);
+                }
+                ViewBag.candidatos = listaVagaProjetoVM;
                 return View(funcionarioProjeto);
             }
             else
             {
-                return RedirectToAction("Index2");
+                return RedirectToAction("Index");
             }
         }
 
@@ -278,16 +266,11 @@ namespace SistemaJobs.Controllers
                 {
                     foreach (var item in checks)
                     {
-                        var funcionarioProjeto = db.FuncionarioProjeto.FirstOrDefault(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId && s.IdFuncionario == item);
-                        db.FuncionarioProjeto.Remove(funcionarioProjeto);
-                    }
-
-                    foreach (var item in checks)
-                    {
-                        var IdFuncionarioProjetoAux = db.FuncionarioProjeto.FirstOrDefault(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId && s.IdFuncionario == item);
+                        var funcionarioProjetoDelete = db.FuncionarioProjeto.FirstOrDefault(s => s.IdVagaProjeto == viewModel.VagaProjetoViewModelId && s.IdFuncionario == item);
+                        db.FuncionarioProjeto.Remove(funcionarioProjetoDelete);
 
                         FuncionarioProjeto funcionarioProjeto = new FuncionarioProjeto();
-                        funcionarioProjeto.IdFuncionarioProjeto = IdFuncionarioProjetoAux.IdFuncionarioProjeto;
+                        funcionarioProjeto.IdFuncionarioProjeto = funcionarioProjeto.IdFuncionarioProjeto;
                         funcionarioProjeto.IdFuncionario = item;
                         funcionarioProjeto.IdVagaProjeto = viewModel.VagaProjetoViewModelId;
                         funcionarioProjeto.Ativo = 0;

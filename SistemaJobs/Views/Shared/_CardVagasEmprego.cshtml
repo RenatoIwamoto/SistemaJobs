@@ -30,7 +30,11 @@
                     }
                 }
 
-                @if (Session["tipoUsuario"].ToString() == "funcionario")
+                @if (Session["tipoUsuario"].ToString() == "funcionario" && (ViewBag.FuncionarioParam == "/MeusProjetos/Index" || ViewBag.FuncionarioParam == "/MeusProjetos"))
+                {
+                    @Html.ActionLink("Detalhes", "Details", new { id = Model.FuncionarioProjeto.IdFuncionarioProjeto }, htmlAttributes: new { @class = "btn btn-primary btn-large" })
+                }
+                else if (Session["tipoUsuario"].ToString() == "funcionario")
                 {
                     @Html.ActionLink("Ver Mais", "Details", "VagaProjeto", new { id = Model.VagaProjetoViewModelId }, htmlAttributes: new { @class = "btn btn-primary btn-large" })
                 }

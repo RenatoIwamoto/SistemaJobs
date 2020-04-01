@@ -1,11 +1,18 @@
 ﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<SistemaJobs.FuncionarioProjeto>
+@model PagedList.IPagedList<SistemaJobs.ViewModel.VagaProjetoViewModel>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2 style="text-align:center;color:#385898;margin-top:80px;">Meus Projetos</h2>
+@if (Session["tipoUsuario"].ToString() == "empresa")
+{
+    <h2 style="margin-top:70px; color: #385898;">Meus Projetos</h2><span>@Html.ActionLink("Cadastrar Projeto", "Create", "VagaProjeto", new { tipoVagaParam = "1" }, new { tipoVagaParam = "1" })</span>
+}
+else
+{
+    <h2 style="text-align:center;color:#385898;margin-top:80px;">Meus Projetos</h2>
+}
 <hr class="hr-custom" />
 
 @using (Html.BeginForm("Index", "MeusProjetos", FormMethod.Get))
@@ -14,7 +21,7 @@
 
 @foreach (var p in Model)
 {
-    @Html.Partial("_CardMeusProjetos", p)
+    @Html.Partial("_CardVagasEmprego", p)
 }
 
 <!-- Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount-->

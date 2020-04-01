@@ -53,5 +53,7 @@ namespace SistemaJobs.ViewModel
         public Candidato Candidato { get; set; }
 
         public Funcionario Funcionario { get; set; }
+
+        public FuncionarioProjeto FuncionarioProjeto { get; set; }
     }
 }
