@@ -241,6 +241,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\logo-hiredit.png" />
     <Content Include="Images\sistemajobs.jpg" />
+    <Content Include="Images\working.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

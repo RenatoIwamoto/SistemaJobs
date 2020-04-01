@@ -64,9 +64,9 @@ namespace SistemaJobs.Controllers
                         db.Dispose();
 
                         if (funcLogin != null)
-                            return RedirectToAction("Details", "Funcionarios");
+                            return RedirectToAction("About", "Home");
 
-                        return RedirectToAction("Details", "Empresas");
+                        return RedirectToAction("About", "Home");
                     }
                     else
                     {
