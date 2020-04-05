@@ -108,9 +108,8 @@
                     {
                         @Html.ActionLink("Voltar |", "Index", null, new { @class = "voltar-projeto" })
                     }
-                    @Html.ActionLink("Estou interessado", "GenerateTable", "Candidatos", new { vagaId = ViewBag.IdVaga, funcId = Session["usuarioLogadoID"] }, new { @class = "btn-custom botaoInteressados" })
                     @*<input type="submit" value="Estou Interessado" class="btn-custom botaoInteressados" style="margin-left: 10px; margin-bottom:10px;" />*@
-                    @Html.ActionLink("Voltar |", "Index", null, new { @class = "voltar-projeto" })
+                    @*@Html.ActionLink("Voltar |", "Index", null, new { @class = "voltar-projeto" })*@
                     @if (ViewBag.Candidato == null)
                     {
                         @Html.ActionLink("Estou interessado", "Create", "Candidatos", new { vagaId = ViewBag.IdVaga, funcId = Session["usuarioLogadoID"] }, new { @class = "btn-custom botaoInteressados" })

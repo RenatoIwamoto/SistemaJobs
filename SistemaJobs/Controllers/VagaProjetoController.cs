@@ -127,30 +127,25 @@ namespace SistemaJobs.Controllers
                 return HttpNotFound();
             }
 
-            var IdUsuarioLogado = Convert.ToInt32(Session["usuarioLogadoID"]);
-            var TipoUsuarioLogado = Session["tipoUsuario"];
+            var idUsuarioLogado = Convert.ToInt32(Session["usuarioLogadoID"]);
+            var tipoUsuarioLogado = Session["tipoUsuario"];
 
-            if (TipoUsuarioLogado == "funcionario" || (TipoUsuarioLogado == "empresa" && vagaProjeto.TipoVaga == "0" && vagaProjeto.IdEmpresa == IdUsuarioLogado))
+            if (tipoUsuarioLogado.ToString() == "funcionario" || (tipoUsuarioLogado.ToString() == "empresa" && vagaProjeto.TipoVaga == "0" && vagaProjeto.IdEmpresa == idUsuarioLogado))
             {
 
                 var cargos = db.Cargos.Where(s => s.IdVagaProjeto == id);
                 var competencias = db.Competencias.Where(s => s.IdVagaProjeto == id);
+                var candidato = db.Candidato.FirstOrDefault(c => c.IdFuncionario == idUsuarioLogado && c.IdVagaProjeto == id);
+
                 var nomeEmpresa = vagaProjeto.Empresa.Nome;
                 var imagemEmpresa = vagaProjeto.Empresa.Imagem;
-            var idFuncionario = Convert.ToInt32(Session["usuarioLogadoID"]);
 
-            var cargos = db.Cargos.Where(s => s.IdVagaProjeto == id);
-            var competencias = db.Competencias.Where(s => s.IdVagaProjeto == id);
-            var candidato = db.Candidato.FirstOrDefault(c => c.IdFuncionario == idFuncionario && c.IdVagaProjeto == id);
-            var nomeEmpresa = vagaProjeto.Empresa.Nome;
-            var imagemEmpresa = vagaProjeto.Empresa.Imagem;
-
-            ViewBag.ListaCargos = cargos.ToList();
-            ViewBag.ListaCompetencias = competencias.ToList();
-            ViewBag.Candidato = candidato;
-            ViewBag.IdVaga = id;
-            ViewBag.NomeEmpresa = nomeEmpresa;
-            ViewBag.Imagem = imagemEmpresa;
+                ViewBag.ListaCargos = cargos.ToList();
+                ViewBag.ListaCompetencias = competencias.ToList();
+                ViewBag.Candidato = candidato;
+                ViewBag.IdVaga = id;
+                ViewBag.NomeEmpresa = nomeEmpresa;
+                ViewBag.Imagem = imagemEmpresa;
 
                 VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
                 cliVM.Titulo = vagaProjeto.Titulo;
@@ -170,7 +165,7 @@ namespace SistemaJobs.Controllers
         // GET: VagaProjeto/Create
         public ActionResult Create(string tipoVagaParam)
         {
-            if (Session["tipoUsuario"] == "empresa")
+            if (Session["tipoUsuario"].ToString() == "empresa")
             {
                 ViewBag.tipoVagaParam = tipoVagaParam;
                 PopularDdlEstado();
