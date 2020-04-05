@@ -20,8 +20,8 @@
           </Key>
           <Property Name="IdCargos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nome" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="IdVagaProjeto" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Competencias">
           <Key>
@@ -44,8 +44,8 @@
           <Property Name="Cidade" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Senha" Type="varchar" MaxLength="12" Nullable="false" />
-          <Property Name="Sobre" Type="varchar" MaxLength="500" />
           <Property Name="Imagem" Type="varchar" MaxLength="200" />
+          <Property Name="Sobre" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Funcionario">
           <Key>

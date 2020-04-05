@@ -183,6 +183,7 @@
     <Compile Include="Controllers\FuncionariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MeusProjetosController.cs" />
     <Compile Include="Controllers\PortfoliosController.cs" />
     <Compile Include="Controllers\VagaProjetoController.cs" />
     <Compile Include="Empresa.cs">
@@ -391,6 +392,11 @@
     <Content Include="Views\VagaProjeto\Edit.cshtml" />
     <Content Include="Views\VagaProjeto\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\MeusProjetos\Create.cshtml" />
+    <Content Include="Views\MeusProjetos\Delete.cshtml" />
+    <Content Include="Views\MeusProjetos\Details.cshtml" />
+    <Content Include="Views\MeusProjetos\Edit.cshtml" />
+    <Content Include="Views\MeusProjetos\Index.cshtml" />
     <Content Include="Views\Candidatos\Create.cshtml" />
     <Content Include="Views\Candidatos\Index.cshtml" />
     <Content Include="Views\Candidatos\Details.cshtml" />

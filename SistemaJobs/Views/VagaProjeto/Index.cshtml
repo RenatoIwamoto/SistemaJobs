@@ -5,15 +5,25 @@
     ViewBag.Title = "Index";
 }
 
-<h2 style="text-align:center;color:#385898;margin-top:80px;">Vagas de Emprego e Projetos</h2>
+@if (Session["tipoUsuario"].ToString() == "funcionario")
+{
+    <h2 style="text-align:center;color:#385898;margin-top:80px;">Vagas de Emprego e Projetos</h2>
+}
+else
+{
+    <h2 style="margin-top:70px; color: #385898;">Vagas de Emprego</h2><span>@Html.ActionLink("Cadastrar Vaga de Emprego", "Create", "VagaProjeto", new { tipoVagaParam = "0" }, new { tipoVagaParam = "0" })</span>
+}
 <hr class="hr-custom" />
 
 @using (Html.BeginForm("Index", "VagaProjeto", FormMethod.Get))
 {
-    <p style="text-align:center;margin-bottom:50px;">
-        @Html.TextBox("SearchString", null, new { @class = "control-label lbl-custom" })
-        <input class = "control-label lbl-custom" type="submit" value="Pesquisar" />
-    </p>
+    if (Session["tipoUsuario"].ToString() == "funcionario")
+    {
+        <p style="text-align:center;margin-bottom:50px;">
+            @Html.TextBox("SearchString", null, new { @class = "control-label lbl-custom" })
+            <input class="control-label lbl-custom" type="submit" value="Pesquisar" />
+        </p>
+    }
 }
 
 @foreach (var p in Model)

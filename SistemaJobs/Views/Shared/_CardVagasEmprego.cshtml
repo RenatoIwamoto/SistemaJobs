@@ -1,31 +1,53 @@
 ﻿@model SistemaJobs.ViewModel.VagaProjetoViewModel
 
-    <div class="well">
-        <table style="width: -webkit-fill-available">
-            <tr>
-                <td>
-                    @Model.Titulo
-                    <br />
-                    @if (Model.TipoVaga == "0")
+<div class="well">
+    <table style="width: -webkit-fill-available">
+        <tr>
+            <td>
+                @Model.Titulo
+                <br />
+                @if (Model.TipoVaga == "0")
+                {
+                    <p>Salário: R$ @Model.SalarioOrcamento</p>
+                }
+                else
+                {
+                    <p>Orçamento: R$ @Model.SalarioOrcamento</p>
+                }
+            </td>
+            <td style="text-align: right;">
+                @if (Session["tipoUsuario"].ToString() == "empresa")
+                {
+                    @Html.ActionLink("Editar", "Edit", "VagaProjeto", new { id = Model.VagaProjetoViewModelId }, htmlAttributes: new { @class = "btn btn-danger btn-large", @style = "margin-right: 5px;" })
+
+                    if (Model.TipoVaga == "0")
                     {
-                        <p>Salário: R$ @Model.SalarioOrcamento</p>
+                        @Html.ActionLink("Ver Mais", "Details", "VagaProjeto", new { id = Model.VagaProjetoViewModelId }, htmlAttributes: new { @class = "btn btn-primary btn-large" })
                     }
                     else
                     {
-                        <p>Orçamento: R$ @Model.SalarioOrcamento</p>
+                        @Html.ActionLink("Ver Mais", "Edit", "MeusProjetos", new { id = Model.VagaProjetoViewModelId }, htmlAttributes: new { @class = "btn btn-primary btn-large" })
                     }
-                </td>
-                <td style="text-align: right;">
-                    @Html.ActionLink("Ver Mais", "Details", new { id = Model.VagaProjetoViewModelId }, htmlAttributes: new { @class = "btn btn-primary btn-large" })
-                    @if (Model.QtdVagas > 1)
-                    {
-                        <p style="margin-top:5px; font-size:12px;">@Model.QtdVagas vagas disponíveis</p>
-                    }
-                    else if (Model.QtdVagas == 1)
-                    {
-                        <p style="margin-top:5px; font-size:12px;">@Model.QtdVagas vaga disponível</p>
-                    }
-                </td>
-            </tr>
-        </table>
-    </div>
+                }
+
+                @if (Session["tipoUsuario"].ToString() == "funcionario" && (ViewBag.FuncionarioParam == "/MeusProjetos/Index" || ViewBag.FuncionarioParam == "/MeusProjetos"))
+                {
+                    @Html.ActionLink("Detalhes", "Details", new { id = Model.FuncionarioProjeto.IdFuncionarioProjeto }, htmlAttributes: new { @class = "btn btn-primary btn-large" })
+                }
+                else if (Session["tipoUsuario"].ToString() == "funcionario")
+                {
+                    @Html.ActionLink("Ver Mais", "Details", "VagaProjeto", new { id = Model.VagaProjetoViewModelId }, htmlAttributes: new { @class = "btn btn-primary btn-large" })
+                }
+
+                @if (Model.QtdVagas > 1)
+                {
+                    <p style="margin-top:5px; font-size:12px;">@Model.QtdVagas vagas disponíveis</p>
+                }
+                else if (Model.QtdVagas == 1)
+                {
+                    <p style="margin-top:5px; font-size:12px;">@Model.QtdVagas vaga disponível</p>
+                }
+            </td>
+        </tr>
+    </table>
+</div>

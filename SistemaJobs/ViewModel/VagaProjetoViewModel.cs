@@ -49,5 +49,11 @@ namespace SistemaJobs.ViewModel
         public string[] ListaCargos { get; set; }
 
         public string[] ListaCompetencias { get; set; }
+
+        public Candidato Candidato { get; set; }
+
+        public Funcionario Funcionario { get; set; }
+
+        public FuncionarioProjeto FuncionarioProjeto { get; set; }
     }
 }

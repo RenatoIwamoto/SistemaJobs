@@ -7,36 +7,48 @@
 <script>
     $(document).ready(function () {
         var s1 = $(".select2").select2({
-            tags: true,
-            tokenSeparators: [',', ' '],
+            tags: true
         });
 
         var s2 = $(".estadoselect2").select2({
             tags: true,
-            width: '100px',
+            width: '100px'
         });
 
         var s3 = $(".regimecontratacaoselect2").select2({
-            tags: true,
+            tags: true
         });
-                
+
+        var s4 = $(".tipovagaselect2").select2({
+            tags: true
+        });
+
         var array = @Html.Raw(Json.Encode(@ViewBag.Comp));
         var array2 = @Html.Raw(Json.Encode(@ViewBag.EstadoList));
         var array3 = @Html.Raw(Json.Encode(@ViewBag.RegimeContratacaoList));
+        var array4 = @Html.Raw(Json.Encode(@ViewBag.TipoVagaList));
 
         s1.val(array).trigger("change");
         s2.val(array2).trigger("change");
         s3.val(array3).trigger("change");
+        s4.val(array4).trigger("change");
     });
 </script>
 <style>
-.select2-container .select2-selection--single {
-    height: 34px !important;
-}
+    .select2-container .select2-selection--single {
+        height: 34px !important;
+    }
 </style>
 <script src="~/Scripts/select2.min.js"></script>
 
-<h2 style="margin-top:50px; color: #385898;">Editar Vaga de emprego</h2>
+@if (Model.TipoVaga == "0")
+{
+    <h2 style="margin-top:50px; color: #385898;">Editar Vaga de emprego</h2>
+}
+else
+{
+    <h2 style="margin-top:50px; color: #385898;">Editar Projeto</h2>
+}
 <hr class="hr-custom" />
 
 @using (Html.BeginForm())
@@ -70,7 +82,7 @@
             <div class="form-group col-md-12">
                 <div class="col-md-6" style="padding:0px">
                     <div class="col-md-12">
-                        @Html.LabelFor(model => model.NomeCompetencia, "Competências", htmlAttributes: new { @class = "control-label lbl-custom" })*
+                        @Html.LabelFor(model => model.ListaCompetencias, "Competências", htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
                         <select multiple class="form-control select2" id="ListaCompetencias" name="ListaCompetencias">
@@ -85,7 +97,7 @@
 
                 <div class="col-md-6" style="padding:0px">
                     <div class="col-md-12">
-                        @Html.LabelFor(model => model.NomeCargo, "Cargos", htmlAttributes: new { @class = "control-label lbl-custom" })*
+                        @Html.LabelFor(model => model.ListaCargos, "Cargos", htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
                         <select multiple class="form-control select2" id="ListaCargos" name="ListaCargos">
@@ -127,10 +139,10 @@
 
                 <div class="col-md-3" style="padding:0px">
                     <div class="col-md-12">
-                        @Html.LabelFor(model => model.RegimeContratacao, htmlAttributes: new { @class = "control-label lbl-custom" })
+                        @Html.LabelFor(model => model.RegimeContratacao, htmlAttributes: new { @class = "control-label lbl-custom" })*
                     </div>
                     <div class="col-md-12">
-                        <select class="form-control regimecontratacaoselect2" id="RegimeContratacao" name="RegimeContratacao" style="height:200px;">
+                        <select class="form-control regimecontratacaoselect2" id="RegimeContratacao" name="RegimeContratacao" style="height:200px; width:auto;">
                             @foreach (var p in ViewBag.RegimeContratacao)
                             {
                                 <option style="width:auto;">@p.Value</option>
@@ -172,12 +184,35 @@
                         @Html.ValidationMessageFor(model => model.DataFinal)
                     </div>
                 </div>
+
+                <div class="col-md-6" style="padding:0px">
+                    <div class="col-md-12">
+                        @Html.LabelFor(model => model.TipoVaga, "Tipo de Cadastro", htmlAttributes: new { @class = "control-label lbl-custom" })*
+                    </div>
+                    <div class="col-md-12">
+                        <select class="form-control tipovagaselect2" id="TipoVaga" name="TipoVaga" style="height:200px; width:auto;">
+                            @foreach (var p in ViewBag.TipoVaga)
+                            {
+                                <option style="width:auto;">@p.Text</option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.TipoVaga)
+                        <h5 style="color:#b94a48; line-height: 1.428571429;">@ViewBag.message3</h5>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-md-12" style=" margin-top:30px; text-align: end;">
                     <div class="col-md-12">
-                        @Html.ActionLink("Voltar", "Index")
+                        @if (Model.TipoVaga == "0")
+                        {
+                            @Html.ActionLink("Voltar", "Index")
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Voltar", "Index", "MeusProjetos")
+                        }
                         <input type="submit" value="Editar" class="btn-custom" style="margin-left: 10px;" />
                     </div>
                 </div>
