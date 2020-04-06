@@ -62,7 +62,7 @@ namespace SistemaJobs.Controllers
             }
             else
             {
-                string select = "SELECT * FROM FuncionarioProjeto INNER JOIN VagaProjeto ON FuncionarioProjeto.IdVagaProjeto = VagaProjeto.IdVagaProjeto AND FuncionarioProjeto.Ativo = 1 AND FuncionarioProjeto.IdFuncionario = " + IdUsuarioLogado;
+                string select = "SELECT * FROM FuncionarioProjeto INNER JOIN VagaProjeto ON FuncionarioProjeto.IdVagaProjeto = VagaProjeto.IdVagaProjeto AND FuncionarioProjeto.Ativo = 1 AND VagaProjeto.TipoVaga = 1 AND FuncionarioProjeto.IdFuncionario = " + IdUsuarioLogado;
                 IEnumerable<FuncionarioProjeto> data = db.Database.SqlQuery<FuncionarioProjeto>(select);
                 List<VagaProjetoViewModel> listaVagaProjetoVM = new List<VagaProjetoViewModel>();
                 data = data.OrderByDescending(s => s.IdFuncionarioProjeto).ToList();
@@ -106,7 +106,7 @@ namespace SistemaJobs.Controllers
                 return HttpNotFound();
             }
 
-            if (TipoUsuarioLogado == "funcionario" && funcionarioProjeto.IdFuncionario == IdUsuarioLogado && funcionarioProjeto.Ativo == 1)
+            if (TipoUsuarioLogado == "funcionario" && funcionarioProjeto.IdFuncionario == IdUsuarioLogado && funcionarioProjeto.Ativo == 1 && funcionarioProjeto.VagaProjeto.TipoVaga == "1")
             {
                 var competencias = db.Competencias.Where(s => s.IdVagaProjeto == funcionarioProjeto.IdVagaProjeto);
                 ViewBag.ListaCompetencias = competencias.ToList();
@@ -125,6 +125,12 @@ namespace SistemaJobs.Controllers
                     vagaProjetoViewModel2.Funcionario = funcionario;
                     listaVagaProjetoVM.Add(vagaProjetoViewModel2);
                 }
+
+                var nomeEmpresa = funcionarioProjeto.VagaProjeto.Empresa.Nome;
+                var imagemEmpresa = funcionarioProjeto.VagaProjeto.Empresa.Imagem;
+
+                ViewBag.NomeEmpresa = nomeEmpresa;
+                ViewBag.Imagem = imagemEmpresa;
                 ViewBag.candidatos = listaVagaProjetoVM;
                 return View(funcionarioProjeto);
             }
@@ -132,34 +138,7 @@ namespace SistemaJobs.Controllers
             {
                 return RedirectToAction("Index");
             }
-        }
-
-        // GET: MeusProjetos/Create
-        public ActionResult Create()
-        {
-            ViewBag.IdFuncionario = new SelectList(db.Funcionario, "IdFuncionario", "Nome");
-            ViewBag.IdVagaProjeto = new SelectList(db.VagaProjeto, "IdVagaProjeto", "Titulo");
-            return View();
-        }
-
-        // POST: MeusProjetos/Create
-        // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
-        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdFuncionarioProjeto,IdFuncionario,IdVagaProjeto,Ativo")] FuncionarioProjeto funcionarioProjeto)
-        {
-            if (ModelState.IsValid)
-            {
-                db.FuncionarioProjeto.Add(funcionarioProjeto);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.IdFuncionario = new SelectList(db.Funcionario, "IdFuncionario", "Nome", funcionarioProjeto.IdFuncionario);
-            ViewBag.IdVagaProjeto = new SelectList(db.VagaProjeto, "IdVagaProjeto", "Titulo", funcionarioProjeto.IdVagaProjeto);
-            return View(funcionarioProjeto);
-        }
+        }       
 
         // GET: MeusProjetos/Edit/5
         public ActionResult Edit(int? id)
@@ -196,6 +175,12 @@ namespace SistemaJobs.Controllers
                     vagaProjetoViewModel2.Funcionario = funcionario;
                     listaVagaProjetoVM.Add(vagaProjetoViewModel2);
                 }
+
+                var nomeEmpresa = vagaProjeto.Empresa.Nome;
+                var imagemEmpresa = vagaProjeto.Empresa.Imagem;
+
+                ViewBag.NomeEmpresa = nomeEmpresa;
+                ViewBag.Imagem = imagemEmpresa;
                 ViewBag.candidatos = listaVagaProjetoVM;
 
                 VagaProjetoViewModel vagaProjetoViewModel = new VagaProjetoViewModel();
@@ -260,7 +245,6 @@ namespace SistemaJobs.Controllers
                     vagaProjetoViewModel2.Funcionario = funcionario;
                     listaVagaProjetoVM.Add(vagaProjetoViewModel2);
                 }
-                ViewBag.candidatos = listaVagaProjetoVM;
 
                 if (checks != null)
                 {
@@ -280,6 +264,13 @@ namespace SistemaJobs.Controllers
                     return RedirectToAction("Index");
                 }
                 else {
+                    var nomeEmpresa = vagaProjeto.Empresa.Nome;
+                    var imagemEmpresa = vagaProjeto.Empresa.Imagem;
+
+                    ViewBag.NomeEmpresa = nomeEmpresa;
+                    ViewBag.Imagem = imagemEmpresa;
+                    ViewBag.candidatos = listaVagaProjetoVM;
+
                     return View(vagaProjetoViewModel);
                 }
             }
@@ -287,32 +278,6 @@ namespace SistemaJobs.Controllers
             {
                 return RedirectToAction("Index");
             }
-        }
-
-        // GET: MeusProjetos/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            FuncionarioProjeto funcionarioProjeto = db.FuncionarioProjeto.Find(id);
-            if (funcionarioProjeto == null)
-            {
-                return HttpNotFound();
-            }
-            return View(funcionarioProjeto);
-        }
-
-        // POST: MeusProjetos/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            FuncionarioProjeto funcionarioProjeto = db.FuncionarioProjeto.Find(id);
-            db.FuncionarioProjeto.Remove(funcionarioProjeto);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

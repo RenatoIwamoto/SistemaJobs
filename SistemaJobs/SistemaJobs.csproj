@@ -387,13 +387,10 @@
     <Content Include="Views\Portfolios\Index.cshtml" />
     <Content Include="Views\Shared\_CardVagasEmprego.cshtml" />
     <Content Include="Views\VagaProjeto\Create.cshtml" />
-    <Content Include="Views\VagaProjeto\Delete.cshtml" />
     <Content Include="Views\VagaProjeto\Details.cshtml" />
     <Content Include="Views\VagaProjeto\Edit.cshtml" />
     <Content Include="Views\VagaProjeto\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\MeusProjetos\Create.cshtml" />
-    <Content Include="Views\MeusProjetos\Delete.cshtml" />
     <Content Include="Views\MeusProjetos\Details.cshtml" />
     <Content Include="Views\MeusProjetos\Edit.cshtml" />
     <Content Include="Views\MeusProjetos\Index.cshtml" />

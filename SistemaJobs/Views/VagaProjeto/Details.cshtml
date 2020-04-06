@@ -95,14 +95,7 @@
                 <div class="col-md-12" style="text-align:end;">
                     @if (Session["tipoUsuario"].ToString() == "empresa")
                     {
-                        if (Model.TipoVaga == "0")
-                        {
-                            @Html.ActionLink("Voltar |", "Index", null, new { @class = "voltar-projeto" })
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Voltar |", "Index", "MeusProjetos", null, new { @class = "voltar-projeto" })
-                        }
+                        @Html.ActionLink("Voltar", "Index", null, new { @class = "voltar-projeto" })   
                     }
                     else
                     {
@@ -110,15 +103,18 @@
                     }
                     @*<input type="submit" value="Estou Interessado" class="btn-custom botaoInteressados" style="margin-left: 10px; margin-bottom:10px;" />*@
                     @*@Html.ActionLink("Voltar |", "Index", null, new { @class = "voltar-projeto" })*@
-                    @if (ViewBag.Candidato == null)
+                    @if (Session["tipoUsuario"].ToString() == "funcionario")
                     {
-                        @Html.ActionLink("Estou interessado", "Create", "Candidatos", new { vagaId = ViewBag.IdVaga, funcId = Session["usuarioLogadoID"] }, new { @class = "btn-custom botaoInteressados" })
+                        if (ViewBag.Candidato == null)
+                        {
+                            @Html.ActionLink("Estou interessado", "Create", "Candidatos", new { vagaId = ViewBag.IdVaga, funcId = Session["usuarioLogadoID"] }, new { @class = "btn-custom botaoInteressados" })
+                        }
+                        else
+                        {
+                            <span class="ja-enviado">Já enviado</span>
+                        }
                     }
-                    else
-                    {
-                        <span class="ja-enviado">Já enviado</span>
-                    }
-                </div>
+                    </div>
             </div>
         </div>
         
