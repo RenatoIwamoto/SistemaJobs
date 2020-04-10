@@ -72,7 +72,7 @@ namespace SistemaJobs.Controllers
                 candidato.VagaDesejada = cargo;
                 db.Candidato.Add(candidato);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "VagaProjeto", new { id = candidato.IdVagaProjeto });
             }
 
             //ViewBag.IdFuncionario = new SelectList(db.Funcionario, "IdFuncionario", "Nome", candidato.IdFuncionario);
@@ -81,7 +81,7 @@ namespace SistemaJobs.Controllers
             //ViewBag.IdFuncionario = Request["funcId"];
             //ViewBag.IdVagaProjeto = Request["vagaId"];
 
-            return View(candidato);
+            return RedirectToAction("Details", "VagaProjeto", new { id = candidato.IdVagaProjeto });
         }
 
         // GET: Candidatos/Edit/5
