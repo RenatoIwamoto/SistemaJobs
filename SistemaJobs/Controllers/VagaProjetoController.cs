@@ -278,7 +278,7 @@ namespace SistemaJobs.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index2", "MeusProjetos", new { });
+                    return RedirectToAction("Index", "MeusProjetos", new { });
                 }
             }
 
@@ -505,7 +505,7 @@ namespace SistemaJobs.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index2", "MeusProjetos", new {});
+                    return RedirectToAction("Index", "MeusProjetos", new {});
                 }
             }
 
@@ -561,32 +561,6 @@ namespace SistemaJobs.Controllers
             }
             aux2 = aux.Split(',').ToArray();
             ViewBag.Comp = aux2;
-        }
-        
-        // GET: VagaProjeto/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VagaProjeto vagaProjeto = db.VagaProjeto.Find(id);
-            if (vagaProjeto == null)
-            {
-                return HttpNotFound();
-            }
-            return View(vagaProjeto);
-        }
-
-        // POST: VagaProjeto/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            VagaProjeto vagaProjeto = db.VagaProjeto.Find(id);
-            db.VagaProjeto.Remove(vagaProjeto);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         //Popula a lista de Estados brasileiros
@@ -654,11 +628,3 @@ namespace SistemaJobs.Controllers
         }
     }
 }
-
-
-
-
-
-
-
-

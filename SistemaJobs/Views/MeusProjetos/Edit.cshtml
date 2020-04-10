@@ -4,8 +4,6 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -18,77 +16,82 @@
             </div>*@
 
         <div>
-
-            <div class="row" style="margin-bottom:10px;margin-top:50px;">
-                <div class="col-md-12">
-                    <h2 style="margin-top:50px; color: #385898;">@Html.DisplayFor(model => model.Titulo)</h2>
-                </div>
+            <div class="col-md-3" style="text-align:center;margin-top:150px;">
+                <img src="~/Images/@(ViewBag.Imagem)" style="border-radius:100%;max-width:70%;max-height:70%;" />
+                <h3 style="color: #385898;">@ViewBag.NomeEmpresa</h3>
             </div>
-            <hr class="hr-custom" />
-            <div class="row" style="margin-bottom: 10px;">
-                <div class="col-md-6">
-                    <label class="lbl-custom">Descrição</label>
-                </div>
 
-                <div class="col-md-6" style="padding-left:0px;">
+            <div class="col-md-9">
+                <div class="row" style="margin-bottom:10px;margin-top:50px;">
                     <div class="col-md-12">
-                        <label class="lbl-custom">Orçamento: </label>
-                        <span class="txt-custom">R$ @Model.SalarioOrcamento</span>
+                        <h2 style="margin-top:50px; color: #385898;">@Html.DisplayFor(model => model.Titulo)</h2>
+                        <div class="txt-custom">
+                            <p>@Html.DisplayFor(model => model.Descricao)</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="row" style="margin-bottom: 10px;">
-                <div class="col-md-12 txt-custom">
-                    <p>@Html.DisplayFor(model => model.Descricao)</p>
-                </div>
-
-                <div class="col-md-12">
-                    <label class="lbl-custom" style="margin-right:10px;">Habilidades Necessárias:</label>
-                    @foreach (var p in ViewBag.ListaCompetencias)
-                    {
-                        <span class="btn btn-primary btn-large">@p.NomeCompetencia</span>
-                    }
-                </div>
-
-                <div class="col-md-12" style="margin-top:10px;">
-                    <label class="lbl-custom">Data de Entrega:</label>
-                    <span class="txt-custom">@Model.DataFinal</span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <label class="lbl-custom">Cidade:</label>
-                    <span class="txt-custom">@Model.Cidade</span>
-                </div>
-                <div class="col-md-12" style="margin-top:10px;">
-                    <label class="lbl-custom">Estado:</label>
-                    <span class="txt-custom">@Model.Estado</span>
-                </div>
-                <div class="col-md-12" style="margin-top:10px;">
-                    <label class="lbl-custom">Integrantes do Projeto:</label>
-                    <br />
-                    @foreach (var p in ViewBag.candidatos)
-                    {
-                    <div style="margin-top:10px;">
-                        <input type="checkbox" name="checks" value="@p.Funcionario.IdFuncionario" />
-                        @p.Funcionario.Nome
-                        <span class="btn btn-primary btn-success">@p.Candidato.VagaDesejada</span>
-                    </div>
-                    }
                 </div>
                 <hr class="hr-custom" />
-            </div>
+                <div class="row" style="margin-bottom: 10px;">
+                     <div class="col-md-6" style="padding-left:0px;">
+                        <div class="col-md-12">
+                            <label class="lbl-custom">Orçamento: </label>
+                            <span class="txt-custom">R$ @Model.SalarioOrcamento</span>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="row">
-                <div class="form-group col-md-12" style=" margin-top:30px; text-align: end;">
+                <div class="row" style="margin-bottom: 10px;">
                     <div class="col-md-12">
-                        @Html.ActionLink("Voltar |", "Index")
-                        <input type="submit" value="Remover Candidatos" class="btn-custom" style="margin-left: 10px;" />
+                        <label class="lbl-custom" style="margin-right:10px;">Habilidades Necessárias:</label>
+                        <h4>
+                            @foreach (var p in ViewBag.ListaCompetencias)
+                            {
+                                <span class="label label-default">@p.NomeCompetencia</span>
+                            }
+                        </h4>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top:10px;">
+                        <label class="lbl-custom">Data de Entrega:</label>
+                        <span class="txt-custom">@Model.DataFinal</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="lbl-custom">Cidade:</label>
+                        <span class="txt-custom">@Model.Cidade</span>
+
+                        <div style="margin-top:10px;">
+                            <label class="lbl-custom">Estado:</label>
+                            <span class="txt-custom">@Model.Estado</span>
+                        </div>
+
+                        <div style="margin-top:10px;">
+                            <label class="lbl-custom">Integrantes do Projeto:</label>
+
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    @foreach (var p in ViewBag.candidatos)
+                                    {
+                                        <input type="checkbox" name="checks" value="@p.Funcionario.IdFuncionario" />
+                                        <h6 class="btn btn-primary btn-large">@p.Funcionario.Nome</h6>
+                                        <h6 class="btn btn-primary btn-success">@p.Candidato.VagaDesejada</h6>
+                                        <br />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="hr-custom" />
+                    </div>
+
+                    <div class="col-md-12" style="text-align:end;">
+                            @Html.ActionLink("Voltar |", "Index")
+                            <input type="submit" value="Remover Candidatos" class="btn-custom" style="margin-left: 10px;" />
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+  </div>
 }

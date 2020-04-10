@@ -4,81 +4,84 @@
     ViewBag.Title = "Details";
 }
 
-<style type="text/css" media="screen and (max-width:400px)">
-    .botaoInteressados {
-        font-size: 10px;
-    }
-</style>
-
 <div class="row">
     @*<div class="col-md-4">
 
         </div>*@
 
     <div>
-
-        <div class="row" style="margin-bottom:10px;margin-top:50px;">
-            <div class="col-md-12">
-                <h2 style="margin-top:50px; color: #385898;">@Html.DisplayFor(model => model.VagaProjeto.Titulo)</h2>
-            </div>
+        <div class="col-md-3" style="text-align:center;margin-top:150px;">
+            <img src="~/Images/@(ViewBag.Imagem)" style="border-radius:100%;max-width:70%;max-height:70%;" />
+            <h3 style="color: #385898;">@ViewBag.NomeEmpresa</h3>
         </div>
-        <hr class="hr-custom" />
-        <div class="row" style="margin-bottom: 10px;">
-            <div class="col-md-6">
-                <label class="lbl-custom">Descrição</label>
+        <div class="col-md-9">
+            <div class="row" style="margin-bottom:10px;margin-top:50px;">
+                <div class="col-md-12">
+                    <h2 style="margin-top:50px; color: #385898;">@Html.DisplayFor(model => model.VagaProjeto.Titulo)</h2>
+                    <div class="txt-custom">
+                        <p>@Html.DisplayFor(model => model.VagaProjeto.Descricao)</p>
+                    </div>
+                </div>
+            </div>
+            <hr class="hr-custom" />
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-6" style="padding-left:0px;">
+                    <div class="col-md-12">
+                        <label class="lbl-custom">Orçamento: </label>
+                        <span class="txt-custom">R$ @Model.VagaProjeto.SalarioOrcamento</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-md-6" style="padding-left:0px;">
+            <div class="row" style="margin-bottom: 10px;">
                 <div class="col-md-12">
-                    <label class="lbl-custom">Orçamento: </label>
-                    <span class="txt-custom">R$ @Model.VagaProjeto.SalarioOrcamento</span>
+                    <label class="lbl-custom" style="margin-right:10px;">Habilidades Necessárias:</label>
+                    <h4>
+                        @foreach (var p in ViewBag.ListaCompetencias)
+                        {
+                            <span class="label label-default">@p.NomeCompetencia</span>
+                        }
+                    </h4>
+                </div>
+
+                <div class="col-md-12" style="margin-top:10px;">
+                    <label class="lbl-custom">Data de Entrega:</label>
+                    <span class="txt-custom">@Model.VagaProjeto.DataFinal</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="lbl-custom">Cidade:</label>
+                    <span class="txt-custom">@Model.VagaProjeto.Cidade</span>
+
+                    <div style="margin-top:10px;">
+                        <label class="lbl-custom">Estado:</label>
+                        <span class="txt-custom">@Model.VagaProjeto.Estado</span>
+                    </div>
+
+                    <div style="margin-top:10px;">
+                        <label class="lbl-custom">Integrantes do Projeto:</label>
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                @foreach (var p in ViewBag.candidatos)
+                                {
+                                    <h6 class="btn btn-primary btn-large">@p.Funcionario.Nome</h6>
+                                    <h6 class="btn btn-primary btn-success">@p.Candidato.VagaDesejada</h6>
+                                    <br />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="hr-custom" />
+                </div>
+
+                <div class="col-md-12" style="text-align:end;">
+                    @Html.ActionLink("Voltar", "Index")
                 </div>
             </div>
         </div>
-
-        <div class="row" style="margin-bottom: 10px;">
-            <div class="col-md-12 txt-custom">
-                <p>@Html.DisplayFor(model => model.VagaProjeto.Descricao)</p>
-            </div>
-
-            <div class="col-md-12">
-                <label class="lbl-custom" style="margin-right:10px;">Habilidades Necessárias:</label>
-                @foreach (var p in ViewBag.ListaCompetencias)
-                {
-                    <span class="btn btn-primary btn-large">@p.NomeCompetencia</span>
-                }
-            </div>
-
-            <div class="col-md-12" style="margin-top:10px;">
-                <label class="lbl-custom">Data de Entrega:</label>
-                <span class="txt-custom">@Model.VagaProjeto.DataFinal</span>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="lbl-custom">Cidade:</label>
-                <span class="txt-custom">@Model.VagaProjeto.Cidade</span>
-            </div>
-            <div class="col-md-12" style="margin-top:10px;">
-                <label class="lbl-custom">Estado:</label>
-                <span class="txt-custom">@Model.VagaProjeto.Estado</span>
-            </div>
-            <div class="col-md-12" style="margin-top:10px;">
-                <label class="lbl-custom">Integrantes do Projeto:</label>
-                <br />
-                @foreach (var p in ViewBag.candidatos)
-                {
-                    <div style="margin-top:10px;">
-                        @p.Funcionario.Nome
-                        <span class="btn btn-primary btn-success">@p.Candidato.VagaDesejada</span>
-                    </div>
-                }
-            </div>
-            <hr class="hr-custom" />
-        </div>
-            <div class="col-md-12" style="text-align:end;">
-                @Html.ActionLink("Voltar", "Index")
-            </div>
     </div>
 </div>
