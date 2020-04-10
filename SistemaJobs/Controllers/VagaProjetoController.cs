@@ -20,7 +20,7 @@ namespace SistemaJobs.Controllers
         // GET: VagaProjeto
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {
-            if (Session["tipoUsuario"] == "funcionario")
+            if (Session["tipoUsuario"].ToString() == "funcionario")
             {
                 if (searchString != null)
                 {
