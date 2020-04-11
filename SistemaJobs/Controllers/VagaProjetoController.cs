@@ -303,7 +303,7 @@ namespace SistemaJobs.Controllers
 
             var IdUsuarioLogado = Convert.ToInt32(Session["usuarioLogadoID"]);
 
-            if (Session["tipoUsuario"] == "empresa" && vagaProjeto.IdEmpresa == IdUsuarioLogado)
+            if (Session["tipoUsuario"].ToString() == "empresa" && vagaProjeto.IdEmpresa == IdUsuarioLogado)
           {
                 VagaProjetoViewModel cliVM = new VagaProjetoViewModel(); //ViewModel
                 cliVM.VagaProjetoViewModelId = vagaProjeto.IdVagaProjeto;
