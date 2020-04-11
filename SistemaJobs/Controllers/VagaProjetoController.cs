@@ -192,7 +192,9 @@ namespace SistemaJobs.Controllers
             db.FuncionarioProjeto.Add(funcionarioProjeto);
             db.SaveChanges();
 
-            return RedirectToAction("Details", "Candidatos", new { id = idFuncionario });
+            var idCandidato = db.Candidato.First(c => c.IdVagaProjeto == idVaga && c.IdFuncionario == idFuncionario).IdCandidato;
+
+            return RedirectToAction("Details", "Candidatos", new { id = idCandidato });
         }
 
         // POST: VagaProjeto/Create

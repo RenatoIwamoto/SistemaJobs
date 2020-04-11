@@ -192,6 +192,9 @@ namespace SistemaJobs.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Imagem = portfolio.Imagem;
+
             return View(portfolio);
         }
 
