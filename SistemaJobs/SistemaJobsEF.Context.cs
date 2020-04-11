@@ -33,5 +33,7 @@ namespace SistemaJobs
         public virtual DbSet<Competencias> Competencias { get; set; }
         public virtual DbSet<FuncionarioProjeto> FuncionarioProjeto { get; set; }
         public virtual DbSet<Candidato> Candidato { get; set; }
+        public virtual DbSet<Mensagem> Mensagem { get; set; }
+        public virtual DbSet<Conversa> Conversa { get; set; }
     }
 }

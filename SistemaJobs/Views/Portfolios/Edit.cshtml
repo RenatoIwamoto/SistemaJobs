@@ -12,6 +12,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.IdPorfolio)
+    @Html.HiddenFor(model => model.IdFuncionario)
     <input type="hidden" name="ImagemSalva" id="ImagemSalva" value="@ViewBag.ImagemSalva" />
 
     <div class="form-horizontal">
@@ -56,7 +57,7 @@
 
         <div>
             <div style="text-align:right;">
-                @Html.ActionLink("Voltar | ", "Index", new { id = Model.IdFuncionario})
+                @Html.ActionLink("Voltar | ", "Index", new { id = Model.IdFuncionario })
                 <input type="submit" value="Salvar" class="btn-custom" />
             </div>
         </div>

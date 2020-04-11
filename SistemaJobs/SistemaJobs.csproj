@@ -183,9 +183,13 @@
     <Compile Include="Controllers\FuncionariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MensagensController.cs" />
     <Compile Include="Controllers\MeusProjetosController.cs" />
     <Compile Include="Controllers\PortfoliosController.cs" />
     <Compile Include="Controllers\VagaProjetoController.cs" />
+    <Compile Include="Conversa.cs">
+      <DependentUpon>SistemaJobsEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Empresa.cs">
       <DependentUpon>SistemaJobsEF.tt</DependentUpon>
     </Compile>
@@ -199,6 +203,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="KeyAttribute.cs" />
+    <Compile Include="Mensagem.cs">
+      <DependentUpon>SistemaJobsEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Portfolio.cs">
@@ -397,6 +404,11 @@
     <Content Include="Views\Candidatos\Create.cshtml" />
     <Content Include="Views\Candidatos\Index.cshtml" />
     <Content Include="Views\Candidatos\Details.cshtml" />
+    <Content Include="Views\Mensagens\Create.cshtml" />
+    <Content Include="Views\Mensagens\Delete.cshtml" />
+    <Content Include="Views\Mensagens\Details.cshtml" />
+    <Content Include="Views\Mensagens\Edit.cshtml" />
+    <Content Include="Views\Mensagens\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

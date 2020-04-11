@@ -21,6 +21,9 @@
         <EntityTypeShape EntityType="HiredItModel.Candidato" Width="1.5" PointX="8.25" PointY="6.375" />
         <AssociationConnector Association="HiredItModel.FK_Candidato_Funcionario" />
         <AssociationConnector Association="HiredItModel.FK_Candidato_VagaProjeto" />
+        <EntityTypeShape EntityType="HiredItModel.Mensagem" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HiredItModel.Conversa" Width="1.5" PointX="7.125" PointY="10" />
+        <AssociationConnector Association="HiredItModel.FK_Mens_Conv" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,0 +1,129 @@
+﻿@model SistemaJobs.Mensagem
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2 style="margin-top:70px; color: #385898;">Mensagens</h2>
+<hr class="hr-custom" />
+
+<div class="row">
+    <div class="col-md-3 part-chat">
+        <div class="row">
+            <div class="desc-chat">
+                <div class="col-md-4">
+                    <img src="~/Images/@(ViewBag.Imagem)" style="border-radius:0;max-width:100%;max-height:100%;" />
+                </div>
+                <div class="col-md-8">
+                    <p>@ViewBag.Nome</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="desc-chat">
+                <div class="col-md-4">
+                    <img src="~/Images/@(ViewBag.Imagem)" style="border-radius:0;max-width:100%;max-height:100%;" />
+                </div>
+                <div class="col-md-8">
+                    <p>@ViewBag.Nome</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="talk-bubble tri-right border round left-top">
+                <div class="talktext">
+                    <p>Teste mensagem remetente</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="talk-bubble tri-right border round right-top pull-right">
+                <div class="talktext">
+                    <p>Teste mensagem destinatário</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" name="Mensagem1" class="form-control" placeholder="Digite sua mensagem">
+                                <span class="input-group-btn">
+                                    <input type="submit" value="Enviar" class="btn btn-default" />
+                                    @Html.ValidationMessageFor(model => model.Mensagem1)
+                                </span>
+                            </div><!-- /input-group -->
+                            @*@Html.EditorFor(model => model.Mensagem1)
+                            @Html.ValidationMessageFor(model => model.Mensagem1)*@
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>*@
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Mensagem</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdRemetente, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IdRemetente)
+                @Html.ValidationMessageFor(model => model.IdRemetente)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdDestinatario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IdDestinatario)
+                @Html.ValidationMessageFor(model => model.IdDestinatario)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Mensagem1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Mensagem1)
+                @Html.ValidationMessageFor(model => model.Mensagem1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Data)
+                @Html.ValidationMessageFor(model => model.Data)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}*@
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

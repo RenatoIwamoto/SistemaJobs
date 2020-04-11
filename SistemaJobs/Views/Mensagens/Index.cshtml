@@ -1,0 +1,51 @@
+﻿@model IEnumerable<SistemaJobs.Mensagem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdRemetente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdDestinatario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mensagem1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdRemetente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdDestinatario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mensagem1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdMensagem }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdMensagem }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdMensagem })
+        </td>
+    </tr>
+}
+
+</table>

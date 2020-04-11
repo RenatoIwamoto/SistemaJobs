@@ -150,10 +150,11 @@ namespace SistemaJobs.Controllers
             {
                 db.Entry(portfolio).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Portfolios", new { id = portfolio.IdFuncionario });
             }
             ViewBag.IdFuncionario = new SelectList(db.Funcionario, "IdFuncionario", "Nome", portfolio.IdFuncionario);
-            return View(portfolio);
+
+            return RedirectToAction("Index", "Portfolios", new { id = portfolio.IdFuncionario });
         }
 
         public bool ValidaImagem(HttpPostedFileBase imagem)

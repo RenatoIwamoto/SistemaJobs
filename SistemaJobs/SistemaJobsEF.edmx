@@ -20,8 +20,8 @@
           </Key>
           <Property Name="IdCargos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nome" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="IdVagaProjeto" Type="int" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="IdVagaProjeto" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Competencias">
           <Key>
@@ -30,6 +30,15 @@
           <Property Name="IdCompetencias" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NomeCompetencia" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="IdVagaProjeto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Conversa">
+          <Key>
+            <PropertyRef Name="IdConversa" />
+          </Key>
+          <Property Name="IdConversa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRemetenteInicial" Type="int" />
+          <Property Name="TipoRemetenteInicial" Type="varchar" MaxLength="20" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -44,8 +53,8 @@
           <Property Name="Cidade" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Senha" Type="varchar" MaxLength="12" Nullable="false" />
-          <Property Name="Imagem" Type="varchar" MaxLength="200" />
           <Property Name="Sobre" Type="varchar" MaxLength="500" />
+          <Property Name="Imagem" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Funcionario">
           <Key>
@@ -74,6 +83,17 @@
           <Property Name="IdFuncionario" Type="int" Nullable="false" />
           <Property Name="IdVagaProjeto" Type="int" Nullable="false" />
           <Property Name="Ativo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mensagem">
+          <Key>
+            <PropertyRef Name="IdMensagem" />
+          </Key>
+          <Property Name="IdMensagem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRemetente" Type="int" Nullable="false" />
+          <Property Name="IdDestinatario" Type="int" Nullable="false" />
+          <Property Name="Mensagem" Type="varchar(max)" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="IdConversa" Type="int" />
         </EntityType>
         <EntityType Name="Portfolio">
           <Key>
@@ -174,6 +194,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Mens_Conv">
+          <End Role="Conversa" Type="Self.Conversa" Multiplicity="0..1" />
+          <End Role="Mensagem" Type="Self.Mensagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conversa">
+              <PropertyRef Name="IdConversa" />
+            </Principal>
+            <Dependent Role="Mensagem">
+              <PropertyRef Name="IdConversa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Port_Func">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="0..1" />
           <End Role="Portfolio" Type="Self.Portfolio" Multiplicity="*" />
@@ -202,9 +234,11 @@
           <EntitySet Name="Candidato" EntityType="Self.Candidato" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cargos" EntityType="Self.Cargos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Competencias" EntityType="Self.Competencias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conversa" EntityType="Self.Conversa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Funcionario" EntityType="Self.Funcionario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FuncionarioProjeto" EntityType="Self.FuncionarioProjeto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mensagem" EntityType="Self.Mensagem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Portfolio" EntityType="Self.Portfolio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VagaProjeto" EntityType="Self.VagaProjeto" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Candidato_Funcionario" Association="Self.FK_Candidato_Funcionario">
@@ -230,6 +264,10 @@
           <AssociationSet Name="FK_FuncionarioProjeto2" Association="Self.FK_FuncionarioProjeto2">
             <End Role="VagaProjeto" EntitySet="VagaProjeto" />
             <End Role="FuncionarioProjeto" EntitySet="FuncionarioProjeto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mens_Conv" Association="Self.FK_Mens_Conv">
+            <End Role="Conversa" EntitySet="Conversa" />
+            <End Role="Mensagem" EntitySet="Mensagem" />
           </AssociationSet>
           <AssociationSet Name="FK_Port_Func" Association="Self.FK_Port_Func">
             <End Role="Funcionario" EntitySet="Funcionario" />
@@ -323,6 +361,12 @@
           <AssociationSet Name="FK_Candidato_VagaProjeto" Association="HiredItModel.FK_Candidato_VagaProjeto">
             <End Role="VagaProjeto" EntitySet="VagaProjeto" />
             <End Role="Candidato" EntitySet="Candidato" />
+          </AssociationSet>
+          <EntitySet Name="Mensagem" EntityType="HiredItModel.Mensagem" />
+          <EntitySet Name="Conversa" EntityType="HiredItModel.Conversa" />
+          <AssociationSet Name="FK_Mens_Conv" Association="HiredItModel.FK_Mens_Conv">
+            <End Role="Conversa" EntitySet="Conversa" />
+            <End Role="Mensagem" EntitySet="Mensagem" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Portfolio">
@@ -495,6 +539,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Mensagem">
+          <Key>
+            <PropertyRef Name="IdMensagem" />
+          </Key>
+          <Property Name="IdMensagem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRemetente" Type="Int32" Nullable="false" />
+          <Property Name="IdDestinatario" Type="Int32" Nullable="false" />
+          <Property Name="Mensagem1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdConversa" Type="Int32" />
+          <NavigationProperty Name="Conversa" Relationship="HiredItModel.FK_Mens_Conv" FromRole="Mensagem" ToRole="Conversa" />
+        </EntityType>
+        <EntityType Name="Conversa">
+          <Key>
+            <PropertyRef Name="IdConversa" />
+          </Key>
+          <Property Name="IdConversa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRemetenteInicial" Type="Int32" />
+          <Property Name="TipoRemetenteInicial" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Mensagem" Relationship="HiredItModel.FK_Mens_Conv" FromRole="Conversa" ToRole="Mensagem" />
+        </EntityType>
+        <Association Name="FK_Mens_Conv">
+          <End Type="HiredItModel.Conversa" Role="Conversa" Multiplicity="0..1" />
+          <End Type="HiredItModel.Mensagem" Role="Mensagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conversa">
+              <PropertyRef Name="IdConversa" />
+            </Principal>
+            <Dependent Role="Mensagem">
+              <PropertyRef Name="IdConversa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -603,6 +681,28 @@
                 <ScalarProperty Name="IdFuncionario" ColumnName="IdFuncionario" />
                 <ScalarProperty Name="IdVagaProjeto" ColumnName="IdVagaProjeto" />
                 <ScalarProperty Name="IdCandidato" ColumnName="IdCandidato" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mensagem">
+            <EntityTypeMapping TypeName="HiredItModel.Mensagem">
+              <MappingFragment StoreEntitySet="Mensagem">
+                <ScalarProperty Name="IdConversa" ColumnName="IdConversa" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Mensagem1" ColumnName="Mensagem" />
+                <ScalarProperty Name="IdDestinatario" ColumnName="IdDestinatario" />
+                <ScalarProperty Name="IdRemetente" ColumnName="IdRemetente" />
+                <ScalarProperty Name="IdMensagem" ColumnName="IdMensagem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Conversa">
+            <EntityTypeMapping TypeName="HiredItModel.Conversa">
+              <MappingFragment StoreEntitySet="Conversa">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="TipoRemetenteInicial" ColumnName="TipoRemetenteInicial" />
+                <ScalarProperty Name="IdRemetenteInicial" ColumnName="IdRemetenteInicial" />
+                <ScalarProperty Name="IdConversa" ColumnName="IdConversa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
