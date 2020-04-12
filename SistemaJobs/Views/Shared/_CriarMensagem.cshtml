@@ -1,0 +1,29 @@
+﻿@model SistemaJobs.Mensagem
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="IdRemetente" id="IdRemetente" value="@Session["usuarioLogadoID"]" />
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <input type="text" name="Mensagem1" class="form-control" placeholder="Digite sua mensagem">
+                        <span class="input-group-btn">
+                            <input type="submit" value="Enviar" class="btn btn-default" />
+                            @Html.ValidationMessageFor(model => model.Mensagem1)
+                        </span>
+                    </div><!-- /input-group -->
+                    @*@Html.EditorFor(model => model.Mensagem1)
+                        @Html.ValidationMessageFor(model => model.Mensagem1)*@
+                </div>
+            </div>
+            @*<div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>*@
+        </div>
+    }

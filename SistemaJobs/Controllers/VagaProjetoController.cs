@@ -143,6 +143,7 @@ namespace SistemaJobs.Controllers
                 ViewBag.ListaCargos = cargos.ToList();
                 ViewBag.ListaCompetencias = competencias.ToList();
                 ViewBag.Candidato = candidato;
+                ViewBag.IdEmpresa = vagaProjeto.IdEmpresa;
                 ViewBag.IdVaga = id;
                 ViewBag.NomeEmpresa = nomeEmpresa;
                 ViewBag.Imagem = imagemEmpresa;

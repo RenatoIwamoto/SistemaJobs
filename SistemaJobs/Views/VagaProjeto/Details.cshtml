@@ -19,6 +19,7 @@
         <div class="col-md-3" style="text-align:center;margin-top:150px;">
             <img src="~/Images/@(ViewBag.Imagem)" style="border-radius:100%;max-width:70%;max-height:70%;" />
             <h3 style="color: #385898;">@ViewBag.NomeEmpresa</h3>
+            @Html.ActionLink("Enviar Mensagem", "Index", "Mensagens", new { id = Session["usuarioLogadoID"], idDestinatario = ViewBag.IdEmpresa, tipo = Session["tipoUsuario"] }, null)
         </div>
         <div class="col-md-9">
             <div class="row" style="margin-bottom:10px;margin-top:50px;">

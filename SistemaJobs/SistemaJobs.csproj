@@ -409,6 +409,8 @@
     <Content Include="Views\Mensagens\Details.cshtml" />
     <Content Include="Views\Mensagens\Edit.cshtml" />
     <Content Include="Views\Mensagens\Index.cshtml" />
+    <Content Include="Views\Shared\_Chat.cshtml" />
+    <Content Include="Views\Shared\_CriarMensagem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

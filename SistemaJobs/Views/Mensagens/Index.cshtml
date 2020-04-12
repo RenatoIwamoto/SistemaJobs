@@ -4,48 +4,88 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2 style="margin-top:70px !important; color: #385898;">Portfólio</h2>
+<hr class="hr-custom" />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.IdRemetente)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IdDestinatario)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Mensagem1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Data)
-        </th>
-        <th></th>
-    </tr>
+<div class="row">
+    <div class="col-md-3 part-chat">
+        <div class="row">
+            <div class="desc-chat">
+                <div class="col-md-4">
+                    <img src="~/Images/@(ViewBag.ImagemRemetente)" style="border-radius:0;max-width:100%;max-height:100%;" />
+                </div>
+                <div class="col-md-8">
+                    <p>@ViewBag.NomeRemetente</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="desc-chat">
+                <div class="col-md-4">
+                    <img src="~/Images/@(ViewBag.ImagemDestinatario)" style="border-radius:0;max-width:100%;max-height:100%;" />
+                </div>
+                <div class="col-md-8">
+                    <p>@ViewBag.NomeDestinatario</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdRemetente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdDestinatario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mensagem1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Data)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdMensagem }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdMensagem }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdMensagem })
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <div class="talk-bubble tri-right border round left-top">
+                    <div class="talktext">
+                        <p>@item.Mensagem1</p>
+                    </div>
+                </div>
+            </div>
+        }
 
-</table>
+        <div class="row">
+            @{Html.RenderAction("Create", "Mensagens");}
+        </div>
+    </div>
+</div>
+
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRemetente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDestinatario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mensagem1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRemetente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDestinatario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mensagem1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.IdMensagem }) |
+                @Html.ActionLink("Details", "Details", new { id=item.IdMensagem }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.IdMensagem })
+            </td>
+        </tr>
+    }
+
+    </table>*@

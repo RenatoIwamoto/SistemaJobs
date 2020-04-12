@@ -3,54 +3,13 @@
 @{
     ViewBag.Title = "Create";
 }
-
-<h2 style="margin-top:70px; color: #385898;">Mensagens</h2>
-<hr class="hr-custom" />
-
-<div class="row">
-    <div class="col-md-3 part-chat">
-        <div class="row">
-            <div class="desc-chat">
-                <div class="col-md-4">
-                    <img src="~/Images/@(ViewBag.Imagem)" style="border-radius:0;max-width:100%;max-height:100%;" />
-                </div>
-                <div class="col-md-8">
-                    <p>@ViewBag.Nome</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="desc-chat">
-                <div class="col-md-4">
-                    <img src="~/Images/@(ViewBag.Imagem)" style="border-radius:0;max-width:100%;max-height:100%;" />
-                </div>
-                <div class="col-md-8">
-                    <p>@ViewBag.Nome</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-9">
-        <div class="row">
-            <div class="talk-bubble tri-right border round left-top">
-                <div class="talktext">
-                    <p>Teste mensagem remetente</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="talk-bubble tri-right border round right-top pull-right">
-                <div class="talktext">
-                    <p>Teste mensagem destinatário</p>
-                </div>
-            </div>
-        </div>
         <div class="row">
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
+                <input type="hidden" name="IdRemetente" id="IdRemetente" value="@Session["usuarioLogadoID"]" />
 
-                <div class="form-horizontal">
+                <div>
                     @Html.ValidationSummary(true)
                     <div class="form-group">
                         <div class="col-md-12">
@@ -73,8 +32,6 @@
                 </div>
             }
         </div>
-    </div>
-</div>
 
 @*@using (Html.BeginForm())
 {
