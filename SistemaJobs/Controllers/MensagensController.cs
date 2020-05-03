@@ -15,6 +15,22 @@ namespace SistemaJobs.Controllers
         private HiredItEntities db = new HiredItEntities();
 
         // GET: Mensagens
+        //public ActionResult Index()
+        //{
+        //    var idUsuarioLogado = Convert.ToInt32(Session["usuarioLogadoID"]);
+        //    var idDestinatario = Convert.ToInt32(Request["idDestinatario"]);
+        //    var tipoUsuarioLogado = Session["tipoUsuario"].ToString();
+        //    var tipoDestinatario = Request["tipo"] == "funcionario" ? "empresa" : "funcionario";
+
+        //    ViewBag.ImagemRemetente = tipoUsuarioLogado == "funcionario" ? db.Funcionario.FirstOrDefault(f => f.IdFuncionario == idUsuarioLogado).Imagem.ToString() : db.Empresa.FirstOrDefault(e => e.IdEmpresa == idUsuarioLogado).Imagem.ToString();
+        //    ViewBag.NomeRemetente = tipoUsuarioLogado == "funcionario" ? db.Funcionario.FirstOrDefault(f => f.IdFuncionario == idUsuarioLogado).Nome.ToString() : db.Empresa.FirstOrDefault(e => e.IdEmpresa == idUsuarioLogado).Nome.ToString();
+        //    ViewBag.ImagemDestinatario = tipoDestinatario == "funcionario" ? db.Funcionario.FirstOrDefault(f => f.IdFuncionario == idDestinatario).Imagem.ToString() : db.Empresa.FirstOrDefault(e => e.IdEmpresa == idDestinatario).Imagem.ToString();
+        //    ViewBag.NomeDestinatario = tipoDestinatario == "funcionario" ? db.Funcionario.FirstOrDefault(f => f.IdFuncionario == idDestinatario).Nome.ToString() : db.Empresa.FirstOrDefault(e => e.IdEmpresa == idDestinatario).Nome.ToString();
+
+        //    return View(db.Mensagem.ToList());
+        //}
+
+        // GET: Mensagens
         public ActionResult Index()
         {
             var idUsuarioLogado = Convert.ToInt32(Session["usuarioLogadoID"]);
@@ -26,9 +42,13 @@ namespace SistemaJobs.Controllers
             ViewBag.NomeRemetente = tipoUsuarioLogado == "funcionario" ? db.Funcionario.FirstOrDefault(f => f.IdFuncionario == idUsuarioLogado).Nome.ToString() : db.Empresa.FirstOrDefault(e => e.IdEmpresa == idUsuarioLogado).Nome.ToString();
             ViewBag.ImagemDestinatario = tipoDestinatario == "funcionario" ? db.Funcionario.FirstOrDefault(f => f.IdFuncionario == idDestinatario).Imagem.ToString() : db.Empresa.FirstOrDefault(e => e.IdEmpresa == idDestinatario).Imagem.ToString();
             ViewBag.NomeDestinatario = tipoDestinatario == "funcionario" ? db.Funcionario.FirstOrDefault(f => f.IdFuncionario == idDestinatario).Nome.ToString() : db.Empresa.FirstOrDefault(e => e.IdEmpresa == idDestinatario).Nome.ToString();
+            ViewBag.TipoDestinatario = tipoDestinatario;
 
-            return View(db.Mensagem.ToList());
+            var mensagens = db.Mensagem.Where(m => m.IdRemetente == idUsuarioLogado && m.IdDestinatario == idDestinatario).ToList();
+
+            return View(mensagens);
         }
+
 
         // GET: Mensagens/Details/5
         public ActionResult Details(int? id)
@@ -58,7 +78,7 @@ namespace SistemaJobs.Controllers
             //ViewBag.ImagemDestinatario = tipoDestinatario == "funcionario" ? db.Funcionario.FirstOrDefault(f => f.IdFuncionario == idDestinatario).Imagem.ToString() : db.Empresa.FirstOrDefault(e => e.IdEmpresa == idDestinatario).Imagem.ToString();
             //ViewBag.NomeDestinatario = tipoDestinatario == "funcionario" ? db.Funcionario.FirstOrDefault(f => f.IdFuncionario == idDestinatario).Nome.ToString() : db.Empresa.FirstOrDefault(e => e.IdEmpresa == idDestinatario).Nome.ToString();
 
-            return PartialView("Create", new Mensagem());
+            return PartialView("Create");
             //return View();
         }
 
@@ -72,15 +92,37 @@ namespace SistemaJobs.Controllers
             mensagem.IdDestinatario = Convert.ToInt32(Request["idDestinatario"]);
             mensagem.IdConversa = null;
             mensagem.Data = DateTime.Now;
+            mensagem.TipoUsuario = Session["tipoUsuario"].ToString();
 
+            var verificaConversa = db.Mensagem.FirstOrDefault(c => c.IdDestinatario == mensagem.IdDestinatario && c.IdRemetente == mensagem.IdRemetente);
+
+            if (verificaConversa == null)
+                mensagem.IdConversa = SalvarConversa(mensagem);
+            else
+                mensagem.IdConversa = verificaConversa.IdConversa;
+ 
             //if (ModelState.IsValid)
             //{
-                db.Mensagem.Add(mensagem);
-                db.SaveChanges();
+            db.Mensagem.Add(mensagem);
+            db.SaveChanges();
             //return RedirectToAction("Index");
             //}
-
+            
             return PartialView("Create");
+        }
+
+        public int SalvarConversa(Mensagem mensagem)
+        {
+            Conversa conversa = new Conversa();
+
+            conversa.IdRemetenteInicial = mensagem.IdRemetente;
+            conversa.TipoRemetenteInicial = Session["tipoUsuario"].ToString();
+            conversa.Data = DateTime.Now;
+
+            db.Conversa.Add(conversa);
+            db.SaveChanges();
+
+            return conversa.IdConversa;
         }
 
         // GET: Mensagens/Edit/5

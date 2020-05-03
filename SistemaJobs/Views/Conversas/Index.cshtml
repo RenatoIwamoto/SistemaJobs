@@ -1,0 +1,31 @@
+﻿@model IEnumerable<SistemaJobs.ViewModels.VmUsuarioConversa>
+
+<h2 style="margin-top:70px !important; color: #385898;">Conversas</h2>
+<hr class="hr-custom" />
+
+    @foreach (var item in Model)
+    {
+        var idDest = "";
+
+        if (Session["usuarioLogadoID"] == item.IdRemetenteInicial.ToString())
+        {
+            idDest = item.IdDestinatario.ToString();
+        }
+        else
+        {
+            idDest = item.IdRemetenteInicial.ToString();
+        }
+
+        <row>
+            <div class="col-md-6">
+                <b>Destinatário:</b> 
+                @Html.DisplayFor(modelItem => item.Usuario)
+            </div>
+            <div class="col-md-6">
+                @Html.ActionLink("Enviar Mensagem", "Index", "Mensagens", new { id = Session["usuarioLogadoID"], idDestinatario = idDest, tipo = Session["tipoUsuario"] }, null)
+                @Html.ActionLink("Details", "Details", new { id = item.IdConversa }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IdConversa })
+            </div>
+        </row>
+    }
+

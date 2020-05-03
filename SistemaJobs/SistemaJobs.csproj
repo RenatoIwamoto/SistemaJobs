@@ -179,6 +179,7 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CandidatosController.cs" />
+    <Compile Include="Controllers\ConversasController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\FuncionariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="VagaProjeto.cs">
       <DependentUpon>SistemaJobsEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\VmUsuarioConversa.cs" />
     <Compile Include="ViewModel\CustomValidationCPFAttribute.cs" />
     <Compile Include="ViewModel\VagaProjetoViewModel.cs" />
     <Compile Include="ViewModel\ValidaDigitoCNPJ.cs" />
@@ -411,6 +413,8 @@
     <Content Include="Views\Mensagens\Index.cshtml" />
     <Content Include="Views\Shared\_Chat.cshtml" />
     <Content Include="Views\Shared\_CriarMensagem.cshtml" />
+    <Content Include="Views\Mensagens\Chat.cshtml" />
+    <Content Include="Views\Conversas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

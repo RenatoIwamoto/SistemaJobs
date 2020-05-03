@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2 style="margin-top:70px !important; color: #385898;">Portfólio</h2>
+<h2 style="margin-top:70px !important; color: #385898;">Mensagens</h2>
 <hr class="hr-custom" />
 
 <div class="row">
@@ -34,8 +34,19 @@
 
         @foreach (var item in Model)
         {
+            var classe = "";
+
+            if (item.TipoUsuario == Session["tipoUsuario"].ToString())
+            {
+                classe = "left-top";
+            }
+            else
+            {
+                classe = "right-top pull-right";
+            }
+
             <div class="row">
-                <div class="talk-bubble tri-right border round left-top">
+                <div class="talk-bubble tri-right border round @classe">
                     <div class="talktext">
                         <p>@item.Mensagem1</p>
                     </div>

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<SistemaJobs.Mensagem>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        var classe = "";
+
+        if (item.TipoUsuario == Session["tipoUsuario"].ToString())
+        {
+            classe = "left-top";
+        }
+        else
+        {
+            classe = "right-top";
+        }
+
+        <div class="row">
+            <div class="talk-bubble tri-right border round ">
+                <div class="talktext">
+                    <p>@item.Mensagem1</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
