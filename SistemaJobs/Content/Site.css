@@ -170,7 +170,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .talk-bubble {
-    margin: 15px 80px 15px 40px ;
+    margin: 15px 80px 15px 40px;
     display: inline-block;
     position: relative;
     width: 50%;
@@ -212,7 +212,7 @@ input[type="checkbox"].input-validation-error {
     top: 0px;
     bottom: auto;
     border: 22px solid;
-    border-color: lightyellow transparent transparent transparent;
+    border-color: #333 transparent transparent transparent;
 }
 
 /* Right triangle, left side slightly down */
@@ -410,7 +410,11 @@ input[type="checkbox"].input-validation-error {
     top: 0px;
     bottom: auto;
     border: 20px solid;
-    border-color: lightyellow transparent transparent transparent;
+    border-color: #333 transparent transparent transparent;
+}
+
+.talk-bubble-dest {
+    background-color: #daddef;
 }
 
 /* talk bubble contents */
