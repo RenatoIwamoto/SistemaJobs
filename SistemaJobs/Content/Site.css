@@ -170,7 +170,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .talk-bubble {
-    margin: 40px;
+    margin: 15px 80px 15px 40px ;
     display: inline-block;
     position: relative;
     width: 50%;

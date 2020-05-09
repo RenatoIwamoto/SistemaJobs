@@ -95,6 +95,7 @@
           <Property Name="Data" Type="datetime" Nullable="false" />
           <Property Name="IdConversa" Type="int" />
           <Property Name="TipoUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="DestinatarioLeu" Type="int" />
         </EntityType>
         <EntityType Name="Portfolio">
           <Key>
@@ -552,6 +553,7 @@
           <Property Name="IdConversa" Type="Int32" />
           <NavigationProperty Name="Conversa" Relationship="HiredItModel.FK_Mens_Conv" FromRole="Mensagem" ToRole="Conversa" />
           <Property Name="TipoUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DestinatarioLeu" Type="Int32" />
         </EntityType>
         <EntityType Name="Conversa">
           <Key>
@@ -689,6 +691,7 @@
           <EntitySetMapping Name="Mensagem">
             <EntityTypeMapping TypeName="HiredItModel.Mensagem">
               <MappingFragment StoreEntitySet="Mensagem">
+                <ScalarProperty Name="DestinatarioLeu" ColumnName="DestinatarioLeu" />
                 <ScalarProperty Name="TipoUsuario" ColumnName="TipoUsuario" />
                 <ScalarProperty Name="IdConversa" ColumnName="IdConversa" />
                 <ScalarProperty Name="Data" ColumnName="Data" />

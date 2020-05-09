@@ -40,7 +40,7 @@ namespace SistemaJobs.Controllers
                 vmUsu.IdConversa = item.IdConversa;
                 vmUsu.IdDestinatario = item.IdDestinatario;
                 vmUsu.IdRemetenteInicial = item.Conversa.IdRemetenteInicial;
-                vmUsu.Usuario = item.Conversa.TipoRemetenteInicial == "funcionario" ? db.Empresa.FirstOrDefault(e => e.IdEmpresa == item.IdDestinatario).Nome.ToString() : db.Funcionario.FirstOrDefault(f => f.IdFuncionario == item.IdDestinatario).Nome.ToString();
+                vmUsu.Usuario = tipoUsuarioLogado == "funcionario" ? db.Empresa.FirstOrDefault(e => e.IdEmpresa == item.IdDestinatario).Nome.ToString() : db.Funcionario.FirstOrDefault(f => f.IdFuncionario == item.IdDestinatario).Nome.ToString();
                 cnv.Add(vmUsu);
             }
 

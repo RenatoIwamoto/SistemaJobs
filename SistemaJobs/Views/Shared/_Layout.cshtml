@@ -34,13 +34,13 @@
                     {
                         <li>@Html.ActionLink("Meu Perfil", "Details", "Empresas", new { id = @Session["usuarioLogadoID"] }, new { id = @Session["usuarioLogadoID"] })</li>
                     }
-
+                    <li>@Html.ActionLink("Mensagens", "Index", "Conversas")</li>
                     @if (Session["tipoUsuario"].ToString() == "funcionario")
                     {
                         <li>@Html.ActionLink("Meu Portfólio", "Index", "Portfolios", new { id = Session["usuarioLogadoID"] }, null)</li>
                     }
-                        
-                        <li>@Html.ActionLink("Vagas de Emprego", "Index", "VagaProjeto")</li>
+
+                    <li>@Html.ActionLink("Vagas de Emprego", "Index", "VagaProjeto")</li>
                     }
                     @if (Session["tipoUsuario"].ToString() == "empresa")
                     {

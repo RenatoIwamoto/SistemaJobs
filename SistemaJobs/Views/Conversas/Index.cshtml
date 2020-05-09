@@ -7,7 +7,7 @@
     {
         var idDest = "";
 
-        if (Session["usuarioLogadoID"] == item.IdRemetenteInicial.ToString())
+        if (Session["usuarioLogadoID"].ToString() == item.IdRemetenteInicial.ToString())
         {
             idDest = item.IdDestinatario.ToString();
         }
@@ -22,7 +22,7 @@
                 @Html.DisplayFor(modelItem => item.Usuario)
             </div>
             <div class="col-md-6">
-                @Html.ActionLink("Enviar Mensagem", "Index", "Mensagens", new { id = Session["usuarioLogadoID"], idDestinatario = idDest, tipo = Session["tipoUsuario"] }, null)
+                @Html.ActionLink("Enviar Mensagem", "Index", "Mensagens", new { IdConversa = item.IdConversa, idDestinatario = idDest, tipo = Session["tipoUsuario"] }, null)
                 @Html.ActionLink("Details", "Details", new { id = item.IdConversa }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.IdConversa })
             </div>

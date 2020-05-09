@@ -21,6 +21,7 @@ namespace SistemaJobs
         public System.DateTime Data { get; set; }
         public Nullable<int> IdConversa { get; set; }
         public string TipoUsuario { get; set; }
+        public Nullable<int> DestinatarioLeu { get; set; }
     
         public virtual Conversa Conversa { get; set; }
     }
