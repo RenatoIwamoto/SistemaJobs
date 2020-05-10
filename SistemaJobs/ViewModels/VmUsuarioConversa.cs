@@ -11,5 +11,6 @@ namespace SistemaJobs.ViewModels
         public int? IdConversa { get; set; }
         public int? IdRemetenteInicial { get; set; }
         public int IdDestinatario { get; set; }
+        public int NaoLida { get; set; }
     }
 }

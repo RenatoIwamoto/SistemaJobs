@@ -22,9 +22,15 @@
                 @Html.DisplayFor(modelItem => item.Usuario)
             </div>
             <div class="col-md-6">
-                @Html.ActionLink("Enviar Mensagem", "Index", "Mensagens", new { IdConversa = item.IdConversa, idDestinatario = idDest, tipo = Session["tipoUsuario"] }, null)
-                @Html.ActionLink("Details", "Details", new { id = item.IdConversa }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.IdConversa })
+                <div class="conversa">
+                    <span>@Html.ActionLink("Ver Mensagens", "Index", "Mensagens", new { IdConversa = item.IdConversa, idDestinatario = idDest, tipo = Session["tipoUsuario"] }, null)</span>
+                    @if (item.NaoLida > 0)
+                    {
+                        <span style="margin-left:20px;"><b style="color:#999;">@item.NaoLida novas mensagens</b></span>
+                    }
+                </div>
+                @*@Html.ActionLink("Details", "Details", new { id = item.IdConversa }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IdConversa })*@
             </div>
         </row>
     }

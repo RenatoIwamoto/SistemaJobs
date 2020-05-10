@@ -20,7 +20,7 @@ namespace SistemaJobs.Controllers
         public ActionResult Index()
         {
             var idUsuarioLogado = Convert.ToInt32(Session["usuarioLogadoID"]);
-            //var idDestinatario = Convert.ToInt32(Request["idDestinatario"]);
+            //var idDestinatario = Convert.ToInt32(Request["IdDestinatario"]);
             var tipoUsuarioLogado = Session["tipoUsuario"].ToString();
             var tipoDestinatario = tipoUsuarioLogado == "funcionario" ? "empresa" : "funcionario";
 
@@ -32,7 +32,9 @@ namespace SistemaJobs.Controllers
             //               where (m.IdRemetente == idUsuario) || (m.IdDestinatario == idUsuario)
             //               select new { idConversa = c.IdConversa };
 
-            var conversa = db.Mensagem.Where(m => m.IdRemetente == idUsuarioLogado || m.IdDestinatario == idUsuarioLogado).DistinctBy(c => c.IdConversa);
+            //var conversa = db.Mensagem.Where(m => m.IdRemetente == idUsuarioLogado && m.IdDestinatario == idDestinatario || m.IdRemetente == idDestinatario && m.IdDestinatario == idUsuarioLogado).DistinctBy(c => c.IdConversa);
+            var conversa = db.Mensagem.Where(m => m.IdRemetente == idUsuarioLogado && m.TipoUsuario == tipoUsuarioLogado || m.IdDestinatario == idUsuarioLogado && m.TipoUsuario == tipoDestinatario).DistinctBy(c => c.IdConversa);
+            //var conversaNaoLida = db.Mensagem.Where(msg => msg.IdDestinatario == idUsuarioLogado && msg.TipoUsuario != tipoUsuarioLogado && msg.DestinatarioLeu == 0).Count();
 
             foreach (var item in conversa)
             {
@@ -41,6 +43,7 @@ namespace SistemaJobs.Controllers
                 vmUsu.IdDestinatario = item.IdDestinatario;
                 vmUsu.IdRemetenteInicial = item.Conversa.IdRemetenteInicial;
                 vmUsu.Usuario = tipoUsuarioLogado == "funcionario" ? db.Empresa.FirstOrDefault(e => e.IdEmpresa == item.IdDestinatario).Nome.ToString() : db.Funcionario.FirstOrDefault(f => f.IdFuncionario == item.IdDestinatario).Nome.ToString();
+                vmUsu.NaoLida = db.Mensagem.Where(msg => msg.IdConversa == item.IdConversa && msg.IdDestinatario == idUsuarioLogado && msg.TipoUsuario != tipoUsuarioLogado && msg.DestinatarioLeu == 0).Count();
                 cnv.Add(vmUsu);
             }
 
