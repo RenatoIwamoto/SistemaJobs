@@ -43,7 +43,8 @@
                 </div>
             </div>
             <div class="col-md-4">
-                @Html.ActionLink("Ver Perfil", "Details", new { id = item.IdCandidato })
+                @Html.ActionLink("Ver Perfil", "Details", new { id = item.IdCandidato })<br />
+                @Html.ActionLink("Excluir Candidato", "DeleteConfirmed", new { id = item.IdCandidato })
             </div>
         </div>
     </div>

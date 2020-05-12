@@ -36,7 +36,7 @@ namespace SistemaJobs.Controllers
             }
 
             candidato.Funcionario.Telefone = Convert.ToUInt64(candidato.Funcionario.Telefone).ToString(@"\(00\)00000\-0000");
-            ViewBag.Contratado = db.FuncionarioProjeto.FirstOrDefault(c => c.IdFuncionario == candidato.IdFuncionario && c.IdVagaProjeto == candidato.IdVagaProjeto);
+            ViewBag.Contratado = db.FuncionarioProjeto.FirstOrDefault(c => c.IdFuncionario == candidato.IdFuncionario && c.IdVagaProjeto == candidato.IdVagaProjeto && c.Ativo != 0);
 
             return View(candidato);
         }
@@ -119,7 +119,7 @@ namespace SistemaJobs.Controllers
             return View(candidato);
         }
 
-        // GET: Candidatos/Delete/5
+        //GET: Candidatos/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -135,8 +135,8 @@ namespace SistemaJobs.Controllers
         }
 
         // POST: Candidatos/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Candidato candidato = db.Candidato.Find(id);

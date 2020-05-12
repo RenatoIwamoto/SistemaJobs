@@ -18,7 +18,7 @@
             <td style="text-align: right;">
                 @if (Session["tipoUsuario"].ToString() == "empresa")
                 {
-                    @Html.ActionLink("Editar", "Edit", "VagaProjeto", new { id = Model.VagaProjetoViewModelId }, htmlAttributes: new { @class = "btn btn-danger btn-large", @style = "margin-right: 5px;" })
+                    @Html.ActionLink("Editar", "Edit", "VagaProjeto", new { id = Model.VagaProjetoViewModelId }, htmlAttributes: new { @class = "btn btn-editar btn-large", @style = "margin-right: 5px;" })
 
                     if (Model.TipoVaga == "0")
                     {

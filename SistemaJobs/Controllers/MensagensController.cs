@@ -10,6 +10,7 @@ using SistemaJobs;
 
 namespace SistemaJobs.Controllers
 {
+    [Authorize]
     public class MensagensController : Controller
     {
         private HiredItEntities db = new HiredItEntities();

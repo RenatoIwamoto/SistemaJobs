@@ -424,11 +424,22 @@ input[type="checkbox"].input-validation-error {
     line-height: 1.5em;
 }
 
-    .talktext p {
-        /* remove webkit p margins */
-        -webkit-margin-before: 0em;
-        -webkit-margin-after: 0em;
-    }
+.talktext p {
+    /* remove webkit p margins */
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+}
+
+.conversa {
+    background: #f2f2f2;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.btn-editar {
+    background: #808080;
+    color: #fff;
+}
 
 @media (max-width: 767px) {
     .body-size {
