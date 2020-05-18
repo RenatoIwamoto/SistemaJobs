@@ -185,14 +185,25 @@ namespace SistemaJobs.Controllers
             var idFuncionario = Convert.ToInt32(Request["idFuncionario"]);
             var idVaga = Convert.ToInt32(Request["idVaga"]);
 
-            FuncionarioProjeto funcionarioProjeto = new FuncionarioProjeto();
+            var candidatoVinculado = db.FuncionarioProjeto.FirstOrDefault(c => c.IdFuncionario == idFuncionario && c.IdVagaProjeto == idVaga && c.Ativo == 0);
 
-            funcionarioProjeto.IdFuncionario = idFuncionario;
-            funcionarioProjeto.IdVagaProjeto = idVaga;
-            funcionarioProjeto.Ativo = 1;
-            db.FuncionarioProjeto.Add(funcionarioProjeto);
-            db.SaveChanges();
+            if (candidatoVinculado != null)
+            {
+                candidatoVinculado.Ativo = 1;
+                db.FuncionarioProjeto.Add(candidatoVinculado);
+                db.Entry(candidatoVinculado).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
+                FuncionarioProjeto funcionarioProjeto = new FuncionarioProjeto();
 
+                funcionarioProjeto.IdFuncionario = idFuncionario;
+                funcionarioProjeto.IdVagaProjeto = idVaga;
+                funcionarioProjeto.Ativo = 1;
+                db.FuncionarioProjeto.Add(funcionarioProjeto);
+                db.SaveChanges();
+            }
             var idCandidato = db.Candidato.First(c => c.IdVagaProjeto == idVaga && c.IdFuncionario == idFuncionario).IdCandidato;
 
             return RedirectToAction("Details", "Candidatos", new { id = idCandidato });
