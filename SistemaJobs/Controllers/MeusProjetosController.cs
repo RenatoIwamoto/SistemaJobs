@@ -131,6 +131,7 @@ namespace SistemaJobs.Controllers
 
                 ViewBag.NomeEmpresa = nomeEmpresa;
                 ViewBag.Imagem = imagemEmpresa;
+                ViewBag.IdEmpresa = funcionarioProjeto.VagaProjeto.IdEmpresa;
                 ViewBag.candidatos = listaVagaProjetoVM;
                 return View(funcionarioProjeto);
             }

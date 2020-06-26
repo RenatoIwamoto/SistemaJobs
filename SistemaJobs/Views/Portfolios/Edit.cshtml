@@ -18,7 +18,7 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true)
         <div class="form-group">
-            @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "col-md-12 lbl-custom" })
+            @Html.Label("Titulo*", htmlAttributes: new { @class = "col-md-12 lbl-custom" })
             <div class="col-md-12">
                 @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Titulo)
@@ -26,7 +26,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "col-md-12 lbl-custom" })
+            @Html.Label("Descricao*", htmlAttributes: new { @class = "col-md-12 lbl-custom" })
             <div class="col-md-12">
                 @Html.TextArea("Descricao", null, new { @class = "form-control", @cols = 40, @rows = 5 })
                 @Html.ValidationMessageFor(model => model.Descricao)
@@ -46,7 +46,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.TempoTrabalho, htmlAttributes: new { @class = "col-md-12 lbl-custom" })
+                    @Html.Label("TempoTrabalho (em dias)", htmlAttributes: new { @class = "col-md-12 lbl-custom" })
                     <div class="col-md-12">
                         @Html.TextBoxFor(model => model.TempoTrabalho, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.TempoTrabalho)
@@ -65,7 +65,3 @@
 
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

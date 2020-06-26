@@ -92,6 +92,8 @@ namespace SistemaJobs.Controllers
             ViewBag.ImagemSalva = empresa.Imagem;
             ViewBag.Usuario = empresa.Usuario;
             ViewBag.Senha = empresa.Senha;
+            ViewBag.EstadoList = empresa.Estado;
+
             PopularDdlEstado();
 
             return View(empresa);
@@ -238,6 +240,13 @@ namespace SistemaJobs.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details");
             }
+
+            ViewBag.Usuario = empresa.Usuario;
+            ViewBag.Senha = empresa.Senha;
+            ViewBag.ImagemSalva = empresa.Imagem;
+
+            PopularDdlEstado();
+            ViewBag.EstadoList = empresa.Estado;
             return View(empresa);
         }
 

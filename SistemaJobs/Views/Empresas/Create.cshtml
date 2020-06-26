@@ -22,7 +22,7 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
             <div class="form-group">
-                @Html.LabelFor(model => model.Nome, new { @class = "col-md-2 control-label" })
+                @Html.Label("Nome*", new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Nome)
@@ -30,7 +30,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.CNPJ, new { @class = "col-md-2 control-label" })
+                @Html.Label("CNPJ*", new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(model => model.CNPJ, new { @class = "form-control", mask = "99.999.999/9999-99" })
                     @Html.ValidationMessageFor(model => model.CNPJ)
@@ -38,7 +38,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Telefone, "Telefone", new { @class = "col-md-2 control-label" })
+                @Html.Label("Telefone*", new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(model => model.Telefone, new { @class = "form-control", mask = "(99) 99999-9999" })
                     @Html.ValidationMessageFor(model => model.Telefone)
@@ -46,7 +46,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Email, new { @class = "col-md-2 control-label" })
+                @Html.Label("Email*", new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Email)
@@ -54,7 +54,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Estado, new { @class = "col-md-2 control-label" })
+                @Html.Label("Estado*", new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.DropDownListFor(m => m.Estado, new SelectList(ViewBag.Estado, "Value", "Text"), "Select", htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Estado)
@@ -62,7 +62,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Cidade, new { @class = "col-md-2 control-label" })
+                @Html.Label("Cidade*", new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(model => model.Cidade, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Cidade)
@@ -70,7 +70,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Usuario, new { @class = "col-md-2 control-label" })
+                @Html.Label("Usuario*", new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(model => model.Usuario, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Usuario)
@@ -78,7 +78,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Senha, new { @class = "col-md-2 control-label" })
+                @Html.Label("Senha*", new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.PasswordFor(model => model.Senha, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Senha)

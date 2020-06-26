@@ -19,7 +19,7 @@ namespace SistemaJobs.Controllers
         public ActionResult Index()
         {
             var candidato = db.Candidato.Include(c => c.Funcionario).Include(c => c.VagaProjeto);
-            return View(candidato.ToList());
+            return View(candidato.OrderByDescending(s => s.IdCandidato).ToList());
         }
 
         // GET: Candidatos/Details/5

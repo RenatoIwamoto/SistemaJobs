@@ -154,7 +154,9 @@ namespace SistemaJobs.Controllers
             }
             ViewBag.IdFuncionario = new SelectList(db.Funcionario, "IdFuncionario", "Nome", portfolio.IdFuncionario);
 
-            return RedirectToAction("Index", "Portfolios", new { id = portfolio.IdFuncionario });
+            return View(portfolio);
+
+            //return RedirectToAction("Index", "Portfolios", new { id = portfolio.IdFuncionario });
         }
 
         public bool ValidaImagem(HttpPostedFileBase imagem)

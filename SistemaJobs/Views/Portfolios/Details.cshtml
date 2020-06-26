@@ -23,7 +23,11 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.TempoTrabalho, htmlAttributes: new { @class = "col-md-2 lbl-custom" })
                 <div class="col-md-10">
-                    @Html.DisplayFor(model => model.TempoTrabalho)
+                    @Html.DisplayFor(model => model.TempoTrabalho) 
+                    @if (Model.TempoTrabalho != null)
+                    {
+                        <text>dias</text>
+                    }
                 </div>
             </div>
         </div>

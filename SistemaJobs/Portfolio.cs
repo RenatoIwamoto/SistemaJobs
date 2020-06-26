@@ -11,12 +11,18 @@ namespace SistemaJobs
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Portfolio
     {
         public int IdPorfolio { get; set; }
+
+        [Required]
         public string Titulo { get; set; }
+
+        [Required]
         public string Descricao { get; set; }
+
         public string Imagem { get; set; }
         public Nullable<int> TempoTrabalho { get; set; }
         public Nullable<int> IdFuncionario { get; set; }

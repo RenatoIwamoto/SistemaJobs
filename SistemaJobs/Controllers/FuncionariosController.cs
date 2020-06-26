@@ -92,6 +92,8 @@ namespace SistemaJobs.Controllers
             ViewBag.ImagemSalva = funcionario.Imagem;
             ViewBag.Usuario = funcionario.Usuario;
             ViewBag.Senha = funcionario.Senha;
+            ViewBag.EstadoList = funcionario.Estado;
+
             PopularDdlEstado();
 
             return View(funcionario);
@@ -239,8 +241,12 @@ namespace SistemaJobs.Controllers
                 return RedirectToAction("Details");
             }
 
+            ViewBag.ImagemSalva = funcionario.Imagem;
+            ViewBag.Usuario = funcionario.Usuario;
+            ViewBag.Senha = funcionario.Senha;
             PopularDdlEstado();
 
+            ViewBag.EstadoList = funcionario.Estado;
             return View(funcionario);
         }
 
