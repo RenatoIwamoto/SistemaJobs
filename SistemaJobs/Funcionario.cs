@@ -52,7 +52,6 @@ namespace SistemaJobs
         public string Email { get; set; }
 
         [Required]
-        [StringLength(2, MinimumLength = 2)]
         public string Estado { get; set; }
 
         [Required]
@@ -66,7 +65,7 @@ namespace SistemaJobs
 
         [Required]
         [StringLength(12, MinimumLength = 6)]
-        [Remote("ValidarUnicidade", "Funcionarios", ErrorMessage = "Senha já cadastrada")]
+        //[Remote("ValidarUnicidade", "Funcionarios", ErrorMessage = "Senha já cadastrada")]
         public string Senha { get; set; }
 
         [StringLength(200)]

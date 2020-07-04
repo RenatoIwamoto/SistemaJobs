@@ -154,14 +154,14 @@ namespace SistemaJobs.Controllers
             var telefone = db.Funcionario.Where(u => u.Telefone == funcionario.Telefone).Count() == 0;
             var email = db.Funcionario.Where(u => u.Email == funcionario.Email).Count() == 0;
             var user = db.Funcionario.Where(u => u.Usuario == funcionario.Usuario).Count() == 0;
-            var senha = db.Funcionario.Where(u => u.Senha == funcionario.Senha).Count() == 0;
+            //var senha = db.Funcionario.Where(u => u.Senha == funcionario.Senha).Count() == 0;
 
             var telefone2 = db.Empresa.Where(u => u.Telefone == funcionario.Telefone).Count() == 0;
             var email2 = db.Empresa.Where(u => u.Email == funcionario.Email).Count() == 0;
             var user2 = db.Empresa.Where(u => u.Usuario == funcionario.Usuario).Count() == 0;
-            var senha2 = db.Empresa.Where(u => u.Senha == funcionario.Senha).Count() == 0;
+            //var senha2 = db.Empresa.Where(u => u.Senha == funcionario.Senha).Count() == 0;
 
-            if (cpf && telefone && email && user && senha && telefone2 && email2 && user2 && senha2)
+            if (cpf && telefone && email && user  && telefone2 && email2 && user2)
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
@@ -178,10 +178,6 @@ namespace SistemaJobs.Controllers
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
             else if (user == false || user2 == false)
-            {
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
-            else if (senha == false || senha2 == false)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
